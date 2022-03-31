@@ -2,7 +2,7 @@ CREATE TABLE carrera(
 codigo VARCHAR(10),
 nombre VARCHAR(50),
 titulo VARCHAR(50),
-CONSTRAINTS pkcarrera PRIMARY KEY (id)
+CONSTRAINTS pkcarrera PRIMARY KEY (codigo)
 );
 
 CREATE OR REPLACE PACKAGE types
@@ -14,62 +14,51 @@ CREATE OR REPLACE PROCEDURE insertarcarrera(codigo IN carrera.codigo%TYPE,nombre
 titulo in carrera.titulo%type)
 AS
 BEGIN
-	INSERT INTO libro VALUES(id,entrega,recibe,nombre,caracteristicas,condicionEntrega,condicionRecibo,fechaEntrega,horaEntrega);
+	INSERT INTO carrera VALUES(codigo,nombre,titulo);
 END;
 /
-CREATE OR REPLACE PROCEDURE modificarlibro (idin IN libro.id%TYPE,entregain IN libro.entrega%TYPE,recibein IN libro.recibe%TYPE,nombrein IN libro.nombre%TYPE,
-caracteristicasin IN libro.caracteristicas%TYPE,condicionEntregain IN libro.condicionEntrega%TYPE,condicionRecibidoin IN libro.condicionRecibo%TYPE,
-fechaEntregain in libro.fechaEntrega%type,horaEntregain in libro.horaEntrega%type)
+CREATE OR REPLACE PROCEDURE modificarcarrera (codigoin IN carrera.codigo%TYPE,nombrein IN carrera.nombre%TYPE,tituloin in carrera.titulo%type)
 AS
 BEGIN
-UPDATE libro SET entrega=entregain,recibe=recibein,nombre=nombrein,caracteristicas=caracteristicasin,condicionEntrega=condicionEntregain,condicionRecibo=condicionRecibidoin,fechaEntrega=fechaEntregain,horaEntrega=horaEntregain WHERE id=idin;
+UPDATE carrera SET nombre=nombrein,codigo=codigoin,titulo=tituloin WHERE codigo=codigoin;
 END;
 /
 
 
-CREATE OR REPLACE FUNCTION buscarlibro(idbuscar IN libro.id%TYPE)
+CREATE OR REPLACE FUNCTION buscarcarrera(idbuscar IN carrera.codigo%TYPE)
 RETURN Types.ref_cursor 
 AS 
-        libro_cursor types.ref_cursor; 
+        carrera_cursor types.ref_cursor; 
 BEGIN 
-  OPEN libro_cursor FOR 
-       SELECT id,entrega,recibe,nombre,caracteristicas,condicionEntrega,condicionRecibo,fechaEntrega,horaEntrega FROM libro WHERE id=idbuscar; 
-RETURN libro_cursor; 
+  OPEN carrera_cursor FOR 
+       SELECT codigo,nombre,titulo FROM carrera WHERE codigo=idbuscar; 
+RETURN carrera_cursor; 
 END;
 /
-CREATE OR REPLACE FUNCTION listarlibro
+CREATE OR REPLACE FUNCTION listarcarrera
 RETURN Types.ref_cursor 
 AS 
-        libro_cursor types.ref_cursor; 
+        carrera_cursor types.ref_cursor; 
 BEGIN 
-  OPEN libro_cursor FOR 
-       SELECT id,entrega,recibe,nombre,caracteristicas,condicionEntrega,condicionRecibo,fechaEntrega,horaEntrega FROM libro ; 
-RETURN libro_cursor; 
+  OPEN carrera_cursor FOR 
+       SELECT codigo,nombre,titulo FROM carrera; 
+RETURN carrera_cursor; 
 END;
 /
-create or replace procedure eliminarlibro(idin IN libro.id%TYPE)
+create or replace procedure eliminarcarrera(codigoin IN carrera.codigo%TYPE)
 as
 begin
-    delete from libro where id=idin;
+    delete from carrera where codigo=codigoin;
 end;
 /
 
 
-CREATE TABLE permisosVacaciones(
-id VARCHAR(10),
-boletaPermisos int,
-boletaVacaciones int,
-funcionario VARCHAR(50),
-cedulaFuncionario VARCHAR(11),
-fechaSolicitud VARCHAR(8),
-diaSolicitado VARCHAR(8),
-horasSolicitadas int,
-motivo VARCHAR(90),
-aprobadoLider int,
-aprobadoGerencia int,
-fechaAprobacion VARCHAR(8),
-justNoAprob VARCHAR(90),
-CONSTRAINTS pkpermisosVacaciones PRIMARY KEY (id)
+CREATE TABLE curso(
+codigo VARCHAR(10),
+nombre VARCHAR(50),
+creditos NUMBER,
+hsemanales NUMBER,
+CONSTRAINTS pkcurso PRIMARY KEY (codigo)
 );
 
 
@@ -78,54 +67,109 @@ AS
      TYPE ref_cursor IS REF CURSOR;
 END;
 /
-CREATE OR REPLACE PROCEDURE insertarPermisosVacaciones(id IN permisosVacaciones.id%TYPE,boletaPermisos IN permisosVacaciones.boletaPermisos%TYPE,
-boletaVacaciones IN permisosVacaciones.boletaVacaciones%TYPE,funcionario IN permisosVacaciones.funcionario%TYPE,
-cedulaFuncionario IN permisosVacaciones.cedulaFuncionario%TYPE,fechaSolicitud IN permisosVacaciones.fechaSolicitud%TYPE,diaSolicitado IN permisosVacaciones.diaSolicitado%TYPE,
-horasSolicitadas in permisosVacaciones.horasSolicitadas%type,motivo in permisosVacaciones.motivo%type,
-aprobadoLider in permisosVacaciones.aprobadoLider%type,aprobadoGerencia in permisosVacaciones.aprobadoGerencia%type,
-justNoAprob in permisosVacaciones.justNoAprob%type)
+
+CREATE OR REPLACE PROCEDURE insertarCurso(codigo IN curso.codigo%TYPE,nombre in curso.nombre%type,creditos in curso.creditos%type,hsemanales in curso.hsemanales%type)
 AS
 BEGIN
-	INSERT INTO permisosVacaciones VALUES(id,boletaPermisos,boletaVacaciones,funcionario,cedulaFuncionario,fechaSolicitud,diaSolicitado,horasSolicitadas,motivo,aprobadoLider,aprobadoGerencia,fechaAprobacion,justNoAprob);
+	INSERT INTO curso VALUES(codigo,nombre,creditos,hsemanales);
 END;
 /
-CREATE OR REPLACE PROCEDURE modificarpermisosVacaciones (idin IN permisosVacaciones.id%TYPE,boletaPermisosin IN permisosVacaciones.boletaPermisos%TYPE,boletaVacacionesin IN permisosVacaciones.boletaVacaciones%TYPE,funcionarioin IN permisosVacaciones.funcionario%TYPE,
-cedulaFuncionarioin IN permisosVacaciones.cedulaFuncionario%TYPE,fechaSolicitudin IN permisosVacaciones.fechaSolicitud%TYPE,diaSolicitadoin IN permisosVacaciones.diaSolicitado%TYPE,
-horasSolicitadasin in permisosVacaciones.horasSolicitadas%type,motivoin in permisosVacaciones.motivo%type,aprobadoLiderin in permisosVacaciones.aprobadoLider%type,aprobadoGerenciain in permisosVacaciones.aprobadoGerencia%type,fechaAprobacionin in permisosVacaciones.fechaAprobacion%type,
-justNoAprobin in permisosVacaciones.justNoAprob%type)
+
+CREATE OR REPLACE PROCEDURE modificarcurso (codigoin IN curso.codigo%TYPE,nombrein IN curso.nombre%TYPE,creditosin in curso.creditos%type,hsemanalesin in curso.hsemanales%type)
 AS
 BEGIN
-UPDATE cliente SET boletaPermisos=boletaPermisosin,boletaVacaciones=boletaVacacionesin,funcionario=funcionarioin,cedulaFuncionario=cedulaFuncionarioin,fechaSolicitud=fechaSolicitudin,diaSolicitado=diaSolicitadoin,horasSolicitadas=horasSolicitadasin,motivo=motivoin, aprobadoLider=aprobadoLiderin,aprobadoGerencia=aprobadoGerenciain, fechaAprobacion=fechaAprobacionin, justNoAprob=justNoAprobin WHERE id=idin;
+UPDATE curso SET nombre=nombrein,codigo=codigoin,creditos=creditosin,hsemanales=hsemanalesin WHERE codigo=codigoin;
 END;
 /
 
 
-CREATE OR REPLACE FUNCTION buscarpermisosVacaciones(idbuscar IN permisosVacaciones.id%TYPE)
+CREATE OR REPLACE FUNCTION buscarcurso(idbuscar IN curso.codigo%TYPE)
 RETURN Types.ref_cursor 
 AS 
-        permisosVacaciones_cursor types.ref_cursor; 
+        curso_cursor types.ref_cursor; 
 BEGIN 
-  OPEN permisosVacaciones_cursor FOR 
-       SELECT id,boletaPermisos,boletaVacaciones,funcionario,cedulaFuncionario,fechaSolicitud,diaSolicitado,horasSolicitadas,motivo,aprobadoLider,aprobadoGerencia,fechaAprobacion,justNoAprob FROM permisosVacaciones WHERE id=idbuscar; 
-RETURN permisosVacaciones_cursor; 
+  OPEN curso_cursor FOR 
+       SELECT codigo,nombre,creditos,hsemanales FROM curso WHERE codigo=idbuscar; 
+RETURN curso_cursor; 
 END;
 /
-CREATE OR REPLACE FUNCTION listarpermisosVacaciones
+CREATE OR REPLACE FUNCTION listarcurso
 RETURN Types.ref_cursor 
 AS 
-        permisosVacaciones_cursor types.ref_cursor; 
+        curso_cursor types.ref_cursor; 
 BEGIN 
-  OPEN permisosVacaciones_cursor FOR 
-       SELECT id,boletaPermisos,boletaVacaciones,funcionario,cedulaFuncionario,fechaSolicitud,diaSolicitado,horasSolicitadas,motivo,aprobadoLider,aprobadoGerencia,fechaAprobacion,justNoAprob FROM permisosVacaciones ; 
-RETURN permisosVacaciones_cursor; 
+  OPEN curso_cursor FOR 
+       SELECT codigo,nombre,creditos,hsemanales FROM curso; 
+RETURN curso_cursor; 
 END;
 /
-create or replace procedure eliminarpermisosVacaciones(idin IN permisosVacaciones.id%TYPE)
+create or replace procedure eliminarcurso(codigoin IN curso.codigo%TYPE)
 as
 begin
-    delete from permisosVacaciones where id=idin;
+    delete from curso where codigo=codigoin;
 end;
 /
+
+
+CREATE TABLE ciclo(
+id number,
+numero NUMBER,
+annio NUMBER,
+fec_inicio VARCHAR,
+fec_final VARCHAR,
+CONSTRAINTS pkciclo PRIMARY KEY (id)
+);
+
+
+CREATE OR REPLACE PACKAGE types
+AS
+     TYPE ref_cursor IS REF CURSOR;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE insertarCiclo(id IN ciclo.id%TYPE,numero in ciclo.numero%type,fec_inicio in ciclo.fec_inicio%type,fec_final in ciclo.fec_final%type)
+AS
+BEGIN
+	INSERT INTO curso VALUES(id,numero,fec_inicio,fec_final);
+END;
+/
+
+CREATE OR REPLACE PROCEDURE modificarCiclo (codigoin IN curso.codigo%TYPE,nombrein IN curso.nombre%TYPE,creditosin in curso.creditos%type,hsemanalesin in curso.hsemanales%type)
+AS
+BEGIN
+UPDATE curso SET nombre=nombrein,codigo=codigoin,creditos=creditosin,hsemanales=hsemanalesin WHERE codigo=codigoin;
+END;
+/
+
+
+CREATE OR REPLACE FUNCTION buscarCiclo(idbuscar IN curso.codigo%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        curso_cursor types.ref_cursor; 
+BEGIN 
+  OPEN curso_cursor FOR 
+       SELECT codigo,nombre,creditos,hsemanales FROM curso WHERE codigo=idbuscar; 
+RETURN curso_cursor; 
+END;
+/
+CREATE OR REPLACE FUNCTION listarCiclo
+RETURN Types.ref_cursor 
+AS 
+        ciclo_cursor types.ref_cursor; 
+BEGIN 
+  OPEN ciclo_cursor FOR 
+       SELECT id,numero,annio,fec_inicio,fec_final FROM ciclo; 
+RETURN ciclo_cursor; 
+END;
+/
+create or replace procedure eliminarCiclo(codigoin IN curso.codigo%TYPE)
+as
+begin
+    delete from curso where codigo=codigoin;
+end;
+/
+
+
 create table perfil(
 id varchar(11),
 nombre varchar2(30),
