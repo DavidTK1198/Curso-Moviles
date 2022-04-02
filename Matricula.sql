@@ -4,7 +4,8 @@ nombre VARCHAR(50),
 titulo VARCHAR(50),
 CONSTRAINTS pkcarrera PRIMARY KEY (codigo)
 );
-
+--CARRERA
+------------------------------------------------------
 CREATE OR REPLACE PACKAGE types
 AS
      TYPE ref_cursor IS REF CURSOR;
@@ -52,7 +53,8 @@ begin
 end;
 /
 
-
+--CURSO
+------------------------------------------------------
 CREATE TABLE curso(
 codigo VARCHAR(10),
 nombre VARCHAR(50),
@@ -110,7 +112,8 @@ begin
 end;
 /
 
-
+--CICLO
+------------------------------------------------------
 CREATE TABLE ciclo(
 id number,
 numero NUMBER,
@@ -127,29 +130,29 @@ AS
 END;
 /
 
-CREATE OR REPLACE PROCEDURE insertarCiclo(id IN ciclo.id%TYPE,numero in ciclo.numero%type,fec_inicio in ciclo.fec_inicio%type,fec_final in ciclo.fec_final%type)
+CREATE OR REPLACE PROCEDURE insertarCiclo(id IN ciclo.id%TYPE,numero in ciclo.numero%type,annio in ciclo.annio%type,fec_inicio in ciclo.fec_inicio%type,fec_final in ciclo.fec_final%type)
 AS
 BEGIN
-	INSERT INTO curso VALUES(id,numero,fec_inicio,fec_final);
+	INSERT INTO ciclo VALUES(id,numero,annio,fec_inicio,fec_final);
 END;
 /
 
-CREATE OR REPLACE PROCEDURE modificarCiclo (codigoin IN curso.codigo%TYPE,nombrein IN curso.nombre%TYPE,creditosin in curso.creditos%type,hsemanalesin in curso.hsemanales%type)
+CREATE OR REPLACE PROCEDURE modificarCiclo (idin IN ciclo.codigo%TYPE,numero IN ciclo.numero%TYPE,fec_inicioin in ciclo.fec_inicio%type,fec_finalin in ciclo.fec_final%type)
 AS
 BEGIN
-UPDATE curso SET nombre=nombrein,codigo=codigoin,creditos=creditosin,hsemanales=hsemanalesin WHERE codigo=codigoin;
+UPDATE ciclo SET id=idin,numero=numeroin,annio=annioin,fec_inicio=fec_inicioin,fec_final=fec_finalin WHERE id=idin;
 END;
 /
 
 
-CREATE OR REPLACE FUNCTION buscarCiclo(idbuscar IN curso.codigo%TYPE)
+CREATE OR REPLACE FUNCTION buscarCiclo(idbuscar IN ciclo.id%TYPE)
 RETURN Types.ref_cursor 
 AS 
-        curso_cursor types.ref_cursor; 
+        ciclo_cursor types.ref_cursor; 
 BEGIN 
   OPEN curso_cursor FOR 
-       SELECT codigo,nombre,creditos,hsemanales FROM curso WHERE codigo=idbuscar; 
-RETURN curso_cursor; 
+       SELECT id,numero,annio,fec_inicio,fec_final FROM ciclo WHERE id=idbuscar; 
+RETURN ciclo_cursor; 
 END;
 /
 CREATE OR REPLACE FUNCTION listarCiclo
@@ -162,123 +165,25 @@ BEGIN
 RETURN ciclo_cursor; 
 END;
 /
-create or replace procedure eliminarCiclo(codigoin IN curso.codigo%TYPE)
+create or replace procedure eliminarCiclo(codigoin IN ciclo.id%TYPE)
 as
 begin
-    delete from curso where codigo=codigoin;
+    delete from curso where id=codigoin;
 end;
 /
 
-
-create table perfil(
-id varchar(11),
-nombre varchar2(30),
-constraints pkperfil primary key (id));
-/
-create or replace package types
-as
-     type ref_cursor is ref cursor;
-End;
-/
-create or replace procedure insertarPerfil (id in varchar,descripcion in varchar) as
-begin
-insert into perfil values(id,descripcion);
-end;
-/
-create or replace function listar
-return Types.ref_cursor 
-as 
-       perfil_cursor types.ref_cursor; 
-begin 
-  open perfil_cursor for 
-       select id,descripcion from perfil; 
-return perfil_cursor; 
-end;
-/
-create or replace procedure modificarPerfil (idin in perfil.id%type,descripin in perfil.descripcion%type) as
-begin
-update perfil set descripcion=descripin where id=idin;
-end;
-/
-create or replace function buscarID (idbuscar in varchar)
-return Types.ref_cursor 
-as 
-       perfil_cursor types.ref_cursor; 
-begin 
-  open perfil_cursor for 
-       select id,descripcion from perfil where id=idbuscar; 
-return perfil_cursor; 
-end;
-/
-create or replace procedure eliminarPorId(idin in varchar)
-as
-begin
-    delete from perfil where id=idin;
-end;
-/
-CREATE TABLE contactos (
-id varchar(11),
-cedula varchar(11),
-nombre VARCHAR(30),
-oraganizacion VARCHAR(30),
-direccion VARCHAR(30),
-cargo VARCHAR(12),
-email varchar(15),
-telefonoTrabajo VARCHAR(10),
-telefonoCasa VARCHAR(10),
-telefonoCelular VARCHAR(10),
-fax VARCHAR(10),
-CONSTRAINTS pkcontactos PRIMARY KEY (id)
-);
+--INSERTAR
+------------------------------------------------------
 
 
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-
-CREATE OR REPLACE PROCEDURE insertarContactos(id in varchar,cedula in varchar,nombre in VARCHAR,oraganizacion in VARCHAR, direccion in VARCHAR, cargo in VARCHAR, email in varchar, telefonoTrabajo in VARCHAR,telefonoCasa in VARCHAR, telefonoCelular in VARCHAR, fax in VARCHAR)
-AS
-BEGIN
-	INSERT INTO Contactos VALUES(id ,cedula,nombre,oraganizacion, direccion, cargo, email, telefonoTrabajo,telefonoCasa, telefonoCelular, fax);
-END;
-
-
-
-CREATE OR REPLACE PROCEDURE modificarContactos(inid in varchar,incedula in varchar,innombre in VARCHAR,inoraganizacion in VARCHAR, indireccion in VARCHAR, incargo in VARCHAR, inemail in varchar, intelefonoTrabajo in VARCHAR,intelefonoCasa in VARCHAR, intelefonoCelular in VARCHAR, infax in VARCHAR)
-AS
-BEGIN
-	update contactos set id=inid ,cedula=incedula,nombre=innombre,oraganizacion=inoraganizacion, direccion=indireccion, cargo=incargo, email=inemail, telefonoTrabajo=intelefonoTrabajo,telefonoCasa=intelefonoCasa, telefonoCelular=intelefonoCelular, fax=infax;
-END;
-
-
-
-CREATE OR REPLACE FUNCTION buscarContactos(idbuscar IN Contactos.id%TYPE)
-RETURN Types.ref_cursor 
-AS 
-        contactos_cursor types.ref_cursor; 
-BEGIN 
-  OPEN contactos_cursor FOR 
-       SELECT id ,cedula,nombre,oraganizacion, direccion, cargo, email, telefonoTrabajo,telefonoCasa, telefonoCelular, fax FROM Contactos WHERE id=idbuscar; 
-RETURN contactos_cursor; 
-END;
-
-
-
-CREATE OR REPLACE procedure eliminarContactos(idbuscar IN Contactos.id%TYPE)
-as
-begin
-	delete from contactos where id=idbuscar;
-end;
 
 CREATE table usuario(
     cedula varchar(11),
     nombre varchar(30),
     nombreUsuario varchar(30),
     contrasea varchar(10),
-    perfil varchar(11),
     constraint PKUSUARIO primary key (cedula)
-   -- constraint FKPERFIL2 foreign key (perfil) refences perfil(id)
+
 );
 
 --INSERTAR
