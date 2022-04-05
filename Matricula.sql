@@ -61,8 +61,10 @@ nombre VARCHAR(50),
 creditos NUMBER,
 hsemanales NUMBER,
 CONSTRAINTS pkcurso PRIMARY KEY (codigo)
-);
+------------------carrepk 
 
+);
+--------------cursopk-----------------requistopk=null
 
 CREATE OR REPLACE PACKAGE types
 AS
