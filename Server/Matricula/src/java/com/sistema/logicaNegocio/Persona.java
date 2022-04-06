@@ -1,4 +1,4 @@
-package com.sistema.logicaNegocio;
+package com.sistema.LogicaNegocio;
 
 
 public class Persona{
@@ -6,10 +6,9 @@ public class Persona{
     String nombre;
     String sexo;
 
-    public Persona(String cedula, String nombre, String sexo) {
+    public Persona(String cedula, String nombre) {
         this.cedula = cedula;
         this.nombre = nombre;
-        this.sexo = sexo;
     }
 
     
@@ -30,14 +29,6 @@ public class Persona{
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String Sexo) {
-        this.sexo = Sexo;
     }
     
     

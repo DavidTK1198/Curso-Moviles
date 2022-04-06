@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sistema.presentation;
+package com.sistema.endpoint;
 
-import com.sistema.logicaNegocio.Model;
-import com.sistema.logicaNegocio.Usuario;
+import com.sistema.LogicaNegocio.UsuarioModel;
+import com.sistema.LogicaNegocio.Usuario;
 import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -36,7 +36,7 @@ public class Login {
                ServicioLogueo prueba=new ServicioLogueo();
                prueba.loginCliente(usuario.getId(),usuario.getClave());
                 
-                logged= Model.instance().get(usuario);
+                logged= UsuarioModel.instance().get(usuario);
                 if(!logged.getClave().equals(usuario.getClave())) throw new Exception("Clave incorrecta");
                 request.getSession(true).setAttribute("user", logged);
                 return logged;

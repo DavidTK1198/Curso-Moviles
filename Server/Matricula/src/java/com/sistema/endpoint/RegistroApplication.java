@@ -1,6 +1,6 @@
-package com.sistema.presentation;
+package com.sistema.endpoint;
 
-import com.sistema.filter.RestfulFilter;
+import com.sistema.Filter.RestfulFilter;
 import java.util.HashSet;
 import java.util.Set;
 import javax.ws.rs.ApplicationPath;
@@ -14,7 +14,6 @@ public class RegistroApplication extends Application {
 
         HashSet<Class<?>> classes = new HashSet<>();
         classes.add(MultiPartFeature.class);
-        classes.add(Personas.class);
         classes.add(Login.class);  
         classes.add(RestfulFilter.class);
         return classes;

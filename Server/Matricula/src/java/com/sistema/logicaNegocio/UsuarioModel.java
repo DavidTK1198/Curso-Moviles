@@ -1,4 +1,4 @@
-package com.sistema.logicaNegocio;
+package com.sistema.LogicaNegocio;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 
-public class Model {
+public class UsuarioModel {
 
-    private static Model uniqueInstance;
+    private static UsuarioModel uniqueInstance;
     
-    public static Model instance(){
+    public static UsuarioModel instance(){
         if (uniqueInstance == null){
-            uniqueInstance = new Model();
+            uniqueInstance = new UsuarioModel();
         }
         return uniqueInstance;
     }
@@ -21,10 +21,10 @@ public class Model {
     static Map<String,Usuario> usuarios;
 
     
-    private Model(){
+    private UsuarioModel(){
         personas = new HashMap<String,Persona> ();
-        personas.put("111", new Persona("111","Juan","M"));
-        personas.put("222", new Persona("222","Maria","F"));
+        personas.put("111", new Persona("111","Juan"));
+        personas.put("222", new Persona("222","Maria"));
         
         usuarios = new HashMap<>();
         usuarios.put("001", new Usuario("001","001","Juan Perez","ADM"));

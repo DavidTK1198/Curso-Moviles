@@ -1,6 +1,6 @@
-package com.sistema.filter;
+package com.sistema.Filter;
 
-import com.sistema.logicaNegocio.Usuario;
+import com.sistema.LogicaNegocio.Usuario;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import javax.annotation.Priority;
@@ -43,7 +43,7 @@ public class RestfulFilter implements ContainerRequestFilter{
         // @PermitAll on the class
         if (resourceInfo.getResourceClass().isAnnotationPresent(PermitAll.class)) return;
         // Authentication is required for non-annotated methods
-        if (!isAuthenticated()) {requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());return;};
+       
     }
 
     private void performAuthorization(String[] rolesAllowed,ContainerRequestContext requestContext) throws IOException {
