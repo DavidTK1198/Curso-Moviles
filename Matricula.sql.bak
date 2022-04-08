@@ -210,8 +210,7 @@ nombreUsuarioin IN usuario.nombreUsuario, contraseain IN Usuario.contrasea%TYPE)
 as
 BEGIN
  INSERT INTO usuario VALUES(cedulain,nombrein,nombreUsuarioin,contraseain,rolin);
-END
-/
+END;
 ------------------------------------------------------
 
 --ACTUALIZAR
@@ -222,8 +221,7 @@ as
 BEGIN
  UPDATE usuario SET nombre=nombrein,nombreUsuario=nombreUsuarioin,
 		    contrasea=contraseain,rol=rollin WHERE cedula=cedulain;
-END
-/
+END;
 ------------------------------------------------------
 
 --ELIMINAR
@@ -232,8 +230,7 @@ CREATE OR REPLACE PROCEDURE eliminarUsuario(cedulain IN usuario.cedula%TYPE)
 as
 BEGIN
  DELETE usuario WHERE cedula=cedulain;
-END
-/
+END;
 ------------------------------------------------------
 
 --LISTAR
@@ -247,8 +244,7 @@ begin
        select nombre,nombreUsuario,contrasea,perfil
        FROM usuario ;
 return usuario_cursor;
-end
-/
+end; 
 ------------------------------------------------------
 
 --CONSULTAR
@@ -262,8 +258,7 @@ begin
        select nombre,nombreUsuario,contrasea,rol
        FROM usuario where cedula=cedulain;
 return usuario_cursor;
-end
-/
+end;  
 ---Login
 
 CREATE OR REPLACE FUNCTION login(idin IN usuario.cedula%TYPE), passwordin IN usuario.contrasea%TYPE)
@@ -274,5 +269,4 @@ BEGIN
   OPEN n_cursor FOR 
 	  SELECT COUNT(nombreUsuario) AS esta FROM usuario WHERE nombreUsuario=idin AND contrasea=passwordin;
 	 RETURN n_cursor; 
-END
-/
+END;
