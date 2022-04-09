@@ -1,38 +1,39 @@
 package com.sistema.LogicaNegocio;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.sistema.AccesoDatos.GlobalException;
+import com.sistema.AccesoDatos.NoDataException;
+import com.sistema.AccesoDatos.ServicioLogueo;
+import java.sql.SQLException;
 
 
 public class UsuarioModel {
 
     private static UsuarioModel uniqueInstance;
+    private final ServicioLogueo login;
+    private Usuario usuario;
     
     public static UsuarioModel instance(){
         if (uniqueInstance == null){
             uniqueInstance = new UsuarioModel();
+            
         }
         return uniqueInstance;
     }
+    private UsuarioModel() {
+        this.login = ServicioLogueo.getInstance();
+        this.usuario=new Usuario();
+    }
     
-
-    static Map<String,Usuario> usuarios;
-
+      public boolean getAuthorization(Usuario us)throws NoDataException, GlobalException {
+        return login.loginCliente(us.getNombre(), us.getClave());
+    }
     
-    private UsuarioModel(){
-  
-        
-        usuarios = new HashMap<>();
-        usuarios.put("001", new Usuario("001","001","Juan Perez","ADM"));
-        usuarios.put("002", new Usuario("002","002","Ana Arburola","CLI"));           
+    public Usuario getUs(){
+        return usuario;
     }
 
-
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
     
-    public static Usuario get(Usuario id)throws Exception{
-        Usuario result = usuarios.get(id.getId());
-        if (result==null) throw new Exception("Usuario no existe");
-        return result;
-    }      
     
 }

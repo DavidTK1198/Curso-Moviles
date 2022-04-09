@@ -18,11 +18,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import com.sistema.AccesoDatos.ServicioLogueo;
+import com.sistema.Controller.UsuarioController;
 
 @Path("/login")
 @PermitAll
 public class Login {
+    UsuarioController control= UsuarioController.getInstance();
     @Context
     HttpServletRequest request;
     
@@ -31,12 +32,8 @@ public class Login {
     @Produces(MediaType.APPLICATION_JSON)    
     public Usuario login(Usuario usuario) {  
             Usuario logged=null;
-            
-            try {
-               ServicioLogueo prueba=new ServicioLogueo();
-               prueba.loginCliente(usuario.getId(),usuario.getClave());
-                
-                logged= UsuarioModel.instance().get(usuario);
+            try {  
+                logged= control.Login(usuario.getId(),usuario.getClave());
                 if(!logged.getClave().equals(usuario.getClave())) throw new Exception("Clave incorrecta");
                 request.getSession(true).setAttribute("user", logged);
                 return logged;

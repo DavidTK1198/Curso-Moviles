@@ -20,11 +20,16 @@ import oracle.jdbc.internal.OracleTypes;
  */
 public class ServicioLogueo extends Servicio {
     private static final String login = "{?=call login(?,?)}";
-
+    private static ServicioLogueo instance = null;
    
     /** Creates a new instance of ServicioLogueo */
     public ServicioLogueo() {
         super();
+    }
+    
+      public static ServicioLogueo getInstance() {
+        if (instance == null) instance = new ServicioLogueo();
+        return instance;
     }
     public boolean loginCliente(String user, String password) throws NoDataException, GlobalException{
         boolean resp=true;

@@ -73,6 +73,7 @@ creditos NUMBER,
 hsemanales NUMBER,
 CONSTRAINTS pkcurso PRIMARY KEY (codigo)
 );
+
 CREATE OR REPLACE PACKAGE types
 AS
      TYPE ref_cursor IS REF CURSOR;
@@ -266,7 +267,7 @@ end
 /
 ---Login
 
-CREATE OR REPLACE FUNCTION login(idin IN usuario.cedula%TYPE), passwordin IN usuario.contrasea%TYPE)
+CREATE OR REPLACE FUNCTION login(idin IN usuario.cedula%TYPE, passwordin IN usuario.contrasea%TYPE)
 RETURN Types.ref_cursor 
 AS 
         n_cursor types.ref_cursor; 
