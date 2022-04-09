@@ -5,7 +5,6 @@
  */
 package com.sistema.endpoint;
 
-import com.sistema.LogicaNegocio.UsuarioModel;
 import com.sistema.LogicaNegocio.Usuario;
 import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
@@ -33,8 +32,8 @@ public class Login {
     public Usuario login(Usuario usuario) {  
             Usuario logged=null;
             try {  
-                logged= control.Login(usuario.getId(),usuario.getClave());
-                if(!logged.getClave().equals(usuario.getClave())) throw new Exception("Clave incorrecta");
+               // logged= control.Login(usuario.getId(),usuario.getClave());
+                //if(!logged.getClave().equals(usuario.getClave())) throw new Exception("Clave incorrecta");
                 request.getSession(true).setAttribute("user", logged);
                 return logged;
             } catch (Exception ex) {
