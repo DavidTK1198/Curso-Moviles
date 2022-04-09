@@ -1,6 +1,7 @@
 package com.sistema.LogicaNegocio;
 
 /**
+ *
  * @author DavidTK1198
  */
 public class Ciclo {
@@ -12,22 +13,13 @@ public class Ciclo {
     private String fec_final;
     private boolean estado;
 
-    public Ciclo(int id, int annio, int numero, String fec_inicio, String fec_final, boolean estado) {
+    public Ciclo(int id,int annio, int numero, String fec_inicio, String fec_final,boolean estado) {
         this.annio = annio;
         this.numero = numero;
         this.id = id;
         this.fec_inicio = fec_inicio;
         this.fec_final = fec_final;
-        this.estado = estado;
-    }
-
-    public Ciclo() {
-        this.annio = 0;
-        this.numero = 0;
-        this.id = 0;
-        this.fec_inicio = "";
-        this.fec_final = "";
-        this.estado = false;
+        this.estado=estado;
     }
 
     public boolean isEstado() {
@@ -37,8 +29,8 @@ public class Ciclo {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
-
-
+    
+    
     public int getAnnio() {
         return annio;
     }

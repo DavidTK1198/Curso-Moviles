@@ -17,12 +17,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import com.sistema.LogicaNegocio.datosUsuario.Controller;
+import com.sistema.Controller.UsuarioController;
 
 @Path("/login")
 @PermitAll
 public class Login {
-    Controller control= Controller.getInstance();
+    UsuarioController control= UsuarioController.getInstance();
     @Context
     HttpServletRequest request;
     

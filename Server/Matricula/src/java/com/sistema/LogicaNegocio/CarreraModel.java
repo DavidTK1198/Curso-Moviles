@@ -4,6 +4,6 @@ package com.sistema.LogicaNegocio;
  *
  * @author DavidTK1198
  */
-public class Curso {
+public class CarreraModel {
     
 }

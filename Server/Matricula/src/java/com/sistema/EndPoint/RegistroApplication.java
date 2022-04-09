@@ -1,4 +1,4 @@
-package com.sistema.EndPoint;
+package com.sistema.endpoint;
 
 import com.sistema.Filter.RestfulFilter;
 import java.util.HashSet;
