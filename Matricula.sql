@@ -193,6 +193,169 @@ begin
     delete from ciclo where id=codigoin;
 end;
 /
+PROMPT SE CREA PROFESOR
+PROMPT =========================================================
+Create table profesor(         
+cedula varchar(15), 
+nombre varchar(100),
+telefono varchar(15),
+email varchar(50),
+constraint PKPROFESOR primary key (cedula)
+);
+CREATE OR REPLACE PACKAGE types
+AS
+     TYPE ref_cursor IS REF CURSOR;
+END;
+/
+
+--INSERTAR
+------------------------------------------------------
+CREATE OR REPLACE PROCEDURE insertarprofesor(cedula IN profesor.cedula%TYPE,nombre IN profesor.nombre%TYPE,
+telefono IN profesor.telefono%type,email IN profesor.email)
+AS
+BEGIN
+	INSERT INTO profesor VALUES(cedula,nombre,telefono,email);
+END;
+/
+--ACTUALIZAR
+------------------------------------------------------
+CREATE OR REPLACE PROCEDURE modificarProfesor (cedulain IN profesor.cedula%TYPE,nombrein IN profesor.nombre%TYPE,
+telefonoin IN profesor.telefono%type,emailin IN profesor.email)
+AS
+BEGIN
+UPDATE profesor SET nombre=nombrein,cedula=cedulain,telefono=telefonoin,emailin WHERE cedula=cedulain;
+END;
+/
+--CONSULTAR
+------------------------------------------------------
+CREATE OR REPLACE FUNCTION buscarProfesor(idbuscar IN profesor.cedula%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        profesor_cursor types.ref_cursor; 
+BEGIN 
+  OPEN profesor_cursor FOR 
+       SELECT cedula,nombre,email,telefono FROM profesor WHERE cedula=idbuscar; 
+RETURN profesor_cursor; 
+END;
+/
+--LISTAR
+------------------------------------------------------
+CREATE OR REPLACE FUNCTION listarProfesor
+RETURN Types.ref_cursor 
+AS 
+        profesor_cursor types.ref_cursor; 
+BEGIN 
+  OPEN profesor_cursor FOR 
+        SELECT cedula,nombre,email,telefono FROM profesor; 
+RETURN profesor_cursor; 
+END;
+/
+--ELIMINAR
+------------------------------------------------------
+create or replace procedure eliminarProfesor(codigoin IN profesor.cedula%TYPE)
+as
+begin
+    delete from profesor where cedula=codigoin;
+end;
+/
+
+PROMPT SE CREA ALUMNO
+PROMPT =========================================================
+Create table Alumno(         
+cedula varchar(15), 
+nombre varchar(100),
+teléfono varchar(15),
+email varchar(50),
+fec_nac varchar(20),
+carrerafk varchar(20)
+constraint FKCARRERA foreign key (carrerafk),
+constraint PKALUMNO primary key (cedula)
+);
+CREATE OR REPLACE PACKAGE types
+AS
+     TYPE ref_cursor IS REF CURSOR;
+END;
+/
+--INSERTAR
+------------------------------------------------------
+CREATE OR REPLACE PROCEDURE insertarAlumno(cedula IN Alumno.cedula%TYPE,nombre IN Alumno.nombre%TYPE,
+telefono IN Alumno.telefono%type,email IN Alumno.email,fec_nac IN Alumno.fec_nac%TYPE,carrera IN Alumno.carrerafk%type)
+AS
+BEGIN
+	INSERT INTO Alumno VALUES(cedula,nombre,telefono,email,fec_nac,carrerafk);
+END;
+/
+--ACTUALIZAR
+------------------------------------------------------
+CREATE OR REPLACE PROCEDURE modificarAlumno (cedulain IN Alumno.cedula%TYPE,nombrein IN Alumno.nombre%TYPE,
+telefonoin IN Alumno.telefono%type,emailin IN Alumno.email,fec_nacin IN Alumno.fec_nac%TYPE)
+AS
+BEGIN
+UPDATE profesor SET nombre=nombrein,cedula=cedulain,telefono=telefonoin,emailin,fec_nac=fec_nacin WHERE cedula=cedulain;
+END;
+/
+--CONSULTAR
+------------------------------------------------------
+CREATE OR REPLACE FUNCTION buscarAlumno(idbuscar IN Alumno.cedula%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        alumno_cursor types.ref_cursor; 
+BEGIN 
+  OPEN alumno_cursor FOR 
+       SELECT cedula,nombre,email,telefono,fec_nac,carrerafk FROM Alumno WHERE cedula=idbuscar; 
+RETURN alumno_cursor; 
+END;
+/
+--LISTAR
+------------------------------------------------------
+CREATE OR REPLACE FUNCTION listarAlumno
+RETURN Types.ref_cursor 
+AS 
+        alumno_cursor types.ref_cursor; 
+BEGIN 
+  OPEN alumno_cursor FOR 
+        SELECT cedula,nombre,email,telefono,fec_nac,carrerafk FROM Alumno; 
+RETURN alumno_cursor; 
+END;
+/
+--ELIMINAR
+------------------------------------------------------
+create or replace procedure eliminarAlumno(codigoin IN Alumno.cedula%TYPE)
+as
+begin
+    delete from Alumno where cedula=codigoin;
+end;
+/
+
+
+PROMPT SE CREA GRUPO
+PROMPT =========================================================
+--GRUPO
+------------------------------------------------------
+CREATE table Grupo(
+codigocurso varchar(15),
+numgrupo number,
+horario varchar(30),
+ciclofk number,
+profesorfk varchar(15),
+constraint FKCURSO primary key (codigocurso),
+constraint FKCICLO foreign key (ciclofk),
+constraint FKPROFESOR foreign key (profesorfk),
+constraint  primary key (numgrupo,codigocurso,ciclofk)--mejor un sequence
+);
+PROMPT SE GRUPO_ESTUDIANTE
+PROMPT =========================================================
+create table Grupo_Alumno(
+
+);
+
+PROMPT SE HISTORIAL
+PROMPT =========================================================
+create table Historial(
+alumnofk varchar(15),
+cursofk varchar(15),
+nota number,
+);
 PROMPT SE CREA USUARIO
 PROMPT =========================================================
 --Usuario
