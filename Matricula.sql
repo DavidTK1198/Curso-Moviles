@@ -1,3 +1,20 @@
+PROMPT  DROPEO DE TABLAS
+drop table Grupo cascade constraint;
+drop table carrera cascade constraint;
+drop table profesor cascade constraint;
+drop table alumno cascade constraint;
+drop table ciclo cascade constraint;
+drop table curso cascade constraint;
+drop table usuario cascade constraint;
+
+PROMPT  DROPEO DE SECUENCIAS
+drop sequence secuenciacurso;
+drop sequence secuenciagrupo;
+drop sequence secuenciainscripcion;
+PROMPT  CREACION DE SECUENCIAS
+create sequence secuenciacurso start with 100;
+create sequence secuenciagrupo start with 1;
+create sequence secuenciainscripcion start with 1000;
 --CARRERA
 ------------------------------------------------------
 PROMPT SE CREA CARRERA
@@ -211,7 +228,7 @@ END;
 --INSERTAR
 ------------------------------------------------------
 CREATE OR REPLACE PROCEDURE insertarprofesor(cedula IN profesor.cedula%TYPE,nombre IN profesor.nombre%TYPE,
-telefono IN profesor.telefono%type,email IN profesor.email)
+telefono IN profesor.telefono%type,email IN profesor.email%TYPE)
 AS
 BEGIN
 	INSERT INTO profesor VALUES(cedula,nombre,telefono,email);
@@ -220,10 +237,10 @@ END;
 --ACTUALIZAR
 ------------------------------------------------------
 CREATE OR REPLACE PROCEDURE modificarProfesor (cedulain IN profesor.cedula%TYPE,nombrein IN profesor.nombre%TYPE,
-telefonoin IN profesor.telefono%type,emailin IN profesor.email)
+telefonoin IN profesor.telefono%type,emailin IN profesor.email%TYPE)
 AS
 BEGIN
-UPDATE profesor SET nombre=nombrein,cedula=cedulain,telefono=telefonoin,emailin WHERE cedula=cedulain;
+UPDATE profesor SET cedula=cedulain,nombre=nombrein,telefono=telefonoin,email=emailin WHERE cedula=cedulain;
 END;
 /
 --CONSULTAR
@@ -264,13 +281,13 @@ PROMPT =========================================================
 Create table Alumno(         
 cedula varchar(15), 
 nombre varchar(100),
-teléfono varchar(15),
+telefono varchar(15),
 email varchar(50),
 fec_nac varchar(20),
-carrerafk varchar(20)
-constraint FKCARRERA foreign key (carrerafk),
+carrerafk varchar(20),
 constraint PKALUMNO primary key (cedula)
 );
+alter table  Alumno add constraint FKCARRERA foreign key (carrerafk) references carrera; 
 CREATE OR REPLACE PACKAGE types
 AS
      TYPE ref_cursor IS REF CURSOR;
@@ -279,19 +296,19 @@ END;
 --INSERTAR
 ------------------------------------------------------
 CREATE OR REPLACE PROCEDURE insertarAlumno(cedula IN Alumno.cedula%TYPE,nombre IN Alumno.nombre%TYPE,
-telefono IN Alumno.telefono%type,email IN Alumno.email,fec_nac IN Alumno.fec_nac%TYPE,carrera IN Alumno.carrerafk%type)
+telefono IN Alumno.telefono%type,email IN Alumno.email%TYPE,fec_nac IN Alumno.fec_nac%TYPE,carrera IN Alumno.carrerafk%type)
 AS
 BEGIN
-	INSERT INTO Alumno VALUES(cedula,nombre,telefono,email,fec_nac,carrerafk);
+	INSERT INTO Alumno VALUES(cedula,nombre,telefono,email,fec_nac,carrera);
 END;
 /
 --ACTUALIZAR
 ------------------------------------------------------
 CREATE OR REPLACE PROCEDURE modificarAlumno (cedulain IN Alumno.cedula%TYPE,nombrein IN Alumno.nombre%TYPE,
-telefonoin IN Alumno.telefono%type,emailin IN Alumno.email,fec_nacin IN Alumno.fec_nac%TYPE)
+telefonoin IN Alumno.telefono%type,emailin IN Alumno.email%TYPE,fec_nacin IN Alumno.fec_nac%TYPE)
 AS
 BEGIN
-UPDATE profesor SET nombre=nombrein,cedula=cedulain,telefono=telefonoin,emailin,fec_nac=fec_nacin WHERE cedula=cedulain;
+UPDATE Alumno SET nombre=nombrein,cedula=cedulain,telefono=telefonoin,email=emailin,fec_nac=fec_nacin WHERE cedula=cedulain;
 END;
 /
 --CONSULTAR
@@ -333,29 +350,18 @@ PROMPT =========================================================
 --GRUPO
 ------------------------------------------------------
 CREATE table Grupo(
-codigocurso varchar(15),
+idgrupo number,
+cursofk varchar(15),
 numgrupo number,
 horario varchar(30),
 ciclofk number,
 profesorfk varchar(15),
-constraint FKCURSO primary key (codigocurso),
-constraint FKCICLO foreign key (ciclofk),
-constraint FKPROFESOR foreign key (profesorfk),
-constraint  primary key (numgrupo,codigocurso,ciclofk)--mejor un sequence
+constraint  PKGRUPO primary key (idgrupo)
 );
-PROMPT SE GRUPO_ESTUDIANTE
-PROMPT =========================================================
-create table Grupo_Alumno(
-
-);
-
-PROMPT SE HISTORIAL
-PROMPT =========================================================
-create table Historial(
-alumnofk varchar(15),
-cursofk varchar(15),
-nota number,
-);
+--constraint FKCURSO foreign key (codigocurso),
+--constraint FKCICLO foreign key (ciclofk),
+--constraint FKPROFESOR foreign key (profesorfk),
+--constraint UKGRUPO unique key (ciclofk,numgrupo,cursofk),
 PROMPT SE CREA USUARIO
 PROMPT =========================================================
 --Usuario
@@ -367,13 +373,18 @@ nombreUsuario varchar(30),
 contrasea varchar(10),
 constraint PKUSUARIO primary key (cedula)
 );
+CREATE OR REPLACE PACKAGE types
+AS
+     TYPE ref_cursor IS REF CURSOR;
+END;
+/
 --INSERTAR
 ------------------------------------------------------
 CREATE OR REPLACE PROCEDURE insertarUsuario(cedulain IN usuario.cedula%TYPE, rolin IN usuario.rol%TYPE,
-nombreUsuarioin IN usuario.nombreUsuario, contraseain IN Usuario.contrasea%TYPE)
+nombreUsuarioin IN usuario.nombreUsuario%TYPE, contraseain IN Usuario.contrasea%TYPE)
 as
 BEGIN
- INSERT INTO usuario VALUES(cedulain,nombrein,nombreUsuarioin,contraseain,rolin);
+ INSERT INTO usuario VALUES(cedulain,rolin,nombreUsuarioin,contraseain);
 END
 /
 ------------------------------------------------------
@@ -381,10 +392,10 @@ END
 --ACTUALIZAR
 ------------------------------------------------------
 CREATE OR REPLACE PROCEDURE actualizaUsuario(cedulain IN usuario.cedula%TYPE, rolin IN usuario.rol%TYPE,
-nombreUsuarioin IN usuario.nombreUsuario, contraseain IN Usuario.contrasea%TYPE)
+nombreUsuarioin IN usuario.nombreUsuario%TYPE, contraseain IN Usuario.contrasea%TYPE)
 as
 BEGIN
- UPDATE usuario SET nombre=nombrein,nombreUsuario=nombreUsuarioin,
+ UPDATE usuario SET nombreUsuario=nombreUsuarioin,
 		    contrasea=contraseain,rol=rollin WHERE cedula=cedulain;
 END
 /
@@ -408,7 +419,7 @@ as
         usuario_cursor types.ref_cursor; 
 begin 
   open usuario_cursor for 
-       select nombre,nombreUsuario,contrasea,perfil
+       select cedula,rol,nombreUsuario,contrasea
        FROM usuario ;
 return usuario_cursor;
 end
@@ -423,7 +434,7 @@ as
         usuario_cursor types.ref_cursor; 
 begin 
   open usuario_cursor for 
-       select nombre,nombreUsuario,contrasea,rol
+       select cedula,rol,nombreUsuario,contrasea
        FROM usuario where cedula=cedulain;
 return usuario_cursor;
 end
