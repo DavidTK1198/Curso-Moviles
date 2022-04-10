@@ -1,4 +1,7 @@
+set linesize 160
+set pagesize 150
 PROMPT  DROPEO DE TABLAS
+drop table Inscripcion cascade constraint;
 drop table Grupo cascade constraint;
 drop table carrera cascade constraint;
 drop table profesor cascade constraint;
@@ -8,11 +11,9 @@ drop table curso cascade constraint;
 drop table usuario cascade constraint;
 
 PROMPT  DROPEO DE SECUENCIAS
-drop sequence secuenciacurso;
 drop sequence secuenciagrupo;
 drop sequence secuenciainscripcion;
 PROMPT  CREACION DE SECUENCIAS
-create sequence secuenciacurso start with 100;
 create sequence secuenciagrupo start with 1;
 create sequence secuenciainscripcion start with 1000;
 --CARRERA
@@ -351,17 +352,100 @@ PROMPT =========================================================
 ------------------------------------------------------
 CREATE table Grupo(
 idgrupo number,
-cursofk varchar(15),
 numgrupo number,
+cursofk varchar(15),
 horario varchar(30),
 ciclofk number,
 profesorfk varchar(15),
-constraint  PKGRUPO primary key (idgrupo)
+constraint  PKGRUPO primary key (idgrupo),
+constraint UKGRUPO unique  (ciclofk,numgrupo,cursofk)
 );
---constraint FKCURSO foreign key (codigocurso),
---constraint FKCICLO foreign key (ciclofk),
---constraint FKPROFESOR foreign key (profesorfk),
---constraint UKGRUPO unique key (ciclofk,numgrupo,cursofk),
+CREATE OR REPLACE PACKAGE types
+AS
+     TYPE ref_cursor IS REF CURSOR;
+END;
+/
+alter table  Grupo add constraint FKCURSO foreign key (cursofk) references curso; 
+alter table  Grupo add constraint FKCICLO foreign key (ciclofk) references ciclo; 
+alter table  Grupo add constraint FKPROFESOR foreign key (profesorfk) references profesor; 
+
+--INSERTAR
+------------------------------------------------------
+CREATE OR REPLACE PROCEDURE insertarGrupo(numgrupoin IN grupo.numgrupo%TYPE,cursoin IN grupo.cursofk%TYPE,
+horarioin IN grupo.horario%type,cicloin IN grupo.ciclofk%TYPE,profesorin IN grupo.profesorfk%TYPE)
+AS
+BEGIN
+	INSERT INTO grupo VALUES(secuenciagrupo.nextval,numgrupoin,cursoin,horarioin,cicloin,profesorin);
+END;
+/
+
+--ACTUALIZAR
+------------------------------------------------------
+CREATE OR REPLACE PROCEDURE modificarGrupo (numgrupoin IN grupo.numgrupo%TYPE,cursoin IN grupo.cursofk%TYPE,
+horarioin IN grupo.horario%type,cicloin IN grupo.ciclofk%TYPE,profesorin IN grupo.profesorfk%TYPE)
+AS
+BEGIN
+UPDATE grupo SET numgrupo=numgrupo,cursofk=cursoin,horario=horarioin,ciclofk=cicloin,profesorfk=profesorin 
+WHERE numgrupo=numgrupoin and cursofk=cursoin and ciclofk=cicloin;
+END;
+/
+--CONSULTAR
+------------------------------------------------------
+CREATE OR REPLACE FUNCTION buscarGrupo(numgrupoin IN grupo.numgrupo%TYPE,cursoin IN grupo.cursofk%TYPE,
+cicloin IN grupo.ciclofk%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        grupo_cursor types.ref_cursor; 
+BEGIN 
+  OPEN grupo_cursor FOR 
+       SELECT idgrupo as numeroGrupo FROM GRUPO
+       WHERE numgrupo=numgrupoin and cursofk=cursoin and ciclofk=cicloin;
+RETURN grupo_cursor; 
+END;
+/
+--INSCRIPCION
+------------------------------------------------------
+PROMPT SE CREA Inscripcion
+PROMPT =========================================================
+CREATE TABLE Inscripcion(
+id number,
+fkgrupo number,
+fkalumno varchar(15),
+nota NUMBER,
+CONSTRAINTS pkInscripcion PRIMARY KEY (id)
+);
+alter table  Inscripcion add constraint FKGRUPO foreign key (fkgrupo) references Grupo; 
+alter table  Inscripcion add constraint FKALUMNO foreign key (fkalumno) references Alumno; 
+CREATE OR REPLACE PACKAGE types
+AS
+     TYPE ref_cursor IS REF CURSOR;
+END;
+/
+CREATE OR REPLACE PROCEDURE insertarInscripcion(grupoin IN grupo.numgrupo%TYPE,alumnoin IN Alumno.cedula%TYPE)
+AS
+BEGIN
+	INSERT INTO Inscripcion VALUES(secuenciainscripcion.nextval,grupoin,alumnoin,null);
+END;
+/
+--ACTUALIZAR
+------------------------------------------------------
+CREATE OR REPLACE PROCEDURE modificarInscripcion (alumnoin IN Alumno.cedula%TYPE,grupoin IN grupo.idgrupo%type,
+notain IN Inscripcion.nota%TYPE)
+AS
+BEGIN
+UPDATE Inscripcion SET nota=notain
+WHERE fkalumno=alumnoin and fkgrupo=grupoin;
+END;
+/
+--ELIMINAR
+------------------------------------------------------
+create or replace procedure eliminarInscripcion(alumnoin IN Alumno.cedula%TYPE,grupoin IN grupo.idgrupo%type)
+as
+begin
+    delete from Inscripcion where fkalumno=alumnoin and fkgrupo=grupoin;
+end;
+/
+
 PROMPT SE CREA USUARIO
 PROMPT =========================================================
 --Usuario
@@ -385,7 +469,7 @@ nombreUsuarioin IN usuario.nombreUsuario%TYPE, contraseain IN Usuario.contrasea%
 as
 BEGIN
  INSERT INTO usuario VALUES(cedulain,rolin,nombreUsuarioin,contraseain);
-END
+END;
 /
 ------------------------------------------------------
 
@@ -396,8 +480,8 @@ nombreUsuarioin IN usuario.nombreUsuario%TYPE, contraseain IN Usuario.contrasea%
 as
 BEGIN
  UPDATE usuario SET nombreUsuario=nombreUsuarioin,
-		    contrasea=contraseain,rol=rollin WHERE cedula=cedulain;
-END
+		    contrasea=contraseain,rol=rolin WHERE cedula=cedulain;
+END;
 /
 ------------------------------------------------------
 
@@ -407,7 +491,7 @@ CREATE OR REPLACE PROCEDURE eliminarUsuario(cedulain IN usuario.cedula%TYPE)
 as
 BEGIN
  DELETE usuario WHERE cedula=cedulain;
-END
+END;
 /
 ------------------------------------------------------
 
@@ -422,7 +506,7 @@ begin
        select cedula,rol,nombreUsuario,contrasea
        FROM usuario ;
 return usuario_cursor;
-end
+end;
 /
 ------------------------------------------------------
 
@@ -437,7 +521,7 @@ begin
        select cedula,rol,nombreUsuario,contrasea
        FROM usuario where cedula=cedulain;
 return usuario_cursor;
-end
+end;
 /
 ---Login
 
@@ -447,7 +531,19 @@ AS
         n_cursor types.ref_cursor; 
 BEGIN 
   OPEN n_cursor FOR 
-	  SELECT COUNT(nombreUsuario) AS esta FROM usuario WHERE nombreUsuario=idin AND contrasea=passwordin;
+	  SELECT COUNT(nombreUsuario) AS esta FROM usuario WHERE cedula=idin AND contrasea=passwordin;
 	 RETURN n_cursor; 
-END
+END;
 /
+PROMPT DATOS QUEMADOS
+------------------------------------------------------
+INSERT INTO usuario VALUES('117250610','ADM','DavidTK1198','admin');
+INSERT INTO usuario VALUES('207760240','EST','EstebanUG','123');
+INSERT INTO usuario VALUES('123456789','PROF','PedritoA','111');
+INSERT INTO usuario VALUES('987654321','MAT','MariaE','222');
+INSERT INTO carrera VALUES('EIF','Ingeniería en Sistemas','Bachillerato');
+INSERT INTO carrera VALUES('MAC','Enseñanza de Matematica','Licenciatura');
+INSERT INTO carrera VALUES('CDN','Ciencias del Movimiento Humano','Bachillerato');
+INSERT INTO Alumno VALUES('100000002','Emmanuel Barrientos','4030-6832','emmanuel@gmail.com','9/11/1992','EIF');
+INSERT INTO Alumno VALUES('200000003','Daniel Madrigal','6079-7171','ddavidb09@gmail.com','4/05/1998','MAC');
+INSERT INTO profesor VALUES('100000002','Pedro Alvarez','4032-2525','pedroa@gmail.com');
