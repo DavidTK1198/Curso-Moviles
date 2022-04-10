@@ -21,7 +21,17 @@ public class Ciclo {
         this.fec_final = fec_final;
         this.estado=estado;
     }
-
+    
+    public Ciclo() {
+        this.annio = 0;
+        this.numero = 0;
+        this.id = 0;
+        this.fec_inicio = "";
+        this.fec_final = "";
+        this.estado = false;
+        this.estado=estado;
+    }
+    
     public boolean isEstado() {
         return estado;
     }
