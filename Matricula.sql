@@ -14,11 +14,13 @@ drop table usuario cascade constraint;
 PROMPT  DROPEO DE SECUENCIAS
 drop sequence secuenciagrupo;
 drop sequence secuenciainscripcion;
-drop sequence secuenciainscurcar;
+drop sequence secuenciacurcar;
+drop sequence secuenciaciclo;
 PROMPT  CREACION DE SECUENCIAS
 create sequence secuenciagrupo start with 1;
 create sequence secuenciainscripcion start with 1000;
-create sequence secuenciainscurcar start with 100;
+create sequence secuenciacurcar start with 100;
+create sequence secuenciaciclo start with 10000;
 --CARRERA
 ------------------------------------------------------
 PROMPT SE CREA CARRERA
@@ -150,7 +152,7 @@ begin
 end;
 /
 
---CICLO
+--CURSO_CARRERA
 ------------------------------------------------------
 PROMPT SE CREA CURSO_CARRERA
 PROMPT =========================================================
@@ -163,6 +165,8 @@ CONSTRAINTS pkcurcar PRIMARY KEY (id)
 );
 alter table  curso_carrera add constraint FKCur foreign key (fkcurso) references curso; 
 alter table  curso_carrera add constraint FKCar foreign key (fkcarrera) references carrera; 
+alter table  curso_carrera add constraint fkrequisito foreign key (requisito) references curso; 
+
 CREATE OR REPLACE PACKAGE types
 AS
      TYPE ref_cursor IS REF CURSOR;
@@ -570,3 +574,31 @@ INSERT INTO carrera VALUES('CDN','Ciencias del Movimiento Humano','Bachillerato'
 INSERT INTO Alumno VALUES('100000002','Emmanuel Barrientos','4030-6832','emmanuel@gmail.com','9/11/1992','EIF');
 INSERT INTO Alumno VALUES('200000003','Daniel Madrigal','6079-7171','ddavidb09@gmail.com','4/05/1998','MAC');
 INSERT INTO profesor VALUES('100000002','Pedro Alvarez','4032-2525','pedroa@gmail.com');
+INSERT INTO curso VALUES('EIF200','Fundamentos de Informatica',3,8);
+INSERT INTO curso VALUES('MAT030','Matemática para Informatica',4,11);
+INSERT INTO curso VALUES('EIF201','Programacion I',4,11);
+INSERT INTO curso VALUES('EIF204','Programación II',4,11);
+INSERT INTO curso VALUES('EIF202','Soporte Tecnico',3,8);
+INSERT INTO curso VALUES('EIF203','Estructuras Discretas para Informática',3,8);
+INSERT INTO curso VALUES('EIF206','Programación III',4,11);
+INSERT INTO curso VALUES('EIF207','Estructuras de Datos',4,11);
+INSERT INTO curso VALUES('EIF205','Arquitectura de Computadoras',3,8);
+INSERT INTO curso VALUES('EIF404','La Organización y su Entorno',3,8);
+INSERT INTO curso VALUES('EIF209','Programación IV',4,11);
+INSERT INTO curso VALUES('EIF210','Ingeniería de Sistemas I',4,11);
+INSERT INTO curso VALUES('EIF401','Ingeniería de Sistemas II',4,11);
+INSERT INTO curso VALUES('EIF406','Ingeniería de Sistemas III',4,11);
+INSERT INTO curso VALUES('EIF211','Diseño e Implementación de Bases de Datos',4,11);
+INSERT INTO curso VALUES('EIF212','Sistemas Operativos',3,8);
+INSERT INTO curso VALUES('EIF208','Comunicaciones y Redes de Computadores',3,8);
+INSERT INTO curso_carrera VALUES(secuenciacurcar.nextval,'EIF200','EIF',null);
+INSERT INTO curso_carrera VALUES(secuenciacurcar.nextval,'MAT030','EIF',null);
+INSERT INTO curso_carrera VALUES(secuenciacurcar.nextval,'EIF201','EIF','EIF200');
+INSERT INTO curso_carrera VALUES(secuenciacurcar.nextval,'EIF201','EIF','MAT030');
+INSERT INTO ciclo VALUES(secuenciaciclo.nextval,1,1,2022,'7/3/2022','25/6/2022');
+INSERT INTO ciclo VALUES(secuenciaciclo.nextval,2,2,2022,'8/8/2022','25/11/2022');
+INSERT INTO ciclo VALUES(secuenciaciclo.nextval,2,2,2021,'7/8/2021','27/11/2021');
+
+
+
+
