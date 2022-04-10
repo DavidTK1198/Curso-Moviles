@@ -1,6 +1,7 @@
 set linesize 160
 set pagesize 150
 PROMPT  DROPEO DE TABLAS
+drop table curso_carrera cascade constraint;
 drop table Inscripcion cascade constraint;
 drop table Grupo cascade constraint;
 drop table carrera cascade constraint;
@@ -13,9 +14,11 @@ drop table usuario cascade constraint;
 PROMPT  DROPEO DE SECUENCIAS
 drop sequence secuenciagrupo;
 drop sequence secuenciainscripcion;
+drop sequence secuenciainscurcar;
 PROMPT  CREACION DE SECUENCIAS
 create sequence secuenciagrupo start with 1;
 create sequence secuenciainscripcion start with 1000;
+create sequence secuenciainscurcar start with 100;
 --CARRERA
 ------------------------------------------------------
 PROMPT SE CREA CARRERA
@@ -26,6 +29,7 @@ nombre VARCHAR(50),
 titulo VARCHAR(50),
 CONSTRAINTS pkcarrera PRIMARY KEY (codigo)
 );
+
 CREATE OR REPLACE PACKAGE types
 AS
      TYPE ref_cursor IS REF CURSOR;
@@ -144,6 +148,25 @@ as
 begin
     delete from curso where codigo=codigoin;
 end;
+/
+
+--CICLO
+------------------------------------------------------
+PROMPT SE CREA CURSO_CARRERA
+PROMPT =========================================================
+CREATE TABLE curso_carrera(
+id number,
+fkcurso varchar(15),
+fkcarrera varchar(15),
+requisito varchar(15),
+CONSTRAINTS pkcurcar PRIMARY KEY (id)
+);
+alter table  curso_carrera add constraint FKCur foreign key (fkcurso) references curso; 
+alter table  curso_carrera add constraint FKCar foreign key (fkcarrera) references carrera; 
+CREATE OR REPLACE PACKAGE types
+AS
+     TYPE ref_cursor IS REF CURSOR;
+END;
 /
 --CICLO
 ------------------------------------------------------
