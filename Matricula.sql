@@ -192,18 +192,18 @@ END;
 /
 --INSERTAR
 ------------------------------------------------------
-CREATE OR REPLACE PROCEDURE insertarCiclo(id IN ciclo.id%TYPE,estado IN ciclo.estado%TYPE,numero in ciclo.numero%type,annio in ciclo.annio%type,fec_inicio in ciclo.fec_inicio%type,fec_final in ciclo.fec_final%type)
+CREATE OR REPLACE PROCEDURE insertarCiclo(annio in ciclo.annio%type,numero in ciclo.numero%type,estado IN ciclo.estado%TYPE,fec_inicio in ciclo.fec_inicio%type,fec_final in ciclo.fec_final%type)
 AS
 BEGIN
-	INSERT INTO ciclo VALUES(id,numero,estado,annio,fec_inicio,fec_final);
+	INSERT INTO ciclo VALUES(secuenciaciclo.nextval,estado,numero,annio,fec_inicio,fec_final);
 END;
 /
 --ACTUALIZAR
 ------------------------------------------------------
-CREATE OR REPLACE PROCEDURE modificarCiclo (idin IN ciclo.id%TYPE,estadoin IN ciclo.estado%TYPE,numeroin IN ciclo.numero%TYPE,annioin IN ciclo.annio%TYPE,fec_inicioin in ciclo.fec_inicio%type,fec_finalin in ciclo.fec_final%type)
+CREATE OR REPLACE PROCEDURE modificarCiclo (idin in ciclo.id%TYPE,annioin IN ciclo.annio%TYPE,numeroin IN ciclo.numero%TYPE,estadoin IN ciclo.estado%TYPE,fec_inicioin in ciclo.fec_inicio%type,fec_finalin in ciclo.fec_final%type)
 AS
 BEGIN
-UPDATE ciclo SET id=idin,estado=estadoin,numero=numeroin,annio=annioin,fec_inicio=fec_inicioin,fec_final=fec_finalin WHERE id=idin;
+UPDATE ciclo SET estado=estadoin,numero=numeroin,annio=annioin,fec_inicio=fec_inicioin,fec_final=fec_finalin WHERE id=idin;
 END;
 /
 --CONSULTAR
@@ -359,7 +359,8 @@ AS
         alumno_cursor types.ref_cursor; 
 BEGIN 
   OPEN alumno_cursor FOR 
-        SELECT cedula,nombre,email,telefono,fec_nac,carrerafk FROM Alumno; 
+   SELECT e.cedula,e.nombre,e.email,e.telefono,c.codigo,c.nombre,c.titulo FROM Alumno e, Carrera c
+        WHERE e.carrerafk=c.codigo; 
 RETURN alumno_cursor; 
 END;
 /
@@ -380,6 +381,7 @@ PROMPT =========================================================
 CREATE table Grupo(
 idgrupo number,
 numgrupo number,
+cupo number,
 cursofk varchar(15),
 horario varchar(30),
 ciclofk number,
@@ -398,21 +400,21 @@ alter table  Grupo add constraint FKPROFESOR foreign key (profesorfk) references
 
 --INSERTAR
 ------------------------------------------------------
-CREATE OR REPLACE PROCEDURE insertarGrupo(numgrupoin IN grupo.numgrupo%TYPE,cursoin IN grupo.cursofk%TYPE,
+CREATE OR REPLACE PROCEDURE insertarGrupo(numgrupoin IN grupo.numgrupo%TYPE,cupoin IN grupo.cupo%TYPE,cursoin IN grupo.cursofk%TYPE,
 horarioin IN grupo.horario%type,cicloin IN grupo.ciclofk%TYPE,profesorin IN grupo.profesorfk%TYPE)
 AS
 BEGIN
-	INSERT INTO grupo VALUES(secuenciagrupo.nextval,numgrupoin,cursoin,horarioin,cicloin,profesorin);
+	INSERT INTO grupo VALUES(secuenciagrupo.nextval,numgrupoin,cupoin,cursoin,horarioin,cicloin,profesorin);
 END;
 /
 
 --ACTUALIZAR
 ------------------------------------------------------
-CREATE OR REPLACE PROCEDURE modificarGrupo (numgrupoin IN grupo.numgrupo%TYPE,cursoin IN grupo.cursofk%TYPE,
+CREATE OR REPLACE PROCEDURE modificarGrupo (numgrupoin IN grupo.numgrupo%TYPE,cupoin IN grupo.cupo%TYPE,cursoin IN grupo.cursofk%TYPE,
 horarioin IN grupo.horario%type,cicloin IN grupo.ciclofk%TYPE,profesorin IN grupo.profesorfk%TYPE)
 AS
 BEGIN
-UPDATE grupo SET numgrupo=numgrupo,cursofk=cursoin,horario=horarioin,ciclofk=cicloin,profesorfk=profesorin 
+UPDATE grupo SET numgrupo=numgrupo,cupo=cupoin,cursofk=cursoin,horario=horarioin,ciclofk=cicloin,profesorfk=profesorin 
 WHERE numgrupo=numgrupoin and cursofk=cursoin and ciclofk=cicloin;
 END;
 /
