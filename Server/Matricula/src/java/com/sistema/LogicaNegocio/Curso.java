@@ -6,25 +6,57 @@ import java.util.ArrayList;
  */
 public class Curso {
     private String nombre;
-    private String tematica; //prueba de estebitan uwu
-    private float costo;
-    private String estado; //true = oferta false = no en oferta
-    private ArrayList<Grupo> grupos; //numero de grupos que tiene el curso
+      private int hsemanales;
+      private String  codigo;
+      private int creditos;
+      private Carrera carrera;
+    private ArrayList<Grupo> grupos;
 
-    public Curso(String nombre, String tematica, float costo, String estado) {
-        this.nombre = nombre;
-        this.tematica = tematica;
-        this.costo = costo;
-        this.estado = estado;
-        this.grupos = new ArrayList();
+    public int getHsemanales() {
+        return hsemanales;
     }
 
     public Curso() {
-        this.nombre = "";
-        this.tematica = "";
-        this.costo = 0.00f;
-        this.estado = "";
-        this.grupos = new ArrayList();
+            this("","",0,0,null);
+            this.grupos=new ArrayList<>();
+    }
+
+    public Curso( String codigo,String nombre, int creditos,int hsemaneles, Carrera carrera) {
+        this.nombre = nombre;
+        this.hsemanales = hsemanales;
+        this.codigo = codigo;
+        this.creditos = creditos;
+        this.carrera = carrera;
+        this.grupos=new ArrayList<>();
+    }
+
+    public void setHsemanales(int hsemanales) {
+        this.hsemanales = hsemanales;
+    }
+
+    public int getCreditos() {
+        return creditos;
+    }
+
+    public void setCreditos(int creditos) {
+        this.creditos = creditos;
+    }
+
+   
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public Carrera getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(Carrera carrera) {
+        this.carrera = carrera;
     }
 
     public String getNombre() {
@@ -39,32 +71,6 @@ public class Curso {
         this.nombre = nombre;
     }
 
-    public String getTematica() {
-        return tematica;
-    }
-
-    public void setTematica(String tematica) {
-        this.tematica = tematica;
-    }
-
-    public float getCosto() {
-        return costo;
-    }
-
-    public void setCosto(float costo) {
-        this.costo = costo;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public String getEstadoString(){
-        return (this.estado.contains("1")) ? "en Oferta" : "sin Oferta";
-    }
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
 
     public ArrayList getGrupos(){
         return grupos;

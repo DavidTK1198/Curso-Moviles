@@ -568,7 +568,7 @@ INSERT INTO usuario VALUES('117250610','ADM','DavidTK1198','admin');
 INSERT INTO usuario VALUES('207760240','EST','EstebanUG','123');
 INSERT INTO usuario VALUES('123456789','PROF','PedritoA','111');
 INSERT INTO usuario VALUES('987654321','MAT','MariaE','222');
-INSERT INTO carrera VALUES('EIF','Ingeniería en Sistemas','Bachillerato');
+INSERT INTO carrera VALUES('EIF','Ingenieria en Sistemas','Bachillerato');
 INSERT INTO carrera VALUES('MAC','Enseñanza de Matematica','Licenciatura');
 INSERT INTO carrera VALUES('CDN','Ciencias del Movimiento Humano','Bachillerato');
 INSERT INTO Alumno VALUES('100000002','Emmanuel Barrientos','4030-6832','emmanuel@gmail.com','9/11/1992','EIF');
@@ -579,16 +579,16 @@ INSERT INTO curso VALUES('MAT030','Matemática para Informatica',4,11);
 INSERT INTO curso VALUES('EIF201','Programacion I',4,11);
 INSERT INTO curso VALUES('EIF204','Programación II',4,11);
 INSERT INTO curso VALUES('EIF202','Soporte Tecnico',3,8);
-INSERT INTO curso VALUES('EIF203','Estructuras Discretas para Informática',3,8);
-INSERT INTO curso VALUES('EIF206','Programación III',4,11);
+INSERT INTO curso VALUES('EIF203','Estructuras Discretas para Informatica',3,8);
+INSERT INTO curso VALUES('EIF206','Programacion III',4,11);
 INSERT INTO curso VALUES('EIF207','Estructuras de Datos',4,11);
 INSERT INTO curso VALUES('EIF205','Arquitectura de Computadoras',3,8);
-INSERT INTO curso VALUES('EIF404','La Organización y su Entorno',3,8);
-INSERT INTO curso VALUES('EIF209','Programación IV',4,11);
-INSERT INTO curso VALUES('EIF210','Ingeniería de Sistemas I',4,11);
-INSERT INTO curso VALUES('EIF401','Ingeniería de Sistemas II',4,11);
-INSERT INTO curso VALUES('EIF406','Ingeniería de Sistemas III',4,11);
-INSERT INTO curso VALUES('EIF211','Diseño e Implementación de Bases de Datos',4,11);
+INSERT INTO curso VALUES('EIF404','La Organizacion y su Entorno',3,8);
+INSERT INTO curso VALUES('EIF209','Programacion IV',4,11);
+INSERT INTO curso VALUES('EIF210','Ingenieria de Sistemas I',4,11);
+INSERT INTO curso VALUES('EIF401','Ingenieria de Sistemas II',4,11);
+INSERT INTO curso VALUES('EIF406','Ingenieria de Sistemas III',4,11);
+INSERT INTO curso VALUES('EIF211','Diseno e Implementacion de Bases de Datos',4,11);
 INSERT INTO curso VALUES('EIF212','Sistemas Operativos',3,8);
 INSERT INTO curso VALUES('EIF208','Comunicaciones y Redes de Computadores',3,8);
 INSERT INTO curso_carrera VALUES(secuenciacurcar.nextval,'EIF200','EIF',null);
@@ -598,6 +598,7 @@ INSERT INTO curso_carrera VALUES(secuenciacurcar.nextval,'EIF201','EIF','MAT030'
 INSERT INTO ciclo VALUES(secuenciaciclo.nextval,1,1,2022,'7/3/2022','25/6/2022');
 INSERT INTO ciclo VALUES(secuenciaciclo.nextval,2,2,2022,'8/8/2022','25/11/2022');
 INSERT INTO ciclo VALUES(secuenciaciclo.nextval,2,2,2021,'7/8/2021','27/11/2021');
+commit;
 
 
 

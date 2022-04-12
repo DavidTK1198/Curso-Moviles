@@ -12,7 +12,7 @@ import com.sistema.LogicaNegocio.UsuarioModel;
 public class UsuarioController {
 
     private static UsuarioController instance = null;
-    private static final UsuarioModel model=null;
+    private static final UsuarioModel model=UsuarioModel.instance();
     
     
       public static UsuarioController getInstance() {
@@ -21,7 +21,6 @@ public class UsuarioController {
     }
 
     private UsuarioController() {
-        UsuarioModel model = UsuarioModel.instance();
     }
       
       public boolean Login(String user, String password) throws NoDataException, GlobalException{

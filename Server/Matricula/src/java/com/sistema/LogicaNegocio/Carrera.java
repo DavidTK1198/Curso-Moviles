@@ -15,6 +15,7 @@ public class Carrera {
     private List<Curso> cursos;
 
     public Carrera() {
+        
     }
 
     public Carrera(String codigo, String nombre, String titulo) {
