@@ -7,29 +7,32 @@ import java.util.List;
  */
 public class Grupo {
     private int numero;
-    private int cupo;
+    private Ciclo ciclo;
     private String horario;
-    private List<Inscripcion> estudiantes;
+    private List<Alumno> estudiantes;
     private Profesor profesor;
     private Curso curso;
+    private int cupo;
 
-    public Grupo(int cupo, String horario, Profesor profesor, Curso curso) {
+    public Grupo(int cupo,int numero,Ciclo ciclo, Profesor profesor, Curso curso, String horario) {
         this.numero = 0;////
-        this.cupo = cupo;
         this.horario = horario;
         this.profesor = profesor;
         this.curso = curso;
         estudiantes = new ArrayList();
+        this.ciclo=ciclo;
+        this.cupo=0;
 
     }
 
     public Grupo() {
         numero = 0;
-        cupo = 0;
         horario = "";
         estudiantes = new ArrayList();
         profesor = new Profesor();
         curso = new Curso();
+        ciclo=new Ciclo();
+        this.cupo=0;
     }
 
     public Curso getCurso() {
@@ -68,7 +71,7 @@ public class Grupo {
         return estudiantes;
     }
 
-    public void setEstudiantes(List<Inscripcion> estudiantes) {
+    public void setEstudiantes(List<Alumno> estudiantes) {
         this.estudiantes = estudiantes;
     }
 

@@ -16,10 +16,10 @@ import oracle.jdbc.internal.OracleTypes;
  */
 public class ServicioCurso extends Servicio {
 
-    private static final String insertarCurso = "{call insertarCurso (?,?,?,?,?,?,?,?,?)}";
+    private static final String insertarCurso = "{call insertarCurso (?,?,?,?)}";
     private static final String LISTAR = "{?=call listarcurso()}";
     private static final String BUSCARID = "{?=call buscarcurso(?)}";
-    private static final String modificarCurso = "{call modificarCurso (?,?,?,?,?,?,?,?,?)}";
+    private static final String modificarCurso = "{call modificarCurso (?,?,?,?)}";
     private static final String eliminarCurso = "{call eliminarCurso(?)}";
     private static ServicioCurso instance = null;
 

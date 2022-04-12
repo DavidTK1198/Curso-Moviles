@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sistema.endpoint;
-
+package com.sistema.Endpoint;
 import com.sistema.Controller.CursoController;
 import com.sistema.LogicaNegocio.Curso;
 import javax.annotation.security.PermitAll;

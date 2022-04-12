@@ -1,5 +1,5 @@
 /*
- * servicioUsuario.java
+ * ServicioUsuario.java
  *
  * Created on 8 de septiembre de 2007, 10:12
  *
@@ -25,17 +25,17 @@ import oracle.jdbc.internal.OracleTypes;
  *
  * @author Estudiante
  */
-public class servicioUsuario extends Servicio{
+public class ServicioUsuario extends Servicio{
     
-    private static final String INSERTARUSUARIO = "{call insertarUsuario(?,?,?,?,?)}";
+    private static final String INSERTARUSUARIO = "{call insertarUsuario(?,?,?,?)}";
     private static final String LISTARUSUARIO = "{?=call listarUsuarios()}";
-    private static final String ACTUALIZARUSUARIO ="{call actualizaUsuario(?,?,?,?,?)}";
+    private static final String ACTUALIZARUSUARIO ="{call actualizaUsuario(?,?,?,?)}";
     private static final String ELIMINARUSUARIO  = "{call eliminarUsuario(?)}";
     private static final String CONSULTARUSUARIO  = "{?=call consultarUsuario(?)}";
     
     
     /** Creates a new instance of servicioUsuario */
-    public servicioUsuario() {
+    public ServicioUsuario() {
         super();
     }
     public void insertarUsuario(Usuario elUsuario) throws GlobalException, NoDataException  	{

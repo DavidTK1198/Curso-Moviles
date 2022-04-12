@@ -21,7 +21,7 @@ public class Curso {
             this.grupos=new ArrayList<>();
     }
 
-    public Curso( String codigo,String nombre, int creditos,int hsemaneles, Carrera carrera) {
+    public Curso( String codigo,String nombre, int creditos,int hsemanales, Carrera carrera) {
         this.nombre = nombre;
         this.hsemanales = hsemanales;
         this.codigo = codigo;

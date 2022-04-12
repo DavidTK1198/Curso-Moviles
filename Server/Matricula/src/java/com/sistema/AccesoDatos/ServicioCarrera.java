@@ -1,5 +1,6 @@
 package com.sistema.AccesoDatos;
 
+
 import com.sistema.LogicaNegocio.Carrera;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,10 +17,10 @@ import oracle.jdbc.internal.OracleTypes;
  */
 public class ServicioCarrera extends Servicio {
 
-    private static final String insertarCarrera = "{call insertarCarrera (?,?,?,?,?,?,?,?,?)}";
+    private static final String insertarCarrera = "{call insertarCarrera (?,?,?)}";
     private static final String LISTAR = "{?=call listarcarrera()}";
     private static final String BUSCARID = "{?=call buscarcarrera(?)}";
-    private static final String modificarCarrera = "{call modificarCarrera (?,?,?,?,?,?,?,?,?)}";
+    private static final String modificarCarrera = "{call modificarCarrera (?,?,?)}";
     private static final String eliminarCarrera = "{call eliminarCarrera(?)}";
     private static ServicioCarrera instance = null;
 

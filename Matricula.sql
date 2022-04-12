@@ -359,7 +359,7 @@ AS
         alumno_cursor types.ref_cursor; 
 BEGIN 
   OPEN alumno_cursor FOR 
-   SELECT e.cedula,e.nombre,e.email,e.telefono,c.codigo,c.nombre,c.titulo FROM Alumno e, Carrera c
+   SELECT e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,c.codigo,c.nombre as car_name,c.titulo FROM Alumno e, Carrera c
         WHERE e.carrerafk=c.codigo; 
 RETURN alumno_cursor; 
 END;

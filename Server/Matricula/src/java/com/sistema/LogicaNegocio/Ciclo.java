@@ -11,9 +11,9 @@ public class Ciclo {
     private int id;
     private String fec_inicio;
     private String fec_final;
-    private boolean estado;
+    private int estado;
 
-    public Ciclo(int id,int annio, int numero, String fec_inicio, String fec_final,boolean estado) {
+    public Ciclo(int id,int annio, int numero, int estado,String fec_inicio, String fec_final) {
         this.annio = annio;
         this.numero = numero;
         this.id = id;
@@ -28,15 +28,14 @@ public class Ciclo {
         this.id = 0;
         this.fec_inicio = "";
         this.fec_final = "";
-        this.estado = false;
-        this.estado=estado;
+        this.estado = 0;
     }
     
-    public boolean isEstado() {
-        return estado;
+    public int isEstado() {
+        return  estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(int estado) {
         this.estado = estado;
     }
     
