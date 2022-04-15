@@ -27,6 +27,7 @@ public class Alumnos {
     public List<Alumno> getAlumnos() {
         try {
            return control.todosLosAlumnos();
+           //return "{'chafa':500}";
         } catch (Exception ex) {
             throw new NotFoundException(); 
         }
