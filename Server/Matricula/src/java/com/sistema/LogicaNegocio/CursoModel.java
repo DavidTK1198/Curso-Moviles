@@ -35,11 +35,31 @@ public class CursoModel {
         return current;
     }
 
+    public List<Curso> getCursos() {
+        return cursos;
+    }
+
+    public void setCursos(List<Curso> cursos) {
+        this.cursos = cursos;
+    }
+
     public void setCurrent(Curso current) {
         this.current = current;
     }
     
-    public List<Curso> todosLosCursos() throws GlobalException, NoDataException{
-        return (List<Curso>) curso_DBA.listarCurso();
+    public void todosLosCursos() throws GlobalException, NoDataException{
+        cursos= (List<Curso>) curso_DBA.listarCurso("todos","");
+    }
+
+    public void buscarporCodigo() throws GlobalException, NoDataException {
+        current= curso_DBA.buscarCurso(current.getCodigo(),"codigo");
+    }
+
+    public void buscarporCarrera() throws GlobalException, NoDataException {
+       cursos= (List<Curso>) curso_DBA.listarCurso("carrera",current.getCarrera().getCodigo());
+    }
+
+    public void buscarporNombre() throws GlobalException, NoDataException {
+        current =curso_DBA.buscarCurso(current.getNombre(),"nombre");
     }
 }

@@ -17,7 +17,7 @@ public class Curso {
     }
 
     public Curso() {
-            this("","",0,0,null);
+            this("","",0,0,new Carrera());
             this.grupos=new ArrayList<>();
     }
 

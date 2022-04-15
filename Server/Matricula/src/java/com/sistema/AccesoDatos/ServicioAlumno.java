@@ -23,12 +23,14 @@ public class ServicioAlumno extends Servicio {
     private static final String modificarAlumno = "{call modificarAlumno (?,?,?,?)}";
     private static final String eliminarAlumno = "{call eliminarAlumno(?)}";
     private static ServicioAlumno instance = null;
+    private static ServicioTransformar helper = null;
 
     /**
      * Creates a new instance of ServicioAlumno
      */
     public ServicioAlumno() {
         super();
+        helper = ServicioTransformar.getInstance();
     }
 
     public static ServicioAlumno getInstance() {
@@ -62,7 +64,7 @@ public class ServicioAlumno extends Servicio {
                         rs.getString("telefono"),
                         rs.getString("email"),
                         rs.getString("fec_nac"),
-                        carreraTransform(rs)
+                        helper.Obtenercarrera(rs)
                 );
                 coleccion.add(alumno);
             }
@@ -218,12 +220,12 @@ public class ServicioAlumno extends Servicio {
             pstmt.execute();
             rs = (ResultSet) pstmt.getObject(1);
             while (rs.next()) {
-               alumno = new Alumno(rs.getString("cedula"),
+                alumno = new Alumno(rs.getString("cedula"),
                         rs.getString("nombre"),
                         rs.getString("telefono"),
                         rs.getString("email"),
                         rs.getString("fec_nac"),
-                        carreraTransform(rs));
+                        helper.Obtenercarrera(rs));
                 coleccion.add(alumno);
             }
         } catch (SQLException e) {
@@ -247,13 +249,6 @@ public class ServicioAlumno extends Servicio {
             throw new NoDataException("No hay datos");
         }
         return alumno;
-    }
-    
-    private Carrera carreraTransform(ResultSet rs) throws SQLException{
-       Carrera carrera = new Carrera(rs.getString("codigo"),
-                        rs.getString("car_name"),
-                        rs.getString("titulo"));
-        return carrera;
     }
 
 }

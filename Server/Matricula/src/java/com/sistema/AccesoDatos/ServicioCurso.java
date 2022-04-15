@@ -19,9 +19,12 @@ public class ServicioCurso extends Servicio {
     private static final String insertarCurso = "{call insertarCurso (?,?,?,?)}";
     private static final String LISTAR = "{?=call listarcurso()}";
     private static final String BUSCARID = "{?=call buscarcurso(?)}";
+    private static final String BUSCARCARRERA = "{?=call buscarcursoporcarrera(?)}";
+    private static final String BUSCARNOMBRE = "{?=call buscarcursopornombre(?)}";
     private static final String modificarCurso = "{call modificarCurso (?,?,?,?)}";
     private static final String eliminarCurso = "{call eliminarCurso(?)}";
     private static ServicioCurso instance = null;
+    private static ServicioTransformar helper = null;
 
     /**
      * Creates a new instance of ServicioCurso
@@ -37,7 +40,7 @@ public class ServicioCurso extends Servicio {
         return instance;
     }
 
-    public Collection listarCurso() throws GlobalException, NoDataException {
+    public Collection listarCurso(String medio, String id) throws GlobalException, NoDataException {
         try {
             conectar();
         } catch (ClassNotFoundException ex) {
@@ -51,7 +54,16 @@ public class ServicioCurso extends Servicio {
         Curso curso = null;
         CallableStatement pstmt = null;
         try {
-            pstmt = conexion.prepareCall(LISTAR);
+
+            switch (medio) {
+                case "todos":
+                    pstmt = conexion.prepareCall(LISTAR);
+                    break;
+                case "carrera":
+                    pstmt = conexion.prepareCall(BUSCARCARRERA);
+                    pstmt.setString(2, id);
+                    break;
+            }
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.execute();
             rs = (ResultSet) pstmt.getObject(1);
@@ -197,7 +209,7 @@ public class ServicioCurso extends Servicio {
         }
     }
 
-    public Curso buscarCurso(String id) throws GlobalException, NoDataException {
+    public Curso buscarCurso(String id, String medio) throws GlobalException, NoDataException {
 
         try {
             conectar();
@@ -211,7 +223,15 @@ public class ServicioCurso extends Servicio {
         Curso curso = null;
         CallableStatement pstmt = null;
         try {
-            pstmt = conexion.prepareCall(BUSCARID);
+            switch (medio) {
+                case "nombre":
+                    pstmt = conexion.prepareCall(BUSCARNOMBRE);
+                    break;
+                case "codigo":
+                    pstmt = conexion.prepareCall(BUSCARID);
+                    break;
+            }
+
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setString(2, id);
             pstmt.execute();
@@ -221,6 +241,7 @@ public class ServicioCurso extends Servicio {
                         rs.getString("nombre"),
                         rs.getInt("creditos"),
                         rs.getInt("hsemanales"), new Carrera());
+
                 coleccion.add(curso);
             }
         } catch (SQLException e) {

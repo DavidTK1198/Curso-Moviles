@@ -131,6 +131,17 @@ BEGIN
 RETURN curso_cursor; 
 END;
 /
+
+CREATE OR REPLACE FUNCTION buscarcursopornombre(idbuscar IN curso.codigo%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        curso_cursor types.ref_cursor; 
+BEGIN 
+  OPEN curso_cursor FOR 
+       SELECT codigo,nombre,creditos,hsemanales FROM curso   WHERE UPPER(nombre) LIKE UPPER(idbuscar)||'%';
+RETURN curso_cursor; 
+END;
+/
 --LISTAR
 ------------------------------------------------------
 CREATE OR REPLACE FUNCTION listarcurso
@@ -166,6 +177,21 @@ CONSTRAINTS pkcurcar PRIMARY KEY (id)
 alter table  curso_carrera add constraint FKCur foreign key (fkcurso) references curso; 
 alter table  curso_carrera add constraint FKCar foreign key (fkcarrera) references carrera; 
 alter table  curso_carrera add constraint fkrequisito foreign key (requisito) references curso; 
+
+CREATE OR REPLACE FUNCTION buscarcursoporcarrera(idbuscar IN curso.codigo%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        curso_cursor types.ref_cursor; 
+BEGIN 
+  OPEN curso_cursor FOR 
+    SELECT DISTINCT e.codigo,e.nombre,e.creditos,e.hsemanales
+   FROM curso e
+    INNER JOIN  curso_carrera cur ON cur.fkcurso=e.codigo
+    INNER JOIN Carrera c ON cur.fkcarrera=c.codigo
+    WHERE cur.fkcarrera=idbuscar;
+RETURN curso_cursor; 
+END;
+/
 
 CREATE OR REPLACE PACKAGE types
 AS
@@ -347,7 +373,8 @@ AS
         alumno_cursor types.ref_cursor; 
 BEGIN 
   OPEN alumno_cursor FOR 
-       SELECT cedula,nombre,email,telefono,fec_nac,carrerafk FROM Alumno WHERE cedula=idbuscar; 
+         SELECT e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,c.codigo as car_codigo,c.nombre as car_name,c.titulo FROM Alumno e, Carrera c
+        WHERE e.cedula=idbuscar; 
 RETURN alumno_cursor; 
 END;
 /
@@ -359,7 +386,7 @@ AS
         alumno_cursor types.ref_cursor; 
 BEGIN 
   OPEN alumno_cursor FOR 
-   SELECT e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,c.codigo,c.nombre as car_name,c.titulo FROM Alumno e, Carrera c
+   SELECT e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,c.codigo as car_codigo,c.nombre as car_name,c.titulo FROM Alumno e, Carrera c
         WHERE e.carrerafk=c.codigo; 
 RETURN alumno_cursor; 
 END;
@@ -577,9 +604,9 @@ INSERT INTO Alumno VALUES('100000002','Emmanuel Barrientos','4030-6832','emmanue
 INSERT INTO Alumno VALUES('200000003','Daniel Madrigal','6079-7171','ddavidb09@gmail.com','4/05/1998','MAC');
 INSERT INTO profesor VALUES('100000002','Pedro Alvarez','4032-2525','pedroa@gmail.com');
 INSERT INTO curso VALUES('EIF200','Fundamentos de Informatica',3,8);
-INSERT INTO curso VALUES('MAT030','Matemática para Informatica',4,11);
+INSERT INTO curso VALUES('MAT030','Matematica para Informatica',4,11);
 INSERT INTO curso VALUES('EIF201','Programacion I',4,11);
-INSERT INTO curso VALUES('EIF204','Programación II',4,11);
+INSERT INTO curso VALUES('EIF204','Programacion II',4,11);
 INSERT INTO curso VALUES('EIF202','Soporte Tecnico',3,8);
 INSERT INTO curso VALUES('EIF203','Estructuras Discretas para Informatica',3,8);
 INSERT INTO curso VALUES('EIF206','Programacion III',4,11);

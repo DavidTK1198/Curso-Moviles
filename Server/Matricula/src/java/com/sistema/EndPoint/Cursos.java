@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.sistema.Endpoint;
+
 import com.sistema.Controller.CursoController;
 import com.sistema.LogicaNegocio.Curso;
 import javax.annotation.security.PermitAll;
@@ -12,22 +13,61 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.QueryParam;
 
 @Path("/cursos")
 @PermitAll
 public class Cursos {
-        CursoController control= CursoController.getInstance();
+
+    CursoController control = CursoController.getInstance();
+
     @GET
     @Path("listar")
     @PermitAll
     @Produces({MediaType.APPLICATION_JSON})
     public List<Curso> getCursos() {
         try {
-           return control.todosLosCursos();
+            return control.todosLosCursos();
         } catch (Exception ex) {
-            throw new NotFoundException(); 
+            throw new NotFoundException();
         }
     }
-    
+
+    //Ejemplo
+    //http://localhost:8088/Matricula/api/cursos/cursoCarrera?codigo=EIF
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("cursoCarrera")
+    public List<Curso> buscarPorCarrera(@DefaultValue("") @QueryParam("codigo") String codigo) {
+        try {
+            return control.cursoporCarrera(codigo);
+        } catch (Exception ex) {
+            throw new NotFoundException();
+        }
+    }
+
+    @GET
+    @Path("cursoNombre")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Curso buscarPorNombre(@DefaultValue("") @QueryParam("nombre") String nombre) {
+        try {
+            return control.cursoPorNombre(nombre);
+        } catch (Exception ex) {
+            throw new NotFoundException();
+        }
+
+    }
+
+    @GET
+    @Path("cursoCodigo")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Curso buscarPorCodigo(@DefaultValue("") @QueryParam("codigo") String codigo) {
+        try {
+            return control.cursoPorCodigo(codigo);
+        } catch (Exception e) {
+            throw new NotFoundException();
+        }
+    }
 }
