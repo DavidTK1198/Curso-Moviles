@@ -66,6 +66,16 @@ BEGIN
 RETURN carrera_cursor; 
 END;
 /
+CREATE OR REPLACE FUNCTION buscarcarreranombre(idbuscar IN carrera.nombre%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        carrera_cursor types.ref_cursor; 
+BEGIN 
+  OPEN carrera_cursor FOR 
+       SELECT codigo,nombre,titulo FROM carrera  WHERE UPPER(nombre) LIKE UPPER(idbuscar)||'%';
+RETURN carrera_cursor; 
+END;
+/
 --LISTAR
 ------------------------------------------------------
 CREATE OR REPLACE FUNCTION listarcarrera
@@ -132,7 +142,7 @@ RETURN curso_cursor;
 END;
 /
 
-CREATE OR REPLACE FUNCTION buscarcursopornombre(idbuscar IN curso.codigo%TYPE)
+CREATE OR REPLACE FUNCTION buscarcursopornombre(idbuscar IN curso.nombre%TYPE)
 RETURN Types.ref_cursor 
 AS 
         curso_cursor types.ref_cursor; 
@@ -178,7 +188,7 @@ alter table  curso_carrera add constraint FKCur foreign key (fkcurso) references
 alter table  curso_carrera add constraint FKCar foreign key (fkcarrera) references carrera; 
 alter table  curso_carrera add constraint fkrequisito foreign key (requisito) references curso; 
 
-CREATE OR REPLACE FUNCTION buscarcursoporcarrera(idbuscar IN curso.codigo%TYPE)
+CREATE OR REPLACE FUNCTION buscarcursoporcarrera(idbuscar IN carrera.codigo%TYPE)
 RETURN Types.ref_cursor 
 AS 
         curso_cursor types.ref_cursor; 
@@ -598,7 +608,7 @@ INSERT INTO usuario VALUES('207760240','EST','EstebanUG','123');
 INSERT INTO usuario VALUES('123456789','PROF','PedritoA','111');
 INSERT INTO usuario VALUES('987654321','MAT','MariaE','222');
 INSERT INTO carrera VALUES('EIF','Ingenieria en Sistemas','Bachillerato');
-INSERT INTO carrera VALUES('MAC','Enseñanza de Matematica','Licenciatura');
+INSERT INTO carrera VALUES('MAC','Ensenanza de Matematica','Licenciatura');
 INSERT INTO carrera VALUES('CDN','Ciencias del Movimiento Humano','Bachillerato');
 INSERT INTO Alumno VALUES('100000002','Emmanuel Barrientos','4030-6832','emmanuel@gmail.com','9/11/1992','EIF');
 INSERT INTO Alumno VALUES('200000003','Daniel Madrigal','6079-7171','ddavidb09@gmail.com','4/05/1998','MAC');

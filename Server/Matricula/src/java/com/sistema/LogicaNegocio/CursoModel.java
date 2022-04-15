@@ -25,7 +25,7 @@ public class CursoModel {
         return uniqueInstance;
     }
 
-    public CursoModel() {
+    private CursoModel() {
         this.current = new Curso();
         this.cursos = new ArrayList<>();
         this.curso_DBA = ServicioCurso.getInstance();

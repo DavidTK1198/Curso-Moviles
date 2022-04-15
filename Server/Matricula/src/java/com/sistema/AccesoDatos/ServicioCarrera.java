@@ -1,6 +1,5 @@
 package com.sistema.AccesoDatos;
 
-
 import com.sistema.LogicaNegocio.Carrera;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +21,7 @@ public class ServicioCarrera extends Servicio {
     private static final String BUSCARID = "{?=call buscarcarrera(?)}";
     private static final String modificarCarrera = "{call modificarCarrera (?,?,?)}";
     private static final String eliminarCarrera = "{call eliminarCarrera(?)}";
+    private static final String BUSCARNOMBRE = "{?=call buscarcarreranombre(?)}";
     private static ServicioCarrera instance = null;
 
     /**
@@ -30,10 +30,14 @@ public class ServicioCarrera extends Servicio {
     public ServicioCarrera() {
         super();
     }
+
     public static ServicioCarrera getInstance() {
-        if (instance == null) instance = new ServicioCarrera();
+        if (instance == null) {
+            instance = new ServicioCarrera();
+        }
         return instance;
     }
+
     public Collection listarCarrera() throws GlobalException, NoDataException {
         try {
             conectar();
@@ -97,7 +101,7 @@ public class ServicioCarrera extends Servicio {
             pstmt.setString(1, carrera.getCodigo());
             pstmt.setString(2, carrera.getNombre());
             pstmt.setString(3, carrera.getTitulo());
-      
+
             boolean resultado = pstmt.execute();
             if (resultado == true) {
                 throw new NoDataException("No se realizo la inserci�n");
@@ -129,7 +133,7 @@ public class ServicioCarrera extends Servicio {
         PreparedStatement pstmt = null;
         try {
             pstmt = conexion.prepareStatement(modificarCarrera);
-           pstmt.setString(1, carrera.getCodigo());
+            pstmt.setString(1, carrera.getCodigo());
             pstmt.setString(2, carrera.getNombre());
             pstmt.setString(3, carrera.getTitulo());
             int resultado = pstmt.executeUpdate();
@@ -188,7 +192,7 @@ public class ServicioCarrera extends Servicio {
         }
     }
 
-    public Carrera buscarCarrera(String id) throws GlobalException, NoDataException {
+    public Carrera buscarCarrera(String id, String medio) throws GlobalException, NoDataException {
 
         try {
             conectar();
@@ -202,13 +206,20 @@ public class ServicioCarrera extends Servicio {
         Carrera carrera = null;
         CallableStatement pstmt = null;
         try {
-            pstmt = conexion.prepareCall(BUSCARID);
+            switch (medio) {
+                case "nombre":
+                    pstmt = conexion.prepareCall(BUSCARNOMBRE);
+                    break;
+                case "codigo":
+                    pstmt = conexion.prepareCall(BUSCARID);
+                    break;
+            }
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setString(2, id);
             pstmt.execute();
             rs = (ResultSet) pstmt.getObject(1);
             while (rs.next()) {
-                 carrera = new Carrera(rs.getString("codigo"),
+                carrera = new Carrera(rs.getString("codigo"),
                         rs.getString("nombre"),
                         rs.getString("titulo"));
                 coleccion.add(carrera);
