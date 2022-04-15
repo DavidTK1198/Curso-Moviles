@@ -254,6 +254,26 @@ BEGIN
 RETURN ciclo_cursor; 
 END;
 /
+CREATE OR REPLACE FUNCTION buscarCicloAnnio(idbuscar IN ciclo.annio%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        ciclo_cursor types.ref_cursor; 
+BEGIN 
+  OPEN ciclo_cursor FOR 
+       SELECT id,estado,numero,annio,fec_inicio,fec_final FROM ciclo WHERE annio=idbuscar; 
+RETURN ciclo_cursor; 
+END;
+/
+CREATE OR REPLACE FUNCTION revisaractivo
+RETURN Types.ref_cursor 
+AS 
+        ciclo_cursor types.ref_cursor; 
+BEGIN 
+  OPEN ciclo_cursor FOR 
+	  SELECT COUNT(id) AS esta FROM ciclo WHERE estado=1;
+	 RETURN ciclo_cursor; 
+END;
+/
 --LISTAR
 ------------------------------------------------------
 CREATE OR REPLACE FUNCTION listarCiclo

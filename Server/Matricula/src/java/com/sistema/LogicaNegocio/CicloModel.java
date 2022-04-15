@@ -20,7 +20,7 @@ public class CicloModel {
     private static CicloModel uniqueInstance;
     private Ciclo current;
     private final ServicioCiclo ciclo_DBA;
-    private List<Ciclo> cursos;
+    private List<Ciclo> ciclos;
 
     public static CicloModel instance() {
         if (uniqueInstance == null) {
@@ -30,9 +30,9 @@ public class CicloModel {
         return uniqueInstance;
     }
 
-    public CicloModel() {
+    private CicloModel() {
         this.current = new Ciclo();
-        this.cursos = new ArrayList<>();
+        this.ciclos = new ArrayList<>();
         this.ciclo_DBA = ServicioCiclo.getInstance();
     }
 
@@ -43,8 +43,35 @@ public class CicloModel {
     public void setCurrent(Ciclo current) {
         this.current = current;
     }
+
+    public List<Ciclo> getCiclos() {
+        return ciclos;
+    }
+
+    public void setCiclos(List<Ciclo> ciclos) {
+        this.ciclos = ciclos;
+    }
+
+    public void todosLosCiclos() throws GlobalException, NoDataException {
+
+        ciclos = (List<Ciclo>) ciclo_DBA.listarCiclo("todos",0);
+    }
     
-    public List<Ciclo> todosLosCiclos() throws GlobalException, NoDataException{
-        return (List<Ciclo>) ciclo_DBA.listarCiclo();
+
+    
+    public void buscarId() throws GlobalException, NoDataException{
+        current= ciclo_DBA.buscarCiclo(current.getId());
+    }
+    
+     public void buscarAnnio() throws GlobalException, NoDataException{
+       ciclos = (List<Ciclo>) ciclo_DBA.listarCiclo("annio",current.getAnnio());
+    }
+
+    public void activarCiclo() throws GlobalException, NoDataException {
+        ciclo_DBA.modificarCiclo(current,"activar");
+    }
+    
+    public void desactivarCiclo() throws GlobalException, NoDataException {
+        ciclo_DBA.modificarCiclo(current,"desactivar");
     }
 }

@@ -13,17 +13,43 @@ import java.util.List;
 public class CicloController {
 
     private static CicloController instance = null;
-    private static final CicloModel model=CicloModel.instance();;
-    
-    
-      public static CicloController getInstance() {
-        if (instance == null) instance = new CicloController();
+    private static final CicloModel model = CicloModel.instance();
+
+    public static CicloController getInstance() {
+        if (instance == null) {
+            instance = new CicloController();
+        }
         return instance;
     }
 
-    private CicloController() {}
-    
-    public List<Ciclo> todosLosCiclos() throws GlobalException, NoDataException{
-        return model.todosLosCiclos();
+    private CicloController() {
     }
+
+    public List<Ciclo> todosLosCiclos() throws GlobalException, NoDataException {
+        model.todosLosCiclos();
+        return model.getCiclos();
     }
+
+    public Ciclo cicloPorCodigo(int codigo) throws GlobalException, NoDataException {
+        model.getCurrent().setId(codigo);
+        model.buscarId();
+        return model.getCurrent();
+    }
+
+    public List<Ciclo> cicloPorAnnio(int annio) throws GlobalException, NoDataException {
+        model.getCurrent().setAnnio(annio);
+        model.buscarAnnio();
+        return model.getCiclos();
+    }
+
+    public void activarCiclo(Ciclo p) throws GlobalException, NoDataException {
+        model.setCurrent(p);
+        model.activarCiclo();
+    }
+
+    public void desactivarCiclo(Ciclo p) throws GlobalException, NoDataException {
+        model.setCurrent(p);
+        model.desactivarCiclo();
+    }
+
+}
