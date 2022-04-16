@@ -14,6 +14,13 @@ public class Alumno {
     private Carrera carrera;
 
     public Alumno() {
+
+        cédula = "";
+        nombre = "";
+        teléfono = "";
+        email = "";
+        fech_nac = "";
+        carrera = new Carrera();
     }
 
     public Alumno(String cédula, String nombre, String teléfono, String email, String fech_nac, Carrera carrera) {
@@ -24,7 +31,6 @@ public class Alumno {
         this.fech_nac = fech_nac;
         this.carrera = carrera;
     }
-    
 
     public String getCédula() {
         return cédula;

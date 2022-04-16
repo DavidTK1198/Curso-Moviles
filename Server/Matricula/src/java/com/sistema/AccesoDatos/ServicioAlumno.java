@@ -22,6 +22,8 @@ public class ServicioAlumno extends Servicio {
     private static final String BUSCARID = "{?=call buscaralumno(?)}";
     private static final String modificarAlumno = "{call modificarAlumno (?,?,?,?)}";
     private static final String eliminarAlumno = "{call eliminarAlumno(?)}";
+    private static final String BUSCARNOMBRE = "{?=call buscarAlumnopornombre(?)}";
+    private static final String BUSCARCARRERA = "{?=call buscarAlumnoporcarrera(?)}";
     private static ServicioAlumno instance = null;
     private static ServicioTransformar helper = null;
 
@@ -40,7 +42,7 @@ public class ServicioAlumno extends Servicio {
         return instance;
     }
 
-    public Collection listarAlumno() throws GlobalException, NoDataException {
+    public Collection listarAlumno(String medio, String id) throws GlobalException, NoDataException {
         try {
             conectar();
         } catch (ClassNotFoundException ex) {
@@ -54,7 +56,16 @@ public class ServicioAlumno extends Servicio {
         Alumno alumno = null;
         CallableStatement pstmt = null;
         try {
-            pstmt = conexion.prepareCall(LISTAR);
+
+            switch (medio) {
+                case "todos":
+                    pstmt = conexion.prepareCall(LISTAR);
+                    break;
+                case "carrera":
+                    pstmt = conexion.prepareCall(BUSCARCARRERA);
+                    pstmt.setString(2, id);
+                    break;
+            }
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.execute();
             rs = (ResultSet) pstmt.getObject(1);
@@ -200,7 +211,7 @@ public class ServicioAlumno extends Servicio {
         }
     }
 
-    public Alumno buscarAlumno(String id) throws GlobalException, NoDataException {
+    public Alumno buscarAlumno(String id, String medio) throws GlobalException, NoDataException {
 
         try {
             conectar();
@@ -209,12 +220,21 @@ public class ServicioAlumno extends Servicio {
         } catch (SQLException e) {
             throw new NoDataException("La base de datos no se encuentra disponible");
         }
+
         ResultSet rs = null;
         ArrayList coleccion = new ArrayList();
         Alumno alumno = null;
         CallableStatement pstmt = null;
         try {
-            pstmt = conexion.prepareCall(BUSCARID);
+
+            switch (medio) {
+                case "nombre":
+                    pstmt = conexion.prepareCall(BUSCARNOMBRE);
+                    break;
+                case "cedula":
+                    pstmt = conexion.prepareCall(BUSCARID);
+                    break;
+            }
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setString(2, id);
             pstmt.execute();

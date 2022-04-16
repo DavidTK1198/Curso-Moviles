@@ -1,4 +1,5 @@
 package com.sistema.Endpoint;
+
 import com.sistema.Controller.ProfesorController;
 import com.sistema.LogicaNegocio.Profesor;
 import com.sistema.LogicaNegocio.Profesor;
@@ -19,20 +20,22 @@ import javax.ws.rs.core.MediaType;
 @Path("/profesores")
 @PermitAll
 public class Profesores {
-           ProfesorController control= ProfesorController.getInstance();
+
+    ProfesorController control = ProfesorController.getInstance();
+
     @GET
     @Path("listar")
     @PermitAll
     @Produces({MediaType.APPLICATION_JSON})
     public List<Profesor> getProfesors() {
         try {
-           return control.todosLosProfesors();
+            return control.todosLosProfesors();
         } catch (Exception ex) {
-            throw new NotFoundException(); 
+            throw new NotFoundException();
         }
     }
-    
-     @GET
+
+    @GET
     @Path("profesorNombre")
     @Produces({MediaType.APPLICATION_JSON})
     public Profesor buscarPorNombre(@DefaultValue("") @QueryParam("nombre") String nombre) {
@@ -44,6 +47,8 @@ public class Profesores {
 
     }
 
+    //ejemplo
+//http://localhost:8088/Matricula/api/profesores/profesorCedula?cedula=100000002
     @GET
     @Path("profesorCedula")
     @Produces({MediaType.APPLICATION_JSON})

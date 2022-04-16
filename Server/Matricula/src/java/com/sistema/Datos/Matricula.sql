@@ -21,6 +21,12 @@ create sequence secuenciagrupo start with 1;
 create sequence secuenciainscripcion start with 1000;
 create sequence secuenciacurcar start with 100;
 create sequence secuenciaciclo start with 10000;
+PROMPT  CREACION DEl CURSOR
+CREATE OR REPLACE PACKAGE types
+AS
+     TYPE ref_cursor IS REF CURSOR;
+END;
+/
 --CARRERA
 ------------------------------------------------------
 PROMPT SE CREA CARRERA
@@ -32,11 +38,6 @@ titulo VARCHAR(50),
 CONSTRAINTS pkcarrera PRIMARY KEY (codigo)
 );
 
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-/
 --INSERTAR
 ------------------------------------------------------
 CREATE OR REPLACE PROCEDURE insertarcarrera(codigo IN carrera.codigo%TYPE,nombre IN carrera.nombre%TYPE,
@@ -108,11 +109,6 @@ hsemanales NUMBER,
 CONSTRAINTS pkcurso PRIMARY KEY (codigo)
 );
 
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-/
 --INSERTAR
 ------------------------------------------------------
 CREATE OR REPLACE PROCEDURE insertarCurso(codigo IN curso.codigo%TYPE,nombre in curso.nombre%type,creditos in curso.creditos%type,hsemanales in curso.hsemanales%type)
@@ -203,11 +199,6 @@ RETURN curso_cursor;
 END;
 /
 
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-/
 --CICLO
 ------------------------------------------------------
 PROMPT SE CREA CICLO
@@ -221,11 +212,7 @@ fec_inicio VARCHAR(20),
 fec_final VARCHAR(20),
 CONSTRAINTS pkciclo PRIMARY KEY (id)
 );
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-/
+
 --INSERTAR
 ------------------------------------------------------
 CREATE OR REPLACE PROCEDURE insertarCiclo(annio in ciclo.annio%type,numero in ciclo.numero%type,estado IN ciclo.estado%TYPE,fec_inicio in ciclo.fec_inicio%type,fec_final in ciclo.fec_final%type)
@@ -303,11 +290,7 @@ telefono varchar(15),
 email varchar(50),
 constraint PKPROFESOR primary key (cedula)
 );
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-/
+
 
 --INSERTAR
 ------------------------------------------------------
@@ -384,11 +367,7 @@ carrerafk varchar(20),
 constraint PKALUMNO primary key (cedula)
 );
 alter table  Alumno add constraint FKCARRERA foreign key (carrerafk) references carrera; 
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-/
+
 --INSERTAR
 ------------------------------------------------------
 CREATE OR REPLACE PROCEDURE insertarAlumno(cedula IN Alumno.cedula%TYPE,nombre IN Alumno.nombre%TYPE,
@@ -416,7 +395,7 @@ AS
 BEGIN 
   OPEN alumno_cursor FOR 
          SELECT e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,c.codigo as car_codigo,c.nombre as car_name,c.titulo FROM Alumno e, Carrera c
-        WHERE e.cedula=idbuscar; 
+        WHERE e.cedula=idbuscar and e.carrerafk=c.codigo; 
 RETURN alumno_cursor; 
 END;
 /
@@ -428,7 +407,7 @@ AS
 BEGIN 
   OPEN alumno_cursor FOR 
          SELECT e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,c.codigo as car_codigo,c.nombre as car_name,c.titulo FROM Alumno e, Carrera c
-        WHERE UPPER(e.nombre) LIKE '%'||UPPER(idbuscar)||'%'; 
+        WHERE UPPER(e.nombre) LIKE '%'||UPPER(idbuscar)||'%' and e.carrerafk=c.codigo; 
 RETURN alumno_cursor; 
 END;
 /
@@ -440,7 +419,7 @@ AS
 BEGIN 
   OPEN alumno_cursor FOR 
          SELECT e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,c.codigo as car_codigo,c.nombre as car_name,c.titulo FROM Alumno e, Carrera c
-        WHERE e.carrerafk=idbuscar; 
+        WHERE e.carrerafk=idbuscar and e.carrerafk=c.codigo; 
 RETURN alumno_cursor; 
 END;
 /
@@ -482,11 +461,7 @@ profesorfk varchar(15),
 constraint  PKGRUPO primary key (idgrupo),
 constraint UKGRUPO unique  (ciclofk,numgrupo,cursofk)
 );
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-/
+
 alter table  Grupo add constraint FKCURSO foreign key (cursofk) references curso; 
 alter table  Grupo add constraint FKCICLO foreign key (ciclofk) references ciclo; 
 alter table  Grupo add constraint FKPROFESOR foreign key (profesorfk) references profesor; 
@@ -538,11 +513,7 @@ CONSTRAINTS pkInscripcion PRIMARY KEY (id)
 );
 alter table  Inscripcion add constraint FKGRUPO foreign key (fkgrupo) references Grupo; 
 alter table  Inscripcion add constraint FKALUMNO foreign key (fkalumno) references Alumno; 
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-/
+
 CREATE OR REPLACE PROCEDURE insertarInscripcion(grupoin IN grupo.numgrupo%TYPE,alumnoin IN Alumno.cedula%TYPE)
 AS
 BEGIN
@@ -579,11 +550,7 @@ nombreUsuario varchar(30),
 contrasea varchar(10),
 constraint PKUSUARIO primary key (cedula)
 );
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-/
+
 --INSERTAR
 ------------------------------------------------------
 CREATE OR REPLACE PROCEDURE insertarUsuario(cedulain IN usuario.cedula%TYPE, rolin IN usuario.rol%TYPE,
