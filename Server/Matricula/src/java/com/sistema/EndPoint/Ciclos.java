@@ -7,6 +7,7 @@ import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotAcceptableException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -54,20 +55,20 @@ public class Ciclos {
     @Consumes(MediaType.APPLICATION_JSON)
     public void activar(Ciclo p) {
         try {
-           control.activarCiclo(p);
+            control.activarCiclo(p);
         } catch (Exception ex) {
-            throw new NotFoundException();
+            throw new NotAcceptableException();
         }
     }
-    
-      @PUT
-      @Path("cicloDesActivar")
+
+    @PUT
+    @Path("cicloDesActivar")
     @Consumes(MediaType.APPLICATION_JSON)
     public void desactivar(Ciclo p) {
         try {
-           control.desactivarCiclo(p);
+            control.desactivarCiclo(p);
         } catch (Exception ex) {
-            throw new NotFoundException();
+            throw new NotAcceptableException();
         }
     }
 

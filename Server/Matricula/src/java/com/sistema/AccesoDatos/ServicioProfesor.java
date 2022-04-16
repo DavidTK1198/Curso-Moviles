@@ -19,6 +19,7 @@ public class ServicioProfesor extends Servicio {
     private static final String insertarProfesor = "{call insertarProfesor (?,?,?,?)}";
     private static final String LISTAR = "{?=call listarprofesor()}";
     private static final String BUSCARID = "{?=call buscarprofesor(?)}";
+    private static final String BUSCARNOMBRE = "{?=call buscarprofesorpornombre(?)}";
     private static final String modificarProfesor = "{call modificarProfesor (?,?,?,?)}";
     private static final String eliminarProfesor = "{call eliminarProfesor(?)}";
     private static ServicioProfesor instance = null;
@@ -195,7 +196,7 @@ public class ServicioProfesor extends Servicio {
         }
     }
 
-    public Profesor buscarProfesor(String id) throws GlobalException, NoDataException {
+    public Profesor buscarProfesor(String id,String medio) throws GlobalException, NoDataException {
 
         try {
             conectar();
@@ -209,7 +210,15 @@ public class ServicioProfesor extends Servicio {
         Profesor profesor = null;
         CallableStatement pstmt = null;
         try {
-            pstmt = conexion.prepareCall(BUSCARID);
+
+            switch (medio) {
+                case "nombre":
+                    pstmt = conexion.prepareCall(BUSCARNOMBRE);
+                    break;
+                case "cedula":
+                    pstmt = conexion.prepareCall(BUSCARID);
+                    break;
+            }
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setString(2, id);
             pstmt.execute();

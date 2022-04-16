@@ -166,23 +166,23 @@ public class ServicioCiclo extends Servicio {
                 if (respuesta > 0) {
                     throw new GlobalException("Ya existe un ciclo activo");
                 }
-            } else {
-                pstmt = conexion.prepareStatement(MODIFICARCICLO);
-                  pstmt.setInt(1, ciclo.getId());
-                pstmt.setInt(2, ciclo.getAnnio());
-                pstmt.setInt(3, ciclo.getNumero());
-                pstmt.setInt(4, ciclo.isEstado());
-                pstmt.setString(5, ciclo.getFec_inicio());
-                pstmt.setString(6, ciclo.getFec_final());
-                int resultado = pstmt.executeUpdate();
-
-                //si es diferente de 0 es porq si afecto un registro o mas
-                if (resultado == 0) {
-                    throw new NoDataException("No se realizo la actualización");
-                } else {
-                    System.out.println("\nModificación Satisfactoria!");
-                }
             }
+            pstmt = conexion.prepareStatement(MODIFICARCICLO);
+            pstmt.setInt(1, ciclo.getId());
+            pstmt.setInt(2, ciclo.getAnnio());
+            pstmt.setInt(3, ciclo.getNumero());
+            pstmt.setInt(4, ciclo.isEstado());
+            pstmt.setString(5, ciclo.getFec_inicio());
+            pstmt.setString(6, ciclo.getFec_final());
+            int resultado = pstmt.executeUpdate();
+
+            //si es diferente de 0 es porq si afecto un registro o mas
+            if (resultado == 0) {
+                throw new NoDataException("No se realizo la actualización");
+            } else {
+                System.out.println("\nModificación Satisfactoria!");
+            }
+
         } catch (SQLException e) {
             throw new GlobalException("Sentencia no valida");
         } finally {

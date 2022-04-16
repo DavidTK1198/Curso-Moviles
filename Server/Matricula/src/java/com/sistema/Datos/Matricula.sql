@@ -72,7 +72,7 @@ AS
         carrera_cursor types.ref_cursor; 
 BEGIN 
   OPEN carrera_cursor FOR 
-       SELECT codigo,nombre,titulo FROM carrera  WHERE UPPER(nombre) LIKE UPPER(idbuscar)||'%';
+       SELECT codigo,nombre,titulo FROM carrera  WHERE UPPER(nombre) LIKE '%'||UPPER(idbuscar)||'%';
 RETURN carrera_cursor; 
 END;
 /
@@ -148,7 +148,7 @@ AS
         curso_cursor types.ref_cursor; 
 BEGIN 
   OPEN curso_cursor FOR 
-       SELECT codigo,nombre,creditos,hsemanales FROM curso   WHERE UPPER(nombre) LIKE UPPER(idbuscar)||'%';
+       SELECT codigo,nombre,creditos,hsemanales FROM curso   WHERE UPPER(nombre) LIKE '%'||UPPER(idbuscar)||'%';
 RETURN curso_cursor; 
 END;
 /
@@ -339,6 +339,18 @@ BEGIN
 RETURN profesor_cursor; 
 END;
 /
+
+
+CREATE OR REPLACE FUNCTION buscarprofesorpornombre(idbuscar IN profesor.nombre%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        profesor_cursor types.ref_cursor; 
+BEGIN 
+  OPEN profesor_cursor FOR 
+       SELECT cedula,nombre,email,telefono FROM profesor WHERE UPPER(nombre) LIKE '%'||UPPER(idbuscar)||'%'; 
+RETURN profesor_cursor; 
+END;
+/
 --LISTAR
 ------------------------------------------------------
 CREATE OR REPLACE FUNCTION listarProfesor
@@ -405,6 +417,30 @@ BEGIN
   OPEN alumno_cursor FOR 
          SELECT e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,c.codigo as car_codigo,c.nombre as car_name,c.titulo FROM Alumno e, Carrera c
         WHERE e.cedula=idbuscar; 
+RETURN alumno_cursor; 
+END;
+/
+
+CREATE OR REPLACE FUNCTION buscarAlumnopornombre(idbuscar IN Alumno.cedula%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        alumno_cursor types.ref_cursor; 
+BEGIN 
+  OPEN alumno_cursor FOR 
+         SELECT e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,c.codigo as car_codigo,c.nombre as car_name,c.titulo FROM Alumno e, Carrera c
+        WHERE UPPER(e.nombre) LIKE '%'||UPPER(idbuscar)||'%'; 
+RETURN alumno_cursor; 
+END;
+/
+
+CREATE OR REPLACE FUNCTION buscarAlumnoporcarrera(idbuscar IN Alumno.cedula%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        alumno_cursor types.ref_cursor; 
+BEGIN 
+  OPEN alumno_cursor FOR 
+         SELECT e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,c.codigo as car_codigo,c.nombre as car_name,c.titulo FROM Alumno e, Carrera c
+        WHERE e.carrerafk=idbuscar; 
 RETURN alumno_cursor; 
 END;
 /

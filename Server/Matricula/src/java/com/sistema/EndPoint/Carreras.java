@@ -28,7 +28,7 @@ public class Carreras {
     @Path("listar")
     @PermitAll
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Carrera> getCarrera() {
+    public List<Carrera> getCarreras() {
         try {
             return control.todasLasCarreras();
         } catch (Exception ex) {

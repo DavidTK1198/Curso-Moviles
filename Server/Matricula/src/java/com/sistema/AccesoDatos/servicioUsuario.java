@@ -9,8 +9,6 @@
 
 package com.sistema.AccesoDatos;
 
-import java.sql.CallableStatement;
-import java.sql.SQLException;
 import com.sistema.LogicaNegocio.Usuario;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;

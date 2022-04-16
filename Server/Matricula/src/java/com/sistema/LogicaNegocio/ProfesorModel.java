@@ -15,7 +15,7 @@ public class ProfesorModel {
     private static ProfesorModel uniqueInstance;
     private Profesor current;
     private final ServicioProfesor profesor_DBA;
-    private List<Profesor> alumnos;
+    private List<Profesor> profesores;
 
     public static ProfesorModel instance() {
         if (uniqueInstance == null) {
@@ -25,9 +25,9 @@ public class ProfesorModel {
         return uniqueInstance;
     }
 
-    public ProfesorModel() {
+    private ProfesorModel() {
         this.current = new Profesor();
-        this.alumnos = new ArrayList<>();
+        this.profesores = new ArrayList<>();
         this.profesor_DBA = ServicioProfesor.getInstance();
     }
 
@@ -38,8 +38,25 @@ public class ProfesorModel {
     public void setCurrent(Profesor current) {
         this.current = current;
     }
-    
-    public List<Profesor> todosLosProfesors() throws GlobalException, NoDataException{
-        return (List<Profesor>) profesor_DBA.listarProfesor();
+
+    public List<Profesor> getProfesores() {
+        return profesores;
     }
+
+    public void setProfesores(List<Profesor> profesores) {
+        this.profesores = profesores;
+    }
+
+    public void todosLosProfesors() throws GlobalException, NoDataException {
+        profesores = (List<Profesor>) profesor_DBA.listarProfesor();
+    }
+
+    public void buscarporCedula() throws GlobalException, NoDataException {
+        current = profesor_DBA.buscarProfesor(current.getCédula(), "cedula");
+    }
+
+    public void buscarporNombre() throws GlobalException, NoDataException {
+        current = profesor_DBA.buscarProfesor(current.getNombre(), "nombre");
+    }
+
 }
