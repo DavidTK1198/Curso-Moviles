@@ -6,12 +6,12 @@ export default class Carreers extends Component {
     constructor(props){
         super(props);
         this.state = {
-            courses: []
+            carreers: []
         }
         this.tabledata = this.tabledata.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        this.updateCoursesSort = this.updateCoursesSort.bind(this);
+        this.updateCarreersSort = this.updateCarreersSort.bind(this);
     }
     openModal = () => {
       this.setState({ show: true });
@@ -20,11 +20,11 @@ export default class Carreers extends Component {
       this.setState({ show: false });
     };
     componentDidMount() {
-      this.updateCoursesSort();
+      this.updateCarreersSort();
   }
-    updateCoursesSort() {
+    updateCarreersSort() {
       let options = {
-          url: "http://localhost:8088/Matricula/api/cursos/listar",
+          url: "http://localhost:8088/Matricula/api/carreras/listar",
           method: "GET",
           header: {
               'Accept': 'application/json',
@@ -35,7 +35,7 @@ export default class Carreers extends Component {
       axios(options).then(response => {
           console.log(response.data)
           this.setState({
-              courses: response.data
+              carreers: response.data
           });
       }).catch(error => {
         console.log(error);
@@ -45,30 +45,24 @@ export default class Carreers extends Component {
     let data = {
      columns: [
        {
-         label: 'codigo',
+         label: 'Codigo',
          field: 'codigo',
          sort:  'asc',
           
        },
        {
-         label: 'creditos',
-         field: 'creditos',
+         label: 'Nombre',
+         field: 'nombre',
          sort:  'asc',
           
        },
        {
-         label: 'hsemanales',
-         field: 'hsemanales',
+         label: 'Titulo',
+         field: 'titulo',
          sort:  'asc',
-       },
-       {
-         label: 'nombre',
-         field: 'nombre',
-         sort:  'asc',
-       }
-       
+       }      
      ],
-     rows: this.state.courses   
+     rows: this.state.carreers   
      }     
      return data
 }  
@@ -77,7 +71,7 @@ export default class Carreers extends Component {
             <div>            
               <MDBDataTable                     
                 searchLabel='Buscar'
-                autoWidth={true}
+                //autoWidth={true}
                 responsive
                 hover={true}
                 data={this.tabledata()}              

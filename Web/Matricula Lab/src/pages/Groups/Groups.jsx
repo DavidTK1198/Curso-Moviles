@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
+import { Button } from "react-bootstrap";
 import '../../css/Courses.css'
 import axios from 'axios';
 import { MDBDataTable,  } from 'mdbreact';
-export default class Courses extends Component {
+import AddGroupModal from './Components/AddGroupModal';
+export default class Groups extends Component {
     constructor(props){
         super(props);
         this.state = {
-            courses: []
+            groups: [],
+            show: false
         }
         this.tabledata = this.tabledata.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        this.updateCoursesSort = this.updateCoursesSort.bind(this);
+        this.updateGroupsSort = this.updateGroupsSort.bind(this);
     }
     openModal = () => {
       this.setState({ show: true });
@@ -20,11 +23,11 @@ export default class Courses extends Component {
       this.setState({ show: false });
     };
     componentDidMount() {
-      this.updateCoursesSort();
+      this.updateGroupsSort();
   }
-    updateCoursesSort() {
+    updateGroupsSort() {
       let options = {
-          url: "http://localhost:8088/Matricula/api/cursos/listar",
+          url: "http://localhost:8088/Matricula/api/grupos/listar",
           method: "GET",
           header: {
               'Accept': 'application/json',
@@ -68,13 +71,17 @@ export default class Courses extends Component {
               }
               
             ],
-            rows: this.state.courses   
+            rows: this.state.groups   
             }         
             return data
     }   
     render() {
         return (
-            <div>           
+            <div>
+              <Button size="sm" onClick={this.openModal} variant="success" key="AddIncidenceButton">
+                <i className="bi bi-plus-square"></i> {' '}
+                    Agregar Incidencia
+              </Button>           
               <MDBDataTable 
                 searchLabel='Buscar'
                 //autoWidth={true}
@@ -82,6 +89,10 @@ export default class Courses extends Component {
                 hover={true}
                 data={this.tabledata()}              
                 />
+              <AddGroupModal
+                show = {this.state.show}
+                closeModal = {this.closeModal}
+              />
             </div>
         );
     }

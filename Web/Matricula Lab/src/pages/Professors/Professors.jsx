@@ -11,7 +11,7 @@ export default class Professors extends Component {
         this.tabledata = this.tabledata.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        this.updateCoursesSort = this.updateCoursesSort.bind(this);
+        this.updateProfessorsSort = this.updateProfessorsSort.bind(this);
     }
     openModal = () => {
       this.setState({ show: true });
@@ -20,9 +20,9 @@ export default class Professors extends Component {
       this.setState({ show: false });
     };
     componentDidMount() {
-      this.updateCoursesSort();
+      this.updateProfessorsSort();
   }
-    updateCoursesSort() {
+    updateProfessorsSort() {
       let options = {
           url: "http://localhost:8088/Matricula/api/profesores/listar",
           method: "GET",
@@ -45,24 +45,24 @@ export default class Professors extends Component {
     let data = {
      columns: [
        {
-         label: 'cédula',
+         label: 'Cédula',
          field: 'cédula',
          sort:  'asc',
           
        },
        {
-         label: 'email',
+         label: 'Correo',
          field: 'email',
          sort:  'asc',
           
        },
        {
-         label: 'nombre',
+         label: 'Nombre',
          field: 'nombre',
          sort:  'asc',
        },
        {
-         label: 'teléfono',
+         label: 'Teléfono',
          field: 'teléfono',
          sort:  'asc',
        }
@@ -77,7 +77,7 @@ export default class Professors extends Component {
             <div>            
               <MDBDataTable                     
                 searchLabel='Buscar'
-                autoWidth={true}
+                //autoWidth={true}
                 responsive
                 hover={true}
                 data={this.tabledata()}              

@@ -2,10 +2,11 @@
 import React from 'react';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Login from '../pages/Login';
-import Carreers from '../pages/Carreers/Carreers'
-import Courses from '../pages/Courses/Courses'
-import Professors from '../pages/Professors/Professors'
-import Students from '../pages/Students/Students'
+import Carreers from '../pages/Carreers/Carreers';
+import Courses from '../pages/Courses/Courses';
+import Professors from '../pages/Professors/Professors';
+import Students from '../pages/Students/Students';
+import Groups from '../pages/Groups/Groups';
 import Logout from '../pages/Logout';
 import Menu from '../pages/Menu';
 import Footer from '../components/Footer';
@@ -29,7 +30,7 @@ function Routes() {
             <Route path="/logout" component={Logout} />
             <Route path="/carreras" component={Carreers}/> 
             <Route path="/cursos" component={Courses}/> 
-            <Route path="/grupos"><h1>Grupos</h1></Route>
+            <Route path="/grupos" component={Groups}/> 
             <Route path="/estudiantes" component={Students}/>
             <Route path="/profesores" component={Professors}/>
             <Route path="/matricula"><h1>Matricula</h1></Route>

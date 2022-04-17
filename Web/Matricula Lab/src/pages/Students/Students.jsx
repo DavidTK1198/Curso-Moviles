@@ -11,7 +11,7 @@ export default class Students extends Component {
         this.tabledata = this.tabledata.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        this.updateCoursesSort = this.updateCoursesSort.bind(this);
+        this.updateStudentsSort = this.updateStudentsSort.bind(this);
     }
     openModal = () => {
       this.setState({ show: true });
@@ -20,9 +20,9 @@ export default class Students extends Component {
       this.setState({ show: false });
     };
     componentDidMount() {
-      this.updateCoursesSort();
+      this.updateStudentsSort();
   }
-    updateCoursesSort() {
+    updateStudentsSort() {
       let options = {
           url: "http://localhost:8088/Matricula/api/alumnos/listar",
           method: "GET",
@@ -45,30 +45,30 @@ export default class Students extends Component {
     let data = {
      columns: [
        {
-         label: 'cédula',
+         label: 'Cédula',
          field: 'cédula',
          sort:  'asc',
           
        },
        {
-         label: 'email',
+         label: 'Correo',
          field: 'email',
          sort:  'asc',
           
        },
        {
-         label: 'fech_nac',
+         label: 'Fecha de nacimiento',
          field: 'fech_nac',
          sort:  'asc',
        },
        {
-         label: 'nombre',
+         label: 'Nombre',
          field: 'nombre',
          sort:  'asc',
        },
        {
-         label: 'titulo',
-         field: 'titulo',
+         label: 'Teléfono',
+         field: 'teléfono',
          sort:  'asc',
        }
      ],
@@ -81,7 +81,7 @@ export default class Students extends Component {
             <div>            
               <MDBDataTable                     
                 searchLabel='Buscar'
-                autoWidth={true}
+                //autoWidth={true}
                 responsive
                 hover={true}
                 data={this.tabledata()}              
