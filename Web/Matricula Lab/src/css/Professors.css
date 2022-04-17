@@ -1,0 +1,21 @@
+.mtr-button{
+    margin: 5px;
+    background-color: brown ;
+    border-color: brown;
+
+}
+
+.mtr-button:hover{
+    background-color: rgb(138, 32, 32);
+    border-color: rgb(138, 32, 32);
+    
+}
+
+.input-group{
+    float: right !important;
+}
+
+
+.sorting{
+    width: 100vh !important;
+}

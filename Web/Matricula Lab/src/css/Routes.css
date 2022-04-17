@@ -1,0 +1,16 @@
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .content-wrap {
+    flex: 1;
+  }
+  .App {
+    text-align: center;
+  }
+  
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
