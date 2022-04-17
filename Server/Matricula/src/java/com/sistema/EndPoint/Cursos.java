@@ -20,9 +20,7 @@ import javax.ws.rs.QueryParam;
 @Path("/cursos")
 @PermitAll
 public class Cursos {
-
     CursoController control = CursoController.getInstance();
-
     @GET
     @Path("listar")
     @PermitAll

@@ -4,7 +4,6 @@ package com.sistema.AccesoDatos;
  *
  * @author DavidTK1198
  */
-
 import com.sistema.LogicaNegocio.Ciclo;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -23,8 +22,10 @@ public class ServicioCiclo extends Servicio {
     private static final String insertarCiclo = "{call insertarCiclo (?,?,?,?,?)}";
     private static final String LISTAR = "{?=call listarciclo()}";
     private static final String BUSCARID = "{?=call buscarciclo(?)}";
-    private static final String modificarCiclo = "{call modificarCiclo (?,?,?,?,?,?)}";
-    private static final String eliminarCiclo = "{call eliminarCiclo(?)}";
+    private static final String BUSCARANNIO = "{?=call buscarCicloAnnio(?)}";
+    private static final String MODIFICARCICLO = "{call modificarCiclo (?,?,?,?,?,?)}";
+    private static final String ELIMINARCICLO = "{call eliminarCiclo(?)}";
+    private static final String REVISARACTIVO = "{?=call revisaractivo()}";
     private static ServicioCiclo instance = null;
 
     /**
@@ -41,7 +42,7 @@ public class ServicioCiclo extends Servicio {
         return instance;
     }
 
-    public Collection listarCiclo() throws GlobalException, NoDataException {
+    public Collection listarCiclo(String medio, int valor) throws GlobalException, NoDataException {
         try {
             conectar();
         } catch (ClassNotFoundException ex) {
@@ -55,7 +56,17 @@ public class ServicioCiclo extends Servicio {
         Ciclo ciclo = null;
         CallableStatement pstmt = null;
         try {
-            pstmt = conexion.prepareCall(LISTAR);
+
+            switch (medio) {
+                case "annio":
+                    pstmt = conexion.prepareCall(BUSCARANNIO);
+                    pstmt.setInt(2, valor);
+                    break;
+                case "todos":
+                    pstmt = conexion.prepareCall(LISTAR);
+                    break;
+            }
+
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.execute();
             rs = (ResultSet) pstmt.getObject(1);
@@ -131,7 +142,7 @@ public class ServicioCiclo extends Servicio {
         }
     }
 
-    public void modificarCiclo(Ciclo ciclo) throws GlobalException, NoDataException {
+    public void modificarCiclo(Ciclo ciclo, String opc) throws GlobalException, NoDataException {
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -140,21 +151,38 @@ public class ServicioCiclo extends Servicio {
             throw new NoDataException("La base de datos no se encuentra disponible");
         }
         PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        CallableStatement castmt = null;
         try {
-            pstmt = conexion.prepareStatement(modificarCiclo);
-            pstmt.setInt(1, ciclo.getAnnio());
-            pstmt.setInt(2, ciclo.getNumero());
-            pstmt.setInt(3, ciclo.isEstado());
-            pstmt.setString(4, ciclo.getFec_inicio());
-            pstmt.setString(5, ciclo.getFec_final());
+            if ("activar".equals(opc)) {
+                castmt = conexion.prepareCall(REVISARACTIVO);
+                castmt.registerOutParameter(1, OracleTypes.CURSOR);
+                castmt.execute();
+                int respuesta = 0;
+                rs = (ResultSet) castmt.getObject(1);
+                while (rs.next()) {
+                    respuesta = rs.getInt("esta");
+                }
+                if (respuesta > 0) {
+                    throw new GlobalException("Ya existe un ciclo activo");
+                }
+            }
+            pstmt = conexion.prepareStatement(MODIFICARCICLO);
+            pstmt.setInt(1, ciclo.getId());
+            pstmt.setInt(2, ciclo.getAnnio());
+            pstmt.setInt(3, ciclo.getNumero());
+            pstmt.setInt(4, ciclo.isEstado());
+            pstmt.setString(5, ciclo.getFec_inicio());
+            pstmt.setString(6, ciclo.getFec_final());
             int resultado = pstmt.executeUpdate();
 
             //si es diferente de 0 es porq si afecto un registro o mas
-            if (resultado != 0) {
+            if (resultado == 0) {
                 throw new NoDataException("No se realizo la actualización");
             } else {
                 System.out.println("\nModificación Satisfactoria!");
             }
+
         } catch (SQLException e) {
             throw new GlobalException("Sentencia no valida");
         } finally {
@@ -179,7 +207,7 @@ public class ServicioCiclo extends Servicio {
         }
         PreparedStatement pstmt = null;
         try {
-            pstmt = conexion.prepareStatement(eliminarCiclo);
+            pstmt = conexion.prepareStatement(ELIMINARCICLO);
             pstmt.setString(1, id);
 
             int resultado = pstmt.executeUpdate();
@@ -203,7 +231,7 @@ public class ServicioCiclo extends Servicio {
         }
     }
 
-    public Ciclo buscarCiclo(String id) throws GlobalException, NoDataException {
+    public Ciclo buscarCiclo(int id) throws GlobalException, NoDataException {
 
         try {
             conectar();
@@ -217,9 +245,10 @@ public class ServicioCiclo extends Servicio {
         Ciclo ciclo = null;
         CallableStatement pstmt = null;
         try {
+
             pstmt = conexion.prepareCall(BUSCARID);
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
-            pstmt.setString(2, id);
+            pstmt.setInt(2, id);
             pstmt.execute();
             rs = (ResultSet) pstmt.getObject(1);
             while (rs.next()) {

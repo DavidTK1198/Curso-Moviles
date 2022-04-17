@@ -25,7 +25,7 @@ public class AlumnoModel {
         return uniqueInstance;
     }
 
-    public AlumnoModel() {
+    private AlumnoModel() {
         this.current = new Alumno();
         this.alumnos = new ArrayList<>();
         this.alumno_DBA = ServicioAlumno.getInstance();
@@ -38,8 +38,28 @@ public class AlumnoModel {
     public void setCurrent(Alumno current) {
         this.current = current;
     }
-    
-    public List<Alumno> todosLosAlumnos() throws GlobalException, NoDataException{
-        return (List<Alumno>) alumno_DBA.listarAlumno();
+
+    public List<Alumno> getAlumnos() {
+        return alumnos;
+    }
+
+    public void setAlumnos(List<Alumno> alumnos) {
+        this.alumnos = alumnos;
+    }
+
+    public void todosLosAlumnos() throws GlobalException, NoDataException {
+        alumnos = (List<Alumno>) alumno_DBA.listarAlumno("todos","");
+    }
+
+    public void buscarporCedula() throws GlobalException, NoDataException {
+        current = alumno_DBA.buscarAlumno(current.getCédula(), "cedula");
+    }
+
+    public void buscarporNombre() throws GlobalException, NoDataException {
+        current = alumno_DBA.buscarAlumno(current.getNombre(), "nombre");
+    }
+
+    public void buscarporCarrera() throws GlobalException, NoDataException {
+        alumnos = (List<Alumno>) alumno_DBA.listarAlumno("carrera", current.getCarrera().getCodigo());
     }
 }

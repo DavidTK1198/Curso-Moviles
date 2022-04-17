@@ -21,6 +21,12 @@ create sequence secuenciagrupo start with 1;
 create sequence secuenciainscripcion start with 1000;
 create sequence secuenciacurcar start with 100;
 create sequence secuenciaciclo start with 10000;
+PROMPT  CREACION DEl CURSOR
+CREATE OR REPLACE PACKAGE types
+AS
+     TYPE ref_cursor IS REF CURSOR;
+END;
+/
 --CARRERA
 ------------------------------------------------------
 PROMPT SE CREA CARRERA
@@ -32,11 +38,6 @@ titulo VARCHAR(50),
 CONSTRAINTS pkcarrera PRIMARY KEY (codigo)
 );
 
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-/
 --INSERTAR
 ------------------------------------------------------
 CREATE OR REPLACE PROCEDURE insertarcarrera(codigo IN carrera.codigo%TYPE,nombre IN carrera.nombre%TYPE,
@@ -63,6 +64,16 @@ AS
 BEGIN 
   OPEN carrera_cursor FOR 
        SELECT codigo,nombre,titulo FROM carrera WHERE codigo=idbuscar; 
+RETURN carrera_cursor; 
+END;
+/
+CREATE OR REPLACE FUNCTION buscarcarreranombre(idbuscar IN carrera.nombre%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        carrera_cursor types.ref_cursor; 
+BEGIN 
+  OPEN carrera_cursor FOR 
+       SELECT codigo,nombre,titulo FROM carrera  WHERE UPPER(nombre) LIKE '%'||UPPER(idbuscar)||'%';
 RETURN carrera_cursor; 
 END;
 /
@@ -98,11 +109,6 @@ hsemanales NUMBER,
 CONSTRAINTS pkcurso PRIMARY KEY (codigo)
 );
 
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-/
 --INSERTAR
 ------------------------------------------------------
 CREATE OR REPLACE PROCEDURE insertarCurso(codigo IN curso.codigo%TYPE,nombre in curso.nombre%type,creditos in curso.creditos%type,hsemanales in curso.hsemanales%type)
@@ -132,13 +138,13 @@ RETURN curso_cursor;
 END;
 /
 
-CREATE OR REPLACE FUNCTION buscarcursopornombre(idbuscar IN curso.codigo%TYPE)
+CREATE OR REPLACE FUNCTION buscarcursopornombre(idbuscar IN curso.nombre%TYPE)
 RETURN Types.ref_cursor 
 AS 
         curso_cursor types.ref_cursor; 
 BEGIN 
   OPEN curso_cursor FOR 
-       SELECT codigo,nombre,creditos,hsemanales FROM curso   WHERE UPPER(nombre) LIKE UPPER(idbuscar)||'%';
+       SELECT codigo,nombre,creditos,hsemanales FROM curso   WHERE UPPER(nombre) LIKE '%'||UPPER(idbuscar)||'%';
 RETURN curso_cursor; 
 END;
 /
@@ -178,7 +184,7 @@ alter table  curso_carrera add constraint FKCur foreign key (fkcurso) references
 alter table  curso_carrera add constraint FKCar foreign key (fkcarrera) references carrera; 
 alter table  curso_carrera add constraint fkrequisito foreign key (requisito) references curso; 
 
-CREATE OR REPLACE FUNCTION buscarcursoporcarrera(idbuscar IN curso.codigo%TYPE)
+CREATE OR REPLACE FUNCTION buscarcursoporcarrera(idbuscar IN carrera.codigo%TYPE)
 RETURN Types.ref_cursor 
 AS 
         curso_cursor types.ref_cursor; 
@@ -193,11 +199,6 @@ RETURN curso_cursor;
 END;
 /
 
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-/
 --CICLO
 ------------------------------------------------------
 PROMPT SE CREA CICLO
@@ -211,11 +212,7 @@ fec_inicio VARCHAR(20),
 fec_final VARCHAR(20),
 CONSTRAINTS pkciclo PRIMARY KEY (id)
 );
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-/
+
 --INSERTAR
 ------------------------------------------------------
 CREATE OR REPLACE PROCEDURE insertarCiclo(annio in ciclo.annio%type,numero in ciclo.numero%type,estado IN ciclo.estado%TYPE,fec_inicio in ciclo.fec_inicio%type,fec_final in ciclo.fec_final%type)
@@ -242,6 +239,26 @@ BEGIN
   OPEN ciclo_cursor FOR 
        SELECT id,estado,numero,annio,fec_inicio,fec_final FROM ciclo WHERE id=idbuscar; 
 RETURN ciclo_cursor; 
+END;
+/
+CREATE OR REPLACE FUNCTION buscarCicloAnnio(idbuscar IN ciclo.annio%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        ciclo_cursor types.ref_cursor; 
+BEGIN 
+  OPEN ciclo_cursor FOR 
+       SELECT id,estado,numero,annio,fec_inicio,fec_final FROM ciclo WHERE annio=idbuscar; 
+RETURN ciclo_cursor; 
+END;
+/
+CREATE OR REPLACE FUNCTION revisaractivo
+RETURN Types.ref_cursor 
+AS 
+        ciclo_cursor types.ref_cursor; 
+BEGIN 
+  OPEN ciclo_cursor FOR 
+	  SELECT COUNT(id) AS esta FROM ciclo WHERE estado=1;
+	 RETURN ciclo_cursor; 
 END;
 /
 --LISTAR
@@ -273,11 +290,7 @@ telefono varchar(15),
 email varchar(50),
 constraint PKPROFESOR primary key (cedula)
 );
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-/
+
 
 --INSERTAR
 ------------------------------------------------------
@@ -306,6 +319,18 @@ AS
 BEGIN 
   OPEN profesor_cursor FOR 
        SELECT cedula,nombre,email,telefono FROM profesor WHERE cedula=idbuscar; 
+RETURN profesor_cursor; 
+END;
+/
+
+
+CREATE OR REPLACE FUNCTION buscarprofesorpornombre(idbuscar IN profesor.nombre%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        profesor_cursor types.ref_cursor; 
+BEGIN 
+  OPEN profesor_cursor FOR 
+       SELECT cedula,nombre,email,telefono FROM profesor WHERE UPPER(nombre) LIKE '%'||UPPER(idbuscar)||'%'; 
 RETURN profesor_cursor; 
 END;
 /
@@ -342,11 +367,7 @@ carrerafk varchar(20),
 constraint PKALUMNO primary key (cedula)
 );
 alter table  Alumno add constraint FKCARRERA foreign key (carrerafk) references carrera; 
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-/
+
 --INSERTAR
 ------------------------------------------------------
 CREATE OR REPLACE PROCEDURE insertarAlumno(cedula IN Alumno.cedula%TYPE,nombre IN Alumno.nombre%TYPE,
@@ -374,7 +395,31 @@ AS
 BEGIN 
   OPEN alumno_cursor FOR 
          SELECT e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,c.codigo as car_codigo,c.nombre as car_name,c.titulo FROM Alumno e, Carrera c
-        WHERE e.cedula=idbuscar; 
+        WHERE e.cedula=idbuscar and e.carrerafk=c.codigo; 
+RETURN alumno_cursor; 
+END;
+/
+
+CREATE OR REPLACE FUNCTION buscarAlumnopornombre(idbuscar IN Alumno.cedula%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        alumno_cursor types.ref_cursor; 
+BEGIN 
+  OPEN alumno_cursor FOR 
+         SELECT e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,c.codigo as car_codigo,c.nombre as car_name,c.titulo FROM Alumno e, Carrera c
+        WHERE UPPER(e.nombre) LIKE '%'||UPPER(idbuscar)||'%' and e.carrerafk=c.codigo; 
+RETURN alumno_cursor; 
+END;
+/
+
+CREATE OR REPLACE FUNCTION buscarAlumnoporcarrera(idbuscar IN Alumno.cedula%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        alumno_cursor types.ref_cursor; 
+BEGIN 
+  OPEN alumno_cursor FOR 
+         SELECT e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,c.codigo as car_codigo,c.nombre as car_name,c.titulo FROM Alumno e, Carrera c
+        WHERE e.carrerafk=idbuscar and e.carrerafk=c.codigo; 
 RETURN alumno_cursor; 
 END;
 /
@@ -416,11 +461,7 @@ profesorfk varchar(15),
 constraint  PKGRUPO primary key (idgrupo),
 constraint UKGRUPO unique  (ciclofk,numgrupo,cursofk)
 );
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-/
+
 alter table  Grupo add constraint FKCURSO foreign key (cursofk) references curso; 
 alter table  Grupo add constraint FKCICLO foreign key (ciclofk) references ciclo; 
 alter table  Grupo add constraint FKPROFESOR foreign key (profesorfk) references profesor; 
@@ -472,11 +513,7 @@ CONSTRAINTS pkInscripcion PRIMARY KEY (id)
 );
 alter table  Inscripcion add constraint FKGRUPO foreign key (fkgrupo) references Grupo; 
 alter table  Inscripcion add constraint FKALUMNO foreign key (fkalumno) references Alumno; 
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-/
+
 CREATE OR REPLACE PROCEDURE insertarInscripcion(grupoin IN grupo.numgrupo%TYPE,alumnoin IN Alumno.cedula%TYPE)
 AS
 BEGIN
@@ -513,11 +550,7 @@ nombreUsuario varchar(30),
 contrasea varchar(10),
 constraint PKUSUARIO primary key (cedula)
 );
-CREATE OR REPLACE PACKAGE types
-AS
-     TYPE ref_cursor IS REF CURSOR;
-END;
-/
+
 --INSERTAR
 ------------------------------------------------------
 CREATE OR REPLACE PROCEDURE insertarUsuario(cedulain IN usuario.cedula%TYPE, rolin IN usuario.rol%TYPE,
@@ -598,7 +631,7 @@ INSERT INTO usuario VALUES('207760240','EST','EstebanUG','123');
 INSERT INTO usuario VALUES('123456789','PROF','PedritoA','111');
 INSERT INTO usuario VALUES('987654321','MAT','MariaE','222');
 INSERT INTO carrera VALUES('EIF','Ingenieria en Sistemas','Bachillerato');
-INSERT INTO carrera VALUES('MAC','Enseñanza de Matematica','Licenciatura');
+INSERT INTO carrera VALUES('MAC','Ensenanza de Matematica','Licenciatura');
 INSERT INTO carrera VALUES('CDN','Ciencias del Movimiento Humano','Bachillerato');
 INSERT INTO Alumno VALUES('100000002','Emmanuel Barrientos','4030-6832','emmanuel@gmail.com','9/11/1992','EIF');
 INSERT INTO Alumno VALUES('200000003','Daniel Madrigal','6079-7171','ddavidb09@gmail.com','4/05/1998','MAC');
