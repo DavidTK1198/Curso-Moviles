@@ -23,25 +23,27 @@ export default class Courses extends Component {
     componentDidMount() {
       this.updateCoursesSort();
   }
-    updateCoursesSort() {
-      let options = {
-          url: "http://localhost:8088/Matricula/api/cursos/listar",
-          method: "GET",
-          header: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': '*'
-          }
-      }
-      axios(options).then(response => {
-          console.log(response.data)
-          this.setState({
-              courses: response.data
-          });
-      }).catch(error => {
-        console.log(error);
+  updateCoursesSort() {
+    let query = new URLSearchParams(this.props.location.search);
+    console.log(query.get('codigo'))
+    let options = {
+        url: "http://localhost:8088/Matricula/api/cursos/cursoCarrera?codigo=" + query.get('codigo'),
+        method: "GET",
+        header: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        }
+    }
+    axios(options).then(response => {
+        console.log(response.data)
+        this.setState({
+            courses: response.data
         });
-  };
+    }).catch(error => {
+      console.log(error);
+      });
+};
     tabledata() {
            let data = {
             columns: [
@@ -73,7 +75,7 @@ export default class Courses extends Component {
             }    
             for(let i in data.rows){
               let cName = data.rows[i]['nombre'];
-              data.rows[i]['nombre'] = <Link to={{ pathname: "/carrera", search: `?id=${data.rows[i]['id']}` }}>
+              data.rows[i]['nombre'] = <Link to={{ pathname: "/curso", search: `?id=${data.rows[i]['id']}` }}>
               {cName}</Link> 
             }       
             return data

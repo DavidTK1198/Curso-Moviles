@@ -67,7 +67,7 @@ export default class Careers extends Component {
      }
      for(let i in data.rows){
       let cName = data.rows[i]['nombre'];
-      data.rows[i]['nombre'] = <Link to={{ pathname: "/cursos", search: `?id=${data.rows[i]['id']}` }}>
+      data.rows[i]['nombre'] = <Link to={{ pathname: "/cursos", search: `?codigo=${data.rows[i]['codigo']}` }}>
       {cName}</Link> 
     }     
      return data

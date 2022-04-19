@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 import '../../../css/AddGroupModal.css';
-import { Modal, Button, Form, OverlayTrigger, Tooltip, Stack } from "react-bootstrap";
+import { Modal, Button, Form, Stack } from "react-bootstrap";
 
 export default class AddIncidentModal extends Component {
     constructor(props) {
