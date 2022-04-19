@@ -454,12 +454,12 @@ CREATE table Grupo(
 idgrupo number,
 numgrupo number,
 cupo number,
-cursofk varchar(15),
+disponible number,
+cursofk varchar(15) not null,
 horario varchar(30),
-ciclofk number,
-profesorfk varchar(15),
-constraint  PKGRUPO primary key (idgrupo),
-constraint UKGRUPO unique  (ciclofk,numgrupo,cursofk)
+ciclofk number not null,
+profesorfk varchar(15) not null,
+constraint  PKGRUPO primary key (idgrupo)
 );
 
 alter table  Grupo add constraint FKCURSO foreign key (cursofk) references curso; 
@@ -468,38 +468,52 @@ alter table  Grupo add constraint FKPROFESOR foreign key (profesorfk) references
 
 --INSERTAR
 ------------------------------------------------------
-CREATE OR REPLACE PROCEDURE insertarGrupo(numgrupoin IN grupo.numgrupo%TYPE,cupoin IN grupo.cupo%TYPE,cursoin IN grupo.cursofk%TYPE,
+CREATE OR REPLACE PROCEDURE insertarGrupo(numgrupoin IN grupo.numgrupo%TYPE,cupoin IN grupo.cupo%TYPE,disponiblein IN grupo.disponible%TYPE,
+cursoin IN grupo.cursofk%TYPE,
 horarioin IN grupo.horario%type,cicloin IN grupo.ciclofk%TYPE,profesorin IN grupo.profesorfk%TYPE)
 AS
 BEGIN
-	INSERT INTO grupo VALUES(secuenciagrupo.nextval,numgrupoin,cupoin,cursoin,horarioin,cicloin,profesorin);
+	INSERT INTO grupo VALUES(secuenciagrupo.nextval,numgrupoin,cupoin,disponiblein,cursoin,horarioin,cicloin,profesorin);
 END;
 /
 
 --ACTUALIZAR
 ------------------------------------------------------
-CREATE OR REPLACE PROCEDURE modificarGrupo (numgrupoin IN grupo.numgrupo%TYPE,cupoin IN grupo.cupo%TYPE,cursoin IN grupo.cursofk%TYPE,
+CREATE OR REPLACE PROCEDURE modificarGrupo (idin grupo.idgrupo%TYPE,numgrupoin IN grupo.numgrupo%TYPE,cupoin IN grupo.cupo%TYPE,disponiblein IN grupo.disponible%TYPE,cursoin IN grupo.cursofk%TYPE,
 horarioin IN grupo.horario%type,cicloin IN grupo.ciclofk%TYPE,profesorin IN grupo.profesorfk%TYPE)
 AS
 BEGIN
-UPDATE grupo SET numgrupo=numgrupo,cupo=cupoin,cursofk=cursoin,horario=horarioin,ciclofk=cicloin,profesorfk=profesorin 
-WHERE numgrupo=numgrupoin and cursofk=cursoin and ciclofk=cicloin;
+UPDATE grupo SET numgrupo=numgrupo,cupo=cupoin,disponible=disponiblein,cursofk=cursoin,horario=horarioin,ciclofk=cicloin,profesorfk=profesorin 
+WHERE idgrupo=idin;
 END;
 /
 --CONSULTAR
 ------------------------------------------------------
-CREATE OR REPLACE FUNCTION buscarGrupo(numgrupoin IN grupo.numgrupo%TYPE,cursoin IN grupo.cursofk%TYPE,
+CREATE OR REPLACE FUNCTION buscargrupo(idbuscar IN carrera.codigo%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        grupo_cursor types.ref_cursor; 
+BEGIN 
+  OPEN grupo_cursor FOR 
+           SELECT g.idgrupo as identidad,g.numgrupo,g.cupo,g.disponible,g.horario,p.cedula,p.nombre,p.email,p.telefono FROM grupo g, profesor p
+       WHERE  g.idgrupo=idbuscar;
+RETURN grupo_cursor; 
+END;
+/
+
+CREATE OR REPLACE FUNCTION listarGrupo(cursoin IN grupo.cursofk%TYPE,
 cicloin IN grupo.ciclofk%TYPE)
 RETURN Types.ref_cursor 
 AS 
         grupo_cursor types.ref_cursor; 
 BEGIN 
   OPEN grupo_cursor FOR 
-       SELECT idgrupo as numeroGrupo FROM GRUPO
-       WHERE numgrupo=numgrupoin and cursofk=cursoin and ciclofk=cicloin;
+       SELECT g.idgrupo as identidad,g.numgrupo,g.cupo,g.disponible,g.horario,p.cedula,p.nombre,p.email,p.telefono FROM grupo g, profesor p
+       WHERE  cursofk=cursoin and ciclofk=cicloin and g.profesorfk=p.cedula;
 RETURN grupo_cursor; 
 END;
 /
+
 --INSCRIPCION
 ------------------------------------------------------
 PROMPT SE CREA Inscripcion
@@ -635,7 +649,8 @@ INSERT INTO carrera VALUES('MAC','Ensenanza de Matematica','Licenciatura');
 INSERT INTO carrera VALUES('CDN','Ciencias del Movimiento Humano','Bachillerato');
 INSERT INTO Alumno VALUES('100000002','Emmanuel Barrientos','4030-6832','emmanuel@gmail.com','9/11/1992','EIF');
 INSERT INTO Alumno VALUES('200000003','Daniel Madrigal','6079-7171','ddavidb09@gmail.com','4/05/1998','MAC');
-INSERT INTO profesor VALUES('100000002','Pedro Alvarez','4032-2525','pedroa@gmail.com');
+INSERT INTO profesor VALUES('111','Pedro Alvarez','4032-2525','pedroa@gmail.com');
+INSERT INTO profesor VALUES('222','Roberto Alvarez','4032-2525','pedroa@gmail.com');
 INSERT INTO curso VALUES('EIF200','Fundamentos de Informatica',3,8);
 INSERT INTO curso VALUES('MAT030','Matematica para Informatica',4,11);
 INSERT INTO curso VALUES('EIF201','Programacion I',4,11);
@@ -660,6 +675,9 @@ INSERT INTO curso_carrera VALUES(secuenciacurcar.nextval,'EIF201','EIF','MAT030'
 INSERT INTO ciclo VALUES(secuenciaciclo.nextval,1,1,2022,'7/3/2022','25/6/2022');
 INSERT INTO ciclo VALUES(secuenciaciclo.nextval,2,2,2022,'8/8/2022','25/11/2022');
 INSERT INTO ciclo VALUES(secuenciaciclo.nextval,2,2,2021,'7/8/2021','27/11/2021');
+INSERT INTO grupo VALUES(secuenciagrupo.nextval,1,20,20,'EIF201','L-V 8-9:40',10000,'111');
+INSERT INTO grupo VALUES(secuenciagrupo.nextval,2,20,20,'EIF200','L-V 8-9:40',10000,'111');
+INSERT INTO grupo VALUES(secuenciagrupo.nextval,3,20,20,'EIF201','M-J 8-9:40',10000,'222');
 commit;
 
 

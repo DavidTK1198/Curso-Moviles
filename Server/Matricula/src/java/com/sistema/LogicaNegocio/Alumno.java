@@ -6,7 +6,7 @@ package com.sistema.LogicaNegocio;
  */
 public class Alumno {
 
-    private String cédula;
+    private String cedula;
     private String nombre;
     private String teléfono;
     private String email;
@@ -15,7 +15,7 @@ public class Alumno {
 
     public Alumno() {
 
-        cédula = "";
+        cedula = "";
         nombre = "";
         teléfono = "";
         email = "";
@@ -23,8 +23,8 @@ public class Alumno {
         carrera = new Carrera();
     }
 
-    public Alumno(String cédula, String nombre, String teléfono, String email, String fech_nac, Carrera carrera) {
-        this.cédula = cédula;
+    public Alumno(String cedula, String nombre, String teléfono, String email, String fech_nac, Carrera carrera) {
+        this.cedula = cedula;
         this.nombre = nombre;
         this.teléfono = teléfono;
         this.email = email;
@@ -33,11 +33,11 @@ public class Alumno {
     }
 
     public String getCédula() {
-        return cédula;
+        return cedula;
     }
 
-    public void setCédula(String cédula) {
-        this.cédula = cédula;
+    public void setCédula(String cedula) {
+        this.cedula = cedula;
     }
 
     public String getNombre() {

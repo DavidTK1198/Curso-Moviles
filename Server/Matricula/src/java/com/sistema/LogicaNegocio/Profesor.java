@@ -5,27 +5,28 @@ package com.sistema.LogicaNegocio;
  * @author DavidTK1198
  */
 public class Profesor {
-    private String cédula;
+    private String cedula;
     private String nombre;
       private String teléfono;
     private String email;
 
-    public String getCédula() {
-        return cédula;
+    public String getCedula() {
+        return cedula;
     }
 
-    public Profesor(String cédula, String nombre, String teléfono, String email) {
-        this.cédula = cédula;
+    public Profesor(String cedula, String nombre, String teléfono, String email) {
+        this.cedula = cedula;
         this.nombre = nombre;
         this.teléfono = teléfono;
         this.email = email;
     }
 
     public Profesor() {
+          this("","","","");
     }
 
-    public void setCédula(String cédula) {
-        this.cédula = cédula;
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
 
     public String getNombre() {

@@ -75,6 +75,7 @@ public class ServicioCurso extends Servicio {
                 curso.setHsemanales(rs.getInt("hsemanales"));
                 curso.setCarrera(new Carrera());
                 coleccion.add(curso);
+                curso.getCarrera().setNombre("Sistemas");
             }
         } catch (SQLException e) {
             e.printStackTrace();

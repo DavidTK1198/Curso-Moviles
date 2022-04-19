@@ -13,6 +13,7 @@ public class Inscripcion {
     private Alumno estudiante;
     private String nota;
     private Grupo grupo;
+    private int idEntidad;
     
     public Inscripcion(Alumno estudiante,String nota, Grupo grupo){
         this.estudiante = estudiante;
@@ -24,6 +25,15 @@ public class Inscripcion {
         estudiante=new Alumno();
         nota = "";
         grupo = new Grupo();
+        idEntidad=0;
+    }
+
+    public int getIdEntidad() {
+        return idEntidad;
+    }
+
+    public void setIdEntidad(int idEntidad) {
+        this.idEntidad = idEntidad;
     }
     
     public Alumno getEstudiante(){
