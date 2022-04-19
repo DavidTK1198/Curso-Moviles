@@ -20,8 +20,8 @@ public class ServicioGrupo extends Servicio {
 
     private static final String insertarGrupo = "{call insertarGrupo (?,?,?,?,?,?,?)}";
     private static final String LISTAR = "{?=call listargrupo(?,?)}";
-    private static final String BUSCARID = "{?=call buscargrupo(?,?,?)}";
-    private static final String modificarGrupo = "{call modificarGrupo (?,?,?,?,?,?,?)}";
+    private static final String BUSCARID = "{?=call buscargrupo(?)}";
+    private static final String modificarGrupo = "{call modificarGrupo (?,?,?,?,?,?,?,?)}";
     private static final String eliminarGrupo = "{call eliminarGrupo(?)}";
     private static ServicioGrupo instance = null;
     private static ServicioTransformar helper = null;
@@ -145,13 +145,14 @@ public class ServicioGrupo extends Servicio {
         PreparedStatement pstmt = null;
         try {
             pstmt = conexion.prepareStatement(modificarGrupo);
-            pstmt.setInt(1, grupo.getNumero());
-            pstmt.setInt(2, grupo.getCupo());
-            pstmt.setInt(3, grupo.getDisponible());
-            pstmt.setString(4, grupo.getCurso().getCodigo());
-            pstmt.setString(5, grupo.getHorario());
-            pstmt.setInt(6, grupo.getCiclo().getId());
-            pstmt.setString(7, grupo.getProfesor().getCedula());
+            pstmt.setInt(1, grupo.getIdEntidad());
+            pstmt.setInt(2, grupo.getNumero());
+            pstmt.setInt(3, grupo.getCupo());
+            pstmt.setInt(4, grupo.getDisponible());
+            pstmt.setString(5, grupo.getCurso().getCodigo());
+            pstmt.setString(6, grupo.getHorario());
+            pstmt.setInt(7, grupo.getCiclo().getId());
+            pstmt.setString(8, grupo.getProfesor().getCedula());
             int resultado = pstmt.executeUpdate();
 
             //si es diferente de 0 es porq si afecto un registro o mas
@@ -208,7 +209,7 @@ public class ServicioGrupo extends Servicio {
         }
     }
 
-    public Grupo buscarGrupo(String id) throws GlobalException, NoDataException {
+    public Grupo buscarGrupo(int id) throws GlobalException, NoDataException {
 
         try {
             conectar();
@@ -222,17 +223,19 @@ public class ServicioGrupo extends Servicio {
         Grupo grupo = null;
         CallableStatement pstmt = null;
         try {
-
+            pstmt = conexion.prepareCall(BUSCARID);
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
-            pstmt.setString(2, id);
+            pstmt.setInt(2, id);
             pstmt.execute();
             rs = (ResultSet) pstmt.getObject(1);
-            while (rs.next()) {
-//                grupo = new Grupo(rs.getString("codigo"),
-//                        rs.getString("nombre"),
-//                        rs.getString("titulo"));
-//                coleccion.add(grupo);
-            }
+            grupo = new Grupo(rs.getInt("cupo"),
+                    rs.getInt("disponible"),
+                    rs.getInt("numgrupo"),
+                    rs.getString("horario"),
+                    new Ciclo(), helper.obtenerProfesor(rs), new Curso()
+            );
+            grupo.setIdEntidad(rs.getInt("identidad"));
+            coleccion.add(grupo);
         } catch (SQLException e) {
             e.printStackTrace();
 

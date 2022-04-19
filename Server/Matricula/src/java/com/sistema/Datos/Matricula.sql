@@ -1,7 +1,6 @@
 set linesize 160
 set pagesize 150
 PROMPT  DROPEO DE TABLAS
-drop table curso_carrera cascade constraint;
 drop table Inscripcion cascade constraint;
 drop table Grupo cascade constraint;
 drop table carrera cascade constraint;
@@ -106,23 +105,27 @@ codigo VARCHAR(10),
 nombre VARCHAR(50),
 creditos NUMBER,
 hsemanales NUMBER,
+fkcarrera VARCHAR(10),
 CONSTRAINTS pkcurso PRIMARY KEY (codigo)
 );
-
+alter table  Curso add constraint FKCARRERACURSO foreign key (fkcarrera) references carrera; 
 --INSERTAR
 ------------------------------------------------------
-CREATE OR REPLACE PROCEDURE insertarCurso(codigo IN curso.codigo%TYPE,nombre in curso.nombre%type,creditos in curso.creditos%type,hsemanales in curso.hsemanales%type)
+CREATE OR REPLACE PROCEDURE insertarCurso(codigo IN curso.codigo%TYPE,nombre in curso.nombre%type,creditos in curso.creditos%type,
+hsemanales in curso.hsemanales%type,carrerain in curso.fkcarrera%TYPE)
 AS
 BEGIN
-	INSERT INTO curso VALUES(codigo,nombre,creditos,hsemanales);
+	INSERT INTO curso VALUES(codigo,nombre,creditos,hsemanales,carrerain);
 END;
 /
 --ACTUALIZAR
 ------------------------------------------------------
-CREATE OR REPLACE PROCEDURE modificarcurso (codigoin IN curso.codigo%TYPE,nombrein IN curso.nombre%TYPE,creditosin in curso.creditos%type,hsemanalesin in curso.hsemanales%type)
+CREATE OR REPLACE PROCEDURE modificarcurso (codigoin IN curso.codigo%TYPE,nombrein IN curso.nombre%TYPE,creditosin in curso.creditos%type,
+hsemanalesin in curso.hsemanales%type,carrerain in curso.fkcarrera%TYPE)
 AS
 BEGIN
-UPDATE curso SET nombre=nombrein,codigo=codigoin,creditos=creditosin,hsemanales=hsemanalesin WHERE codigo=codigoin;
+UPDATE curso SET nombre=nombrein,codigo=codigoin,creditos=creditosin,hsemanales=hsemanalesin,fkcarrera=carrerain
+ WHERE codigo=codigoin;
 END;
 /
 --CONSULTAR
@@ -133,7 +136,9 @@ AS
         curso_cursor types.ref_cursor; 
 BEGIN 
   OPEN curso_cursor FOR 
-       SELECT codigo,nombre,creditos,hsemanales FROM curso WHERE codigo=idbuscar; 
+         SELECT  e.codigo,e.nombre,e.creditos,e.hsemanales,c.codigo as car_codigo,c.nombre as car_name,c.titulo 
+	   FROM curso e, carrera c 
+	   WHERE e.codigo=idbuscar AND e.fkcarrera=c.codigo; 
 RETURN curso_cursor; 
 END;
 /
@@ -144,7 +149,21 @@ AS
         curso_cursor types.ref_cursor; 
 BEGIN 
   OPEN curso_cursor FOR 
-       SELECT codigo,nombre,creditos,hsemanales FROM curso   WHERE UPPER(nombre) LIKE '%'||UPPER(idbuscar)||'%';
+       SELECT  e.codigo,e.nombre,e.creditos,e.hsemanales,c.codigo as car_codigo,c.nombre as car_name,c.titulo 
+	   FROM curso e, carrera c
+	   WHERE UPPER(e.nombre) LIKE '%'||UPPER(idbuscar)||'%' AND e.fkcarrera=c.codigo;
+RETURN curso_cursor; 
+END;
+/
+CREATE OR REPLACE FUNCTION buscarcursoporcarrera(idbuscar IN carrera.codigo%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        curso_cursor types.ref_cursor; 
+BEGIN 
+  OPEN curso_cursor FOR 
+    SELECT e.codigo,e.nombre,e.creditos,e.hsemanales,c.codigo as car_codigo,c.nombre as car_name,c.titulo
+   FROM curso e, carrera c
+    WHERE e.fkcarrera=idbuscar AND e.fkcarrera=c.codigo;
 RETURN curso_cursor; 
 END;
 /
@@ -156,7 +175,9 @@ AS
         curso_cursor types.ref_cursor; 
 BEGIN 
   OPEN curso_cursor FOR 
-       SELECT codigo,nombre,creditos,hsemanales FROM curso; 
+        SELECT e.codigo,e.nombre,e.creditos,e.hsemanales,c.codigo as car_codigo,c.nombre as car_name,c.titulo
+   FROM curso e, carrera c
+    WHERE  e.fkcarrera=c.codigo;
 RETURN curso_cursor; 
 END;
 /
@@ -167,36 +188,6 @@ as
 begin
     delete from curso where codigo=codigoin;
 end;
-/
-
---CURSO_CARRERA
-------------------------------------------------------
-PROMPT SE CREA CURSO_CARRERA
-PROMPT =========================================================
-CREATE TABLE curso_carrera(
-id number,
-fkcurso varchar(15),
-fkcarrera varchar(15),
-requisito varchar(15),
-CONSTRAINTS pkcurcar PRIMARY KEY (id)
-);
-alter table  curso_carrera add constraint FKCur foreign key (fkcurso) references curso; 
-alter table  curso_carrera add constraint FKCar foreign key (fkcarrera) references carrera; 
-alter table  curso_carrera add constraint fkrequisito foreign key (requisito) references curso; 
-
-CREATE OR REPLACE FUNCTION buscarcursoporcarrera(idbuscar IN carrera.codigo%TYPE)
-RETURN Types.ref_cursor 
-AS 
-        curso_cursor types.ref_cursor; 
-BEGIN 
-  OPEN curso_cursor FOR 
-    SELECT DISTINCT e.codigo,e.nombre,e.creditos,e.hsemanales
-   FROM curso e
-    INNER JOIN  curso_carrera cur ON cur.fkcurso=e.codigo
-    INNER JOIN Carrera c ON cur.fkcarrera=c.codigo
-    WHERE cur.fkcarrera=idbuscar;
-RETURN curso_cursor; 
-END;
 /
 
 --CICLO
@@ -489,14 +480,14 @@ END;
 /
 --CONSULTAR
 ------------------------------------------------------
-CREATE OR REPLACE FUNCTION buscargrupo(idbuscar IN carrera.codigo%TYPE)
+CREATE OR REPLACE FUNCTION buscargrupo(idbuscar IN grupo.idgrupo%TYPE)
 RETURN Types.ref_cursor 
 AS 
         grupo_cursor types.ref_cursor; 
 BEGIN 
   OPEN grupo_cursor FOR 
            SELECT g.idgrupo as identidad,g.numgrupo,g.cupo,g.disponible,g.horario,p.cedula,p.nombre,p.email,p.telefono FROM grupo g, profesor p
-       WHERE  g.idgrupo=idbuscar;
+       WHERE  g.idgrupo=idbuscar AND g.profesorfk=p.cedula;
 RETURN grupo_cursor; 
 END;
 /
@@ -520,36 +511,84 @@ PROMPT SE CREA Inscripcion
 PROMPT =========================================================
 CREATE TABLE Inscripcion(
 id number,
-fkgrupo number,
-fkalumno varchar(15),
+fkgrupo number not null,
+fkalumno varchar(15)not null,
 nota NUMBER,
 CONSTRAINTS pkInscripcion PRIMARY KEY (id)
 );
 alter table  Inscripcion add constraint FKGRUPO foreign key (fkgrupo) references Grupo; 
 alter table  Inscripcion add constraint FKALUMNO foreign key (fkalumno) references Alumno; 
 
-CREATE OR REPLACE PROCEDURE insertarInscripcion(grupoin IN grupo.numgrupo%TYPE,alumnoin IN Alumno.cedula%TYPE)
+--INSERTAR
+------------------------------------------------------
+CREATE OR REPLACE PROCEDURE insertarInscripcion(grupoin IN grupo.idgrupo%TYPE,alumnoin IN Alumno.cedula%TYPE)
 AS
 BEGIN
 	INSERT INTO Inscripcion VALUES(secuenciainscripcion.nextval,grupoin,alumnoin,null);
 END;
 /
+--CONSULTAR
+------------------------------------------------------
+CREATE OR REPLACE FUNCTION listarPorGrupo(idbuscar IN Inscripcion.fkgrupo%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        inscripcion_cursor types.ref_cursor; 
+BEGIN 
+  OPEN inscripcion_cursor FOR 
+       SELECT i.id as identidad,i.nota,e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,
+	   g.idgrupo as identidadg,g.numgrupo,g.cupo,g.disponible,g.horario FROM  Inscripcion i
+		INNER JOIN Alumno e ON i.fkalumno=e.cedula
+		INNER JOIN grupo g ON i.fkgrupo=g.idgrupo
+       WHERE  i.fkgrupo=idbuscar;
+RETURN inscripcion_cursor; 
+END;
+/
+
+CREATE OR REPLACE FUNCTION listarPorAlumno(idbuscar IN Inscripcion.fkalumno%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        inscripcion_cursor types.ref_cursor; 
+BEGIN 
+  OPEN inscripcion_cursor FOR 
+       SELECT i.id as identidad,i.nota,e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,
+	   g.idgrupo as identidadg,g.numgrupo,g.cupo,g.disponible,g.horario FROM  Inscripcion i
+		INNER JOIN Alumno e ON i.fkalumno=e.cedula
+		INNER JOIN grupo g ON i.fkgrupo=g.idgrupo
+       WHERE  i.fkalumno=idbuscar;
+RETURN inscripcion_cursor; 
+END;
+/
+
+CREATE OR REPLACE FUNCTION buscarInscripcion(idbuscar IN inscripcion.id%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        inscripcion_cursor types.ref_cursor; 
+BEGIN 
+  OPEN inscripcion_cursor FOR 
+      SELECT i.id as identidad,i.nota,e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,
+	   g.idgrupo as identidadg,g.numgrupo,g.cupo,g.disponible,g.horario FROM  Inscripcion i
+		INNER JOIN Alumno e ON i.fkalumno=e.cedula
+		INNER JOIN grupo g ON i.fkgrupo=g.idgrupo
+       WHERE  i.id=idbuscar;
+RETURN inscripcion_cursor; 
+END;
+/
 --ACTUALIZAR
 ------------------------------------------------------
-CREATE OR REPLACE PROCEDURE modificarInscripcion (alumnoin IN Alumno.cedula%TYPE,grupoin IN grupo.idgrupo%type,
+CREATE OR REPLACE PROCEDURE modificarInscripcion (idin IN Inscripcion.id%TYPE,
 notain IN Inscripcion.nota%TYPE)
 AS
 BEGIN
 UPDATE Inscripcion SET nota=notain
-WHERE fkalumno=alumnoin and fkgrupo=grupoin;
+WHERE id=idin;
 END;
 /
 --ELIMINAR
 ------------------------------------------------------
-create or replace procedure eliminarInscripcion(alumnoin IN Alumno.cedula%TYPE,grupoin IN grupo.idgrupo%type)
+create or replace procedure eliminarInscripcion(idin IN Inscripcion.id%TYPE)
 as
 begin
-    delete from Inscripcion where fkalumno=alumnoin and fkgrupo=grupoin;
+    delete from Inscripcion where id=idin;
 end;
 /
 
@@ -647,31 +686,29 @@ INSERT INTO usuario VALUES('987654321','MAT','MariaE','222');
 INSERT INTO carrera VALUES('EIF','Ingenieria en Sistemas','Bachillerato');
 INSERT INTO carrera VALUES('MAC','Ensenanza de Matematica','Licenciatura');
 INSERT INTO carrera VALUES('CDN','Ciencias del Movimiento Humano','Bachillerato');
-INSERT INTO Alumno VALUES('100000002','Emmanuel Barrientos','4030-6832','emmanuel@gmail.com','9/11/1992','EIF');
-INSERT INTO Alumno VALUES('200000003','Daniel Madrigal','6079-7171','ddavidb09@gmail.com','4/05/1998','MAC');
+INSERT INTO Alumno VALUES('333','Emmanuel Barrientos','4030-6832','emmanuel@gmail.com','9/11/1992','EIF');
+INSERT INTO Alumno VALUES('444','Daniel Madrigal','6079-7171','ddavidb09@gmail.com','4/05/1998','MAC');
 INSERT INTO profesor VALUES('111','Pedro Alvarez','4032-2525','pedroa@gmail.com');
 INSERT INTO profesor VALUES('222','Roberto Alvarez','4032-2525','pedroa@gmail.com');
-INSERT INTO curso VALUES('EIF200','Fundamentos de Informatica',3,8);
-INSERT INTO curso VALUES('MAT030','Matematica para Informatica',4,11);
-INSERT INTO curso VALUES('EIF201','Programacion I',4,11);
-INSERT INTO curso VALUES('EIF204','Programacion II',4,11);
-INSERT INTO curso VALUES('EIF202','Soporte Tecnico',3,8);
-INSERT INTO curso VALUES('EIF203','Estructuras Discretas para Informatica',3,8);
-INSERT INTO curso VALUES('EIF206','Programacion III',4,11);
-INSERT INTO curso VALUES('EIF207','Estructuras de Datos',4,11);
-INSERT INTO curso VALUES('EIF205','Arquitectura de Computadoras',3,8);
-INSERT INTO curso VALUES('EIF404','La Organizacion y su Entorno',3,8);
-INSERT INTO curso VALUES('EIF209','Programacion IV',4,11);
-INSERT INTO curso VALUES('EIF210','Ingenieria de Sistemas I',4,11);
-INSERT INTO curso VALUES('EIF401','Ingenieria de Sistemas II',4,11);
-INSERT INTO curso VALUES('EIF406','Ingenieria de Sistemas III',4,11);
-INSERT INTO curso VALUES('EIF211','Diseno e Implementacion de Bases de Datos',4,11);
-INSERT INTO curso VALUES('EIF212','Sistemas Operativos',3,8);
-INSERT INTO curso VALUES('EIF208','Comunicaciones y Redes de Computadores',3,8);
-INSERT INTO curso_carrera VALUES(secuenciacurcar.nextval,'EIF200','EIF',null);
-INSERT INTO curso_carrera VALUES(secuenciacurcar.nextval,'MAT030','EIF',null);
-INSERT INTO curso_carrera VALUES(secuenciacurcar.nextval,'EIF201','EIF','EIF200');
-INSERT INTO curso_carrera VALUES(secuenciacurcar.nextval,'EIF201','EIF','MAT030');
+INSERT INTO curso VALUES('EIF200','Fundamentos de Informatica',3,8,'EIF');
+INSERT INTO curso VALUES('MAT030','Matematica para Informatica',4,11,'EIF');
+INSERT INTO curso VALUES('EIF201','Programacion I',4,11,'EIF');
+INSERT INTO curso VALUES('EIF204','Programacion II',4,11,'EIF');
+INSERT INTO curso VALUES('EIF202','Soporte Tecnico',3,8,'EIF');
+INSERT INTO curso VALUES('EIF203','Estructuras Discretas para Informatica',3,8,'EIF');
+INSERT INTO curso VALUES('EIF206','Programacion III',4,11,'EIF');
+INSERT INTO curso VALUES('EIF207','Estructuras de Datos',4,11,'EIF');
+INSERT INTO curso VALUES('EIF205','Arquitectura de Computadoras',3,8,'EIF');
+INSERT INTO curso VALUES('EIF404','La Organizacion y su Entorno',3,8,'EIF');
+INSERT INTO curso VALUES('EIF209','Programacion IV',4,11,'EIF');
+INSERT INTO curso VALUES('EIF210','Ingenieria de Sistemas I',4,11,'EIF');
+INSERT INTO curso VALUES('EIF401','Ingenieria de Sistemas II',4,11,'EIF');
+INSERT INTO curso VALUES('EIF406','Ingenieria de Sistemas III',4,11,'EIF');
+INSERT INTO curso VALUES('EIF211','Diseno e Implementacion de Bases de Datos',4,11,'EIF');
+INSERT INTO curso VALUES('EIF212','Sistemas Operativos',3,8,'EIF');
+INSERT INTO curso VALUES('EIF208','Comunicaciones y Redes de Computadores',3,8,'EIF');
+INSERT INTO curso VALUES('CDN201','Cumbia recreativa',3,8,'CDN');
+INSERT INTO curso VALUES('CDN205','Desarrollo Humano',3,8,'CDN');
 INSERT INTO ciclo VALUES(secuenciaciclo.nextval,1,1,2022,'7/3/2022','25/6/2022');
 INSERT INTO ciclo VALUES(secuenciaciclo.nextval,2,2,2022,'8/8/2022','25/11/2022');
 INSERT INTO ciclo VALUES(secuenciaciclo.nextval,2,2,2021,'7/8/2021','27/11/2021');

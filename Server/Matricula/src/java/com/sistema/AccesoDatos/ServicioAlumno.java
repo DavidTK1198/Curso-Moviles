@@ -115,7 +115,7 @@ public class ServicioAlumno extends Servicio {
         try {
 
             pstmt = conexion.prepareCall(insertarAlumno);
-            pstmt.setString(1, alumno.getCédula());
+            pstmt.setString(1, alumno.getCedula());
             pstmt.setString(2, alumno.getNombre());
             pstmt.setString(3, alumno.getTeléfono());
             pstmt.setString(4, alumno.getEmail());
@@ -151,7 +151,7 @@ public class ServicioAlumno extends Servicio {
         PreparedStatement pstmt = null;
         try {
             pstmt = conexion.prepareStatement(modificarAlumno);
-            pstmt.setString(1, alumno.getCédula());
+            pstmt.setString(1, alumno.getCedula());
             pstmt.setString(2, alumno.getNombre());
             pstmt.setString(3, alumno.getTeléfono());
             pstmt.setString(4, alumno.getEmail());

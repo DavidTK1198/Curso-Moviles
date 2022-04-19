@@ -5,6 +5,8 @@
  */
 package com.sistema.LogicaNegocio;
 
+import com.sistema.AccesoDatos.GlobalException;
+import com.sistema.AccesoDatos.NoDataException;
 import com.sistema.AccesoDatos.ServicioInscripcion;
 import java.util.List;
 
@@ -48,7 +50,23 @@ public class InscripcionModel {
         this.current = current;
     }
 
-    public void todasLasInscripciones() {
-        
+    public void InscripcionesPorAlmuno() throws GlobalException, NoDataException {
+        inscripciones=(List<Inscripcion>) this.inscripcion_DBA.listarInscripcion("alumno", current.getEstudiante().getCedula());
     }
+    
+     public void InscripcionesPorGrupo() throws GlobalException, NoDataException {
+        inscripciones=(List<Inscripcion>) this.inscripcion_DBA.listarInscripcion("grupo", Integer.toString(current.getGrupo().getIdEntidad()));
+    }
+    
+    public void agregarInscripcion() throws GlobalException, NoDataException{
+        this.inscripcion_DBA.insertarInscripcion(current);
+    }
+    
+    public void eliminarInscripcion() throws GlobalException, NoDataException, GlobalException{
+        this.inscripcion_DBA.eliminarInscripcion(current.getIdEntidad());
+    }
+    public void asignarNota() throws GlobalException, NoDataException{
+        this.inscripcion_DBA.modificarInscripcion(current);
+    }
+   
 }

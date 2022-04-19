@@ -59,5 +59,9 @@ public class GrupoModel {
        grupo_DBA.modificarGrupo(current);
     }
 
+    public void buscarGrupo() throws GlobalException, NoDataException {
+        this.grupo_DBA.buscarGrupo(current.getIdEntidad());
+    }
+
 
 }

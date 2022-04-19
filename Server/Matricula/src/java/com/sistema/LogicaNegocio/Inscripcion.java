@@ -11,11 +11,11 @@ package com.sistema.LogicaNegocio;
  */
 public class Inscripcion {
     private Alumno estudiante;
-    private String nota;
+    private int nota;
     private Grupo grupo;
     private int idEntidad;
     
-    public Inscripcion(Alumno estudiante,String nota, Grupo grupo){
+    public Inscripcion(Alumno estudiante,int nota, Grupo grupo){
         this.estudiante = estudiante;
         this.nota = nota;
         this.grupo = grupo;
@@ -23,7 +23,7 @@ public class Inscripcion {
     
     public Inscripcion(){
         estudiante=new Alumno();
-        nota = "";
+        nota = 0;
         grupo = new Grupo();
         idEntidad=0;
     }
@@ -44,11 +44,11 @@ public class Inscripcion {
         this.estudiante = estudiante;
     }
     
-    public String getNota(){
+    public int getNota(){
         return nota;
     }
     
-    public void setNota(String nota){
+    public void setNota(int nota){
         this.nota = nota;
     }
     

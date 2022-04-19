@@ -41,6 +41,11 @@ public class GrupoController {
         model.setCurrent(p);
         model.modificarGrupo();
     }
+    
+    public void buscarGrupo(Grupo p) throws GlobalException, NoDataException{
+        model.setCurrent(p);
+        model.buscarGrupo();
+    }
 
  
 

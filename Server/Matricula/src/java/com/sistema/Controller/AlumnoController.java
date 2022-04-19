@@ -31,7 +31,7 @@ public class AlumnoController {
     }
 
     public Alumno alumnoPorCedula(String codigo) throws NoDataException, GlobalException {
-        model.getCurrent().setCédula(codigo);
+        model.getCurrent().setCedula(codigo);
         model.buscarporCedula();
         return model.getCurrent();
     }

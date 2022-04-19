@@ -32,11 +32,11 @@ public class Alumno {
         this.carrera = carrera;
     }
 
-    public String getCédula() {
+    public String getCedula() {
         return cedula;
     }
 
-    public void setCédula(String cedula) {
+    public void setCedula(String cedula) {
         this.cedula = cedula;
     }
 

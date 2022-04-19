@@ -31,6 +31,7 @@ public class ServicioCurso extends Servicio {
      */
     public ServicioCurso() {
         super();
+        helper = ServicioTransformar.getInstance();
     }
 
     public static ServicioCurso getInstance() {
@@ -73,9 +74,8 @@ public class ServicioCurso extends Servicio {
                 curso.setNombre(rs.getString("nombre"));
                 curso.setCreditos(rs.getInt("creditos"));
                 curso.setHsemanales(rs.getInt("hsemanales"));
-                curso.setCarrera(new Carrera());
+                curso.setCarrera(helper.Obtenercarrera(rs));
                 coleccion.add(curso);
-                curso.getCarrera().setNombre("Sistemas");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -117,6 +117,7 @@ public class ServicioCurso extends Servicio {
             pstmt.setString(2, curso.getNombre());
             pstmt.setInt(3, curso.getCreditos());
             pstmt.setInt(4, curso.getHsemanales());
+            pstmt.setString(5, curso.getCarrera().getCodigo());
 
             boolean resultado = pstmt.execute();
             if (resultado == true) {
@@ -241,7 +242,7 @@ public class ServicioCurso extends Servicio {
                 curso = new Curso(rs.getString("codigo"),
                         rs.getString("nombre"),
                         rs.getInt("creditos"),
-                        rs.getInt("hsemanales"), new Carrera());
+                        rs.getInt("hsemanales"), helper.Obtenercarrera(rs));
 
                 coleccion.add(curso);
             }

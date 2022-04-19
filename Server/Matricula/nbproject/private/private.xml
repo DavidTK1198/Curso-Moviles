@@ -3,16 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/LogicaNegocio/GrupoModel.java</file>
-            <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/Controller/InscripcionController.java</file>
-            <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/AccesoDatos/ServicioGrupo.java</file>
-            <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/LogicaNegocio/Grupo.java</file>
-            <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/AccesoDatos/ServicioInscripcion.java</file>
-            <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/Endpoint/Carreras.java</file>
-            <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/LogicaNegocio/InscripcionModel.java</file>
-            <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/Controller/GrupoController.java</file>
+            <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/AccesoDatos/ServicioCurso.java</file>
+            <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/Endpoint/Cursos.java</file>
             <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/LogicaNegocio/CursoModel.java</file>
-            <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/Endpoint/Grupos.java</file>
+            <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/AccesoDatos/ServicioAlumno.java</file>
         </group>
     </open-files>
 </project-private>

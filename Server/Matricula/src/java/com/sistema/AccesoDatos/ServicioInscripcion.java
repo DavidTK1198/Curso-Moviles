@@ -15,28 +15,31 @@ import oracle.jdbc.internal.OracleTypes;
  */
 public class ServicioInscripcion extends Servicio {
 
-    private static final String insertarInscripcion = "{call insertarInscripcion (?,?,?)}";
-    private static final String LISTAR = "{?=call listarinscripcion()}";
-    private static final String BUSCARID = "{?=call buscarinscripcion(?)}";
-    private static final String modificarInscripcion = "{call modificarInscripcion (?,?,?)}";
+    private static final String insertarInscripcion = "{call insertarInscripcion (?,?)}";
+    private static final String BUSCARALUMNO = "{?=call listarPorAlumno(?)}";
+    private static final String BUSCARGRUPO = "{?=call listarPorGrupo(?)}";
+    private static final String BUSCARID = "{?=call buscarInscripcion(?)}";
+    private static final String modificarInscripcion = "{call modificarInscripcion (?,?)}";
     private static final String eliminarInscripcion = "{call eliminarInscripcion(?)}";
     private static ServicioInscripcion instance = null;
+    private static ServicioTransformar helper = null;
 
     /**
      * Creates a new instance of ServicioInscripcion
      */
-    public ServicioInscripcion() {
+    private ServicioInscripcion() {
         super();
     }
 
     public static ServicioInscripcion getInstance() {
         if (instance == null) {
             instance = new ServicioInscripcion();
+            helper = ServicioTransformar.getInstance();
         }
         return instance;
     }
 
-    public Collection listarInscripcion() throws GlobalException, NoDataException {
+    public Collection listarInscripcion(String medio, String id) throws GlobalException, NoDataException {
         try {
             conectar();
         } catch (ClassNotFoundException ex) {
@@ -49,16 +52,27 @@ public class ServicioInscripcion extends Servicio {
         ArrayList coleccion = new ArrayList();
         Inscripcion inscripcion = null;
         CallableStatement pstmt = null;
+
         try {
-            pstmt = conexion.prepareCall(LISTAR);
+            switch (medio) {
+                case "alumno":
+                    pstmt = conexion.prepareCall(BUSCARALUMNO);
+                    pstmt.setString(2, id);
+                    break;
+                case "grupo":
+                    pstmt = conexion.prepareCall(BUSCARGRUPO);
+                    pstmt.setInt(2, Integer.parseInt(id));
+                    break;
+            }
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.execute();
             rs = (ResultSet) pstmt.getObject(1);
             while (rs.next()) {
-               // inscripcion = new Inscripcion(rs.getString("codigo"),
-                   //     rs.getString("nombre"),
-                 //       rs.getString("titulo"));
-                //coleccion.add(inscripcion);
+                inscripcion = new Inscripcion(helper.obtenerAlumno(rs),
+                        rs.getInt("nota"),
+                        helper.obtenerGrupo(rs));
+                inscripcion.setIdEntidad(rs.getInt("identidad"));
+                coleccion.add(inscripcion);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -96,10 +110,8 @@ public class ServicioInscripcion extends Servicio {
         try {
 
             pstmt = conexion.prepareCall(insertarInscripcion);
-           // pstmt.setString(1, inscripcion.getCodigo());
-            //pstmt.setString(2, inscripcion.getNombre());
-            //pstmt.setString(3, inscripcion.getTitulo());
-
+            pstmt.setInt(1, inscripcion.getGrupo().getIdEntidad());
+            pstmt.setString(2, inscripcion.getEstudiante().getCedula());
             boolean resultado = pstmt.execute();
             if (resultado == true) {
                 throw new NoDataException("No se realizo la inserci�n");
@@ -130,14 +142,13 @@ public class ServicioInscripcion extends Servicio {
         }
         PreparedStatement pstmt = null;
         try {
-         //   pstmt = conexion.prepareStatement(modificarInscripcion);
-           // pstmt.setString(1, inscripcion.getCodigo());
-            //pstmt.setString(2, inscripcion.getNombre());
-            //pstmt.setString(3, inscripcion.getTitulo());
+            pstmt = conexion.prepareStatement(modificarInscripcion);
+            pstmt.setInt(1, inscripcion.getIdEntidad());
+            pstmt.setInt(2, inscripcion.getNota());
             int resultado = pstmt.executeUpdate();
 
             //si es diferente de 0 es porq si afecto un registro o mas
-            if (resultado != 0) {
+            if (resultado == 0) {
                 throw new NoDataException("No se realizo la actualización");
             } else {
                 System.out.println("\nModificación Satisfactoria!");
@@ -156,7 +167,7 @@ public class ServicioInscripcion extends Servicio {
         }
     }
 
-    public void eliminarInscripcions(String id) throws GlobalException, NoDataException {
+    public void eliminarInscripcion(int id) throws GlobalException, NoDataException {
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -167,11 +178,11 @@ public class ServicioInscripcion extends Servicio {
         PreparedStatement pstmt = null;
         try {
             pstmt = conexion.prepareStatement(eliminarInscripcion);
-            pstmt.setString(1, id);
+            pstmt.setInt(1, id);
 
             int resultado = pstmt.executeUpdate();
 
-            if (resultado != 0) {
+            if (resultado == 0) {
                 throw new NoDataException("No se realizo el borrado");
             } else {
                 System.out.println("\nEliminación Satisfactoria!");
@@ -204,17 +215,19 @@ public class ServicioInscripcion extends Servicio {
         Inscripcion inscripcion = null;
         CallableStatement pstmt = null;
         try {
-        
+
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setString(2, id);
             pstmt.execute();
             rs = (ResultSet) pstmt.getObject(1);
             while (rs.next()) {
-//                inscripcion = new Inscripcion(rs.getString("codigo"),
-//                        rs.getString("nombre"),
-//                        rs.getString("titulo"));
-//                coleccion.add(inscripcion);
+                inscripcion = new Inscripcion(helper.obtenerAlumno(rs),
+                        rs.getInt("nota"),
+                        helper.obtenerGrupo(rs));
+                inscripcion.setIdEntidad(rs.getInt("identidad"));
+                coleccion.add(inscripcion);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
 
