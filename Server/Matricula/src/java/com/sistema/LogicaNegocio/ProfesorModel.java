@@ -52,7 +52,7 @@ public class ProfesorModel {
     }
 
     public void buscarporCedula() throws GlobalException, NoDataException {
-        current = profesor_DBA.buscarProfesor(current.getCédula(), "cedula");
+        current = profesor_DBA.buscarProfesor(current.getCedula(), "cedula");
     }
 
     public void buscarporNombre() throws GlobalException, NoDataException {

@@ -1,6 +1,7 @@
 package com.sistema.AccesoDatos;
 
 import com.sistema.LogicaNegocio.Carrera;
+import com.sistema.LogicaNegocio.Profesor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -28,5 +29,10 @@ public class ServicioTransformar {
                         rs.getString("car_name"),
                         rs.getString("titulo"));
         return carrera;
+    }
+
+    Profesor obtenerProfesor(ResultSet rs) throws SQLException {
+       return new Profesor(rs.getString("cedula"),rs.getString("nombre"),rs.getString("telefono"),
+               rs.getString("email"));
     }
 }

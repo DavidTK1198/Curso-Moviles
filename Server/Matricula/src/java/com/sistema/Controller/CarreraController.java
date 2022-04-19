@@ -4,7 +4,6 @@ import com.sistema.AccesoDatos.GlobalException;
 import com.sistema.AccesoDatos.NoDataException;
 import com.sistema.LogicaNegocio.Carrera;
 import com.sistema.LogicaNegocio.CarreraModel;
-import com.sistema.LogicaNegocio.Curso;
 import java.util.List;
 
 /**

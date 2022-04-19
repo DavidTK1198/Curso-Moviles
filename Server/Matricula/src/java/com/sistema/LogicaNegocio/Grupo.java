@@ -12,17 +12,43 @@ public class Grupo {
     private List<Alumno> estudiantes;
     private Profesor profesor;
     private Curso curso;
-    private int cupo;
+    private int idEntidad;
 
-    public Grupo(int cupo,int numero,Ciclo ciclo, Profesor profesor, Curso curso, String horario) {
-        this.numero = 0;////
+    public int getIdEntidad() {
+        return idEntidad;
+    }
+
+    public void setIdEntidad(int idEntidad) {
+        this.idEntidad = idEntidad;
+    }
+    private int cupo;
+    private int disponible;
+
+    public Grupo(int cupo,int disponible,int numero,String horario,Ciclo ciclo, Profesor profesor, Curso curso) {
+        this.numero = numero;////
         this.horario = horario;
         this.profesor = profesor;
         this.curso = curso;
         estudiantes = new ArrayList();
         this.ciclo=ciclo;
-        this.cupo=0;
+        this.cupo=cupo;
+        this.disponible=disponible;
+    }
 
+    public Ciclo getCiclo() {
+        return ciclo;
+    }
+
+    public void setCiclo(Ciclo ciclo) {
+        this.ciclo = ciclo;
+    }
+
+    public int getDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(int disponible) {
+        this.disponible = disponible;
     }
 
     public Grupo() {
@@ -33,6 +59,8 @@ public class Grupo {
         curso = new Curso();
         ciclo=new Ciclo();
         this.cupo=0;
+        this.disponible=0;
+        this.idEntidad=0;
     }
 
     public Curso getCurso() {
@@ -83,7 +111,4 @@ public class Grupo {
         this.profesor = profesor;
     }
 
-    public String getEspacio() {
-        return Integer.toString(cupo - estudiantes.size());
-    }
 }
