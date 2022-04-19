@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../../css/Courses.css'
 import axios from 'axios';
 import { MDBDataTable,  } from 'mdbreact';
+import { Link } from 'react-router-dom';
 export default class Courses extends Component {
     constructor(props){
         super(props);
@@ -69,7 +70,12 @@ export default class Courses extends Component {
               
             ],
             rows: this.state.courses   
-            }         
+            }    
+            for(let i in data.rows){
+              let cName = data.rows[i]['nombre'];
+              data.rows[i]['nombre'] = <Link to={{ pathname: "/carrera", search: `?id=${data.rows[i]['id']}` }}>
+              {cName}</Link> 
+            }       
             return data
     }   
     render() {

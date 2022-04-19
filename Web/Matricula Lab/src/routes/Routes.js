@@ -2,7 +2,8 @@
 import React from 'react';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Login from '../pages/Login';
-import Carreers from '../pages/Carreers/Carreers';
+import Careers from '../pages/Careers/Careers';
+import Career from '../pages/Career/Career';
 import Courses from '../pages/Courses/Courses';
 import Professors from '../pages/Professors/Professors';
 import Students from '../pages/Students/Students';
@@ -13,7 +14,7 @@ import Footer from '../components/Footer';
 import NavigationBar from '../components/NavigationBar';
 import '../css/Routes.css';
 
-function Routes() {
+export default function Routes() {
     /*
   Routes() function defines the behaviour of the website rendering-response based on 
   client requests' path and other important information such as cookies present in the request.
@@ -28,7 +29,8 @@ function Routes() {
             <Route path="/auth" component={Login}/>  
             <Route path="/menu" component={Menu} />            
             <Route path="/logout" component={Logout} />
-            <Route path="/carreras" component={Carreers}/> 
+            <Route path="/carreras" component={Careers}/> 
+            <Route path="/carrera" component={Career}/>
             <Route path="/cursos" component={Courses}/> 
             <Route path="/grupos" component={Groups}/> 
             <Route path="/estudiantes" component={Students}/>
@@ -45,5 +47,3 @@ function Routes() {
     </div>
   );
 }
-
-export default Routes;

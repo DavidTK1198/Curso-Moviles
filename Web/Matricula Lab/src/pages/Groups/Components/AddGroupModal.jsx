@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import '../../../css/AddGroupModal.css';
 import { Modal, Button, Form, OverlayTrigger, Tooltip, Stack } from "react-bootstrap";
 
 export default class AddIncidentModal extends Component {
@@ -62,7 +63,7 @@ export default class AddIncidentModal extends Component {
         return (
             <Modal show={render} onHide={() => { closeModal() }} >
                 <Modal.Header closeButton>
-                    Ingrese los datos de la nueva incidencia
+                    Ingrese los datos del nuevo grupo
                 </Modal.Header>
                 <Modal.Body>
                     <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>

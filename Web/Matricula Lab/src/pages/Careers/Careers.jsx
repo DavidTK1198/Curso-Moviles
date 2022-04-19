@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import '../../css/Carreers.css'
+import '../../css/Careers.css'
 import axios from 'axios';
 import { MDBDataTable,  } from 'mdbreact';
-export default class Carreers extends Component {
+import { Link } from 'react-router-dom';
+export default class Careers extends Component {
     constructor(props){
         super(props);
         this.state = {
-            carreers: []
+            careers: []
         }
         this.tabledata = this.tabledata.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        this.updateCarreersSort = this.updateCarreersSort.bind(this);
+        this.updateCareersSort = this.updateCareersSort.bind(this);
     }
     openModal = () => {
       this.setState({ show: true });
@@ -20,9 +21,9 @@ export default class Carreers extends Component {
       this.setState({ show: false });
     };
     componentDidMount() {
-      this.updateCarreersSort();
+      this.updateCareersSort();
   }
-    updateCarreersSort() {
+    updateCareersSort() {
       let options = {
           url: "http://localhost:8088/Matricula/api/carreras/listar",
           method: "GET",
@@ -35,7 +36,7 @@ export default class Carreers extends Component {
       axios(options).then(response => {
           console.log(response.data)
           this.setState({
-              carreers: response.data
+              careers: response.data
           });
       }).catch(error => {
         console.log(error);
@@ -62,8 +63,13 @@ export default class Carreers extends Component {
          sort:  'asc',
        }      
      ],
-     rows: this.state.carreers   
-     }     
+     rows: this.state.careers   
+     }
+     for(let i in data.rows){
+      let cName = data.rows[i]['nombre'];
+      data.rows[i]['nombre'] = <Link to={{ pathname: "/cursos", search: `?id=${data.rows[i]['id']}` }}>
+      {cName}</Link> 
+    }     
      return data
 }  
     render() {

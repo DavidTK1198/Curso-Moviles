@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
-import { Button } from "react-bootstrap";
 import '../../css/Courses.css'
 import axios from 'axios';
 import { MDBDataTable,  } from 'mdbreact';
-import AddGroupModal from './Components/AddGroupModal';
-export default class Groups extends Component {
+import { Link } from 'react-router-dom';
+export default class Career extends Component {
     constructor(props){
         super(props);
         this.state = {
-            groups: [],
-            show: false
+            courses: []
         }
         this.tabledata = this.tabledata.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        this.updateGroupsSort = this.updateGroupsSort.bind(this);
+        this.updateCoursesSort = this.updateCoursesSort.bind(this);
     }
     openModal = () => {
       this.setState({ show: true });
@@ -23,11 +21,11 @@ export default class Groups extends Component {
       this.setState({ show: false });
     };
     componentDidMount() {
-      this.updateGroupsSort();
+      this.updateCoursesSort();
   }
-    updateGroupsSort() {
+    updateCoursesSort() {
       let options = {
-          url: "http://localhost:8088/Matricula/api/grupos/listar",
+          url: "http://localhost:8088/Matricula/api/cursos/listar",
           method: "GET",
           header: {
               'Accept': 'application/json',
@@ -71,17 +69,18 @@ export default class Groups extends Component {
               }
               
             ],
-            rows: this.state.groups   
-            }         
+            rows: this.state.courses   
+            }
+            for(let i in data.rows){
+                let cName = data.rows[i]['nombre'];
+                data.rows[i]['nombre'] = <Link to={{ pathname: "/carrera", search: `?id=${data.rows[i]['id']}` }}>
+                {cName}</Link> 
+              }          
             return data
     }   
     render() {
         return (
-            <div>
-              <Button size="sm" onClick={this.openModal} variant="success" key="AddIncidenceButton">
-                <i className="bi bi-plus-square"></i> {' '}
-                    Agregar grupo
-              </Button>           
+            <div>           
               <MDBDataTable 
                 searchLabel='Buscar'
                 //autoWidth={true}
@@ -89,10 +88,6 @@ export default class Groups extends Component {
                 hover={true}
                 data={this.tabledata()}              
                 />
-              <AddGroupModal
-                show = {this.state.show}
-                closeModal = {this.closeModal}
-              />
             </div>
         );
     }
