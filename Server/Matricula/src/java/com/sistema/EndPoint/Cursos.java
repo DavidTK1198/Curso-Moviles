@@ -5,7 +5,9 @@
  */
 package com.sistema.Endpoint;
 
+import com.sistema.AccesoDatos.ServicioCarrera;
 import com.sistema.Controller.CursoController;
+import com.sistema.LogicaNegocio.Carrera;
 import com.sistema.LogicaNegocio.Curso;
 import com.sistema.LogicaNegocio.Inscripcion;
 import javax.annotation.security.PermitAll;
@@ -75,7 +77,7 @@ public class Cursos {
         }
     }
     
-        @PUT
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void actualizarCurso(Curso p) {
         try {
@@ -84,7 +86,7 @@ public class Cursos {
             throw new NotFoundException("No se ha encontrado el curso");
         }
     }
-
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void agregarCurso(Curso p) {
@@ -94,6 +96,18 @@ public class Cursos {
             throw new NotAcceptableException();
         }
     }
+    /*
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void agregarCurso(@DefaultValue("") @QueryParam("codigo") String codigo, @DefaultValue("") @QueryParam("nombre") String nombre, @DefaultValue("") @QueryParam("hsemanales") int hsemanales, @DefaultValue("") @QueryParam("creditos") int creditos, @DefaultValue("") @QueryParam("idCarrera") String idCarrera) {
+        try {
+            Carrera carrera = ServicioCarrera.getInstance().buscarCarrera(idCarrera, "codigo");
+            Curso c = new Curso(codigo, nombre, creditos, hsemanales, carrera);
+            control.agregarCurso(c);
+        } catch (Exception ex) {
+            throw new NotAcceptableException();
+        }
+    }*/
 
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)

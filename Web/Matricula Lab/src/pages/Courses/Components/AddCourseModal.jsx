@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-//import axios from 'axios';
+import axios from 'axios';
 import '../../../css/AddGroupModal.css';
-import { Modal, Button, Form, Stack } from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap";
 
 export default class AddCourseModal extends Component {
     constructor(props) {
@@ -14,8 +14,10 @@ export default class AddCourseModal extends Component {
     onChange = e => {
         this.setState({ value: e.target.value })
     }
-    /*
+    
     handleSubmit = (event) => {
+        let query = new URLSearchParams(this.props.location.search);
+        console.log(query.get('codigo'))
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.preventDefault();
@@ -24,20 +26,18 @@ export default class AddCourseModal extends Component {
         else {
             event.preventDefault();
             let options = {
-                url: process.env.REACT_APP_API_URL + `/IncidenceManager/Insert`,
+                url: "",
                 method: 'POST',
                 header: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 data: {
-                    'name': event.target.name.value,
-                    'description': event.target.description.value,
-                    'entryDate': this.state.startDate.getTime(),
-                    'affectation': event.target.affectation.value,
-                    'cause': event.target.cause.value,
-                    'risk': event.target.risk.value,
-                    'planID': this.props.planID
+                    'codigo': event.target.name.value,
+                    'nombre': event.target.codigo.value,
+                    'hsemanales': event.target.hsemanales.value,
+                    'creditos': event.target.creditos.value,
+                    'idCarrera': query.get('codigo')
                 }
             }
 
@@ -47,15 +47,9 @@ export default class AddCourseModal extends Component {
                     this.props.refreshPage();
                 }).catch(error => {
                     console.log(error);
-                    toast.error("ID de la incidencia ya se encuentra registrado en el sistema.", {
-                        position: toast.POSITION.TOP_RIGHT,
-                        pauseOnHover: true,
-                        theme: 'colored',
-                        autoClose: 5000
-                    });
                 });
         }
-    }*/
+    }
 
     render() {
         let render = this.props.show;
@@ -83,12 +77,54 @@ export default class AddCourseModal extends Component {
                                 </Form.Control.Feedback>
                             </div>
                         </Form.Group>
-                        <div className="form-group">
-                            <Stack direction="horizontal" gap={3}>
-                                <label>Descripción:</label>
-                            </Stack>
-                            <textarea name="description" id="description" type="text" placeholder="Descripción" className="form-control" style={{ height: '150px' }} required />
-                        </div>
+                        <Form.Group>
+                            <div className="form-group">
+                                <Form.Label>Código:</Form.Label>
+                                <Form.Control
+                                    name="codigo"
+                                    id="codigo"
+                                    type="text"
+                                    placeholder="Código"
+                                    className="form-control"
+                                    required
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Por favor ingresar nombre.
+                                </Form.Control.Feedback>
+                            </div>
+                        </Form.Group>
+                        <Form.Group>
+                            <div className="form-group">
+                                <Form.Label>Créditos:</Form.Label>
+                                <Form.Control
+                                    name="creditos"
+                                    id="creditos"
+                                    type="text"
+                                    placeholder="Créditos"
+                                    className="form-control"
+                                    required
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Por favor ingresar nombre.
+                                </Form.Control.Feedback>
+                            </div>
+                        </Form.Group>
+                        <Form.Group>
+                            <div className="form-group">
+                                <Form.Label>Horas Semanales:</Form.Label>
+                                <Form.Control
+                                    name="hsemanales"
+                                    id="hsemanales"
+                                    type="text"
+                                    placeholder="Horas Semanales"
+                                    className="form-control"
+                                    required
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Por favor ingresar nombre.
+                                </Form.Control.Feedback>
+                            </div>
+                        </Form.Group>
                         <div className='text-center'>
                             <Button className='btn-sfr' type="submit">
                                 Guardar

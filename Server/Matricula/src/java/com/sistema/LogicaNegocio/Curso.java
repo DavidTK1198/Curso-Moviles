@@ -5,12 +5,12 @@ import java.util.ArrayList;
  * @author DavidTK1198
  */
 public class Curso {
-    private String nombre;
+      private String nombre;
       private int hsemanales;
       private String  codigo;
       private int creditos;
       private Carrera carrera;
-    private ArrayList<Grupo> grupos;
+      private ArrayList<Grupo> grupos;
 
     public int getHsemanales() {
         return hsemanales;
