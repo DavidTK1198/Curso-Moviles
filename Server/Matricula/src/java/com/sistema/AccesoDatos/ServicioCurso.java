@@ -16,12 +16,12 @@ import oracle.jdbc.internal.OracleTypes;
  */
 public class ServicioCurso extends Servicio {
 
-    private static final String insertarCurso = "{call insertarCurso (?,?,?,?)}";
+    private static final String insertarCurso = "{call insertarCurso (?,?,?,?,?)}";
     private static final String LISTAR = "{?=call listarcurso()}";
     private static final String BUSCARID = "{?=call buscarcurso(?)}";
     private static final String BUSCARCARRERA = "{?=call buscarcursoporcarrera(?)}";
     private static final String BUSCARNOMBRE = "{?=call buscarcursopornombre(?)}";
-    private static final String modificarCurso = "{call modificarCurso (?,?,?,?)}";
+    private static final String modificarCurso = "{call modificarCurso (?,?,?,?,?)}";
     private static final String eliminarCurso = "{call eliminarCurso(?)}";
     private static ServicioCurso instance = null;
     private static ServicioTransformar helper = null;
@@ -154,11 +154,12 @@ public class ServicioCurso extends Servicio {
             pstmt.setString(2, curso.getNombre());
             pstmt.setInt(3, curso.getCreditos());
             pstmt.setInt(4, curso.getHsemanales());
+            pstmt.setString(5, curso.getCarrera().getCodigo());
 
             int resultado = pstmt.executeUpdate();
 
             //si es diferente de 0 es porq si afecto un registro o mas
-            if (resultado != 0) {
+            if (resultado == 0) {
                 throw new NoDataException("No se realizo la actualización");
             } else {
                 System.out.println("\nModificación Satisfactoria!");
@@ -192,7 +193,7 @@ public class ServicioCurso extends Servicio {
 
             int resultado = pstmt.executeUpdate();
 
-            if (resultado != 0) {
+            if (resultado == 0) {
                 throw new NoDataException("No se realizo el borrado");
             } else {
                 System.out.println("\nEliminación Satisfactoria!");

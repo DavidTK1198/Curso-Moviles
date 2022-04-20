@@ -48,4 +48,21 @@ public class CursoController {
         model.buscarporNombre();
         return model.getCurrent();
     }
+
+    public void eliminarCurso(String id) throws GlobalException, NoDataException {
+        model.getCurrent().setCodigo(id);
+        model.eliminar();
+    }
+
+    public void agregarCurso(Curso p) throws GlobalException, NoDataException {
+        model.setCurrent(p);
+        model.agregarCurso();
+    }
+
+    public void actualizarCurso(Curso p) throws GlobalException, NoDataException {
+      model.setCurrent(p);
+      model.actualizar();
+    }
+
+ 
 }

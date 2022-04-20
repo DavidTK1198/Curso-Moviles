@@ -62,4 +62,16 @@ public class CursoModel {
     public void buscarporNombre() throws GlobalException, NoDataException {
         current =curso_DBA.buscarCurso(current.getNombre(),"nombre");
     }
+
+    public void eliminar() throws GlobalException, NoDataException{
+       curso_DBA.eliminarCursos(current.getCodigo());
+    }
+
+    public void agregarCurso() throws GlobalException, NoDataException {
+       this.curso_DBA.insertarCurso(current);
+    }
+
+    public void actualizar() throws GlobalException, NoDataException {
+        this.curso_DBA.modificarCurso(current);
+    }
 }
