@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/LogicaNegocio/Curso.java</file>
             <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/Controller/CursoController.java</file>
             <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/AccesoDatos/ServicioCurso.java</file>
@@ -10,6 +11,9 @@
             <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/LogicaNegocio/CursoModel.java</file>
             <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/AccesoDatos/ServicioAlumno.java</file>
             <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/Endpoint/Grupos.java</file>
+=======
+            <file>file:/C:/Users/USER/Desktop/Curso-Moviles/Server/Matricula/src/java/com/sistema/EndPoint/Cursos.java</file>
+>>>>>>> 52c2ad11c205d2bf0a4ce383476d6a77a734392a
         </group>
     </open-files>
 </project-private>

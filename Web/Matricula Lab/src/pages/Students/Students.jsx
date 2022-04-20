@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../../css/Professors.css'
 import axios from 'axios';
 import { MDBDataTable,  } from 'mdbreact';
+import { Link } from 'react-router-dom';
 export default class Students extends Component {
     constructor(props){
         super(props);
@@ -46,7 +47,7 @@ export default class Students extends Component {
      columns: [
        {
          label: 'Cédula',
-         field: 'cédula',
+         field: 'cedula',
          sort:  'asc',
           
        },
@@ -73,7 +74,15 @@ export default class Students extends Component {
        }
      ],
      rows: this.state.students   
-     }     
+     } 
+     for(let i in data.rows){
+      let cName = data.rows[i]['nombre'];
+      data.rows[i]['nombre'] = 
+      <Link 
+        to={{ pathname: "/alumno", search: `?codigo=${data.rows[i]['codigo']}` }}>
+        {cName}
+      </Link> 
+    }     
      return data
 }  
     render() {
@@ -81,7 +90,6 @@ export default class Students extends Component {
             <div>            
               <MDBDataTable                     
                 searchLabel='Buscar'
-                //autoWidth={true}
                 responsive
                 hover={true}
                 data={this.tabledata()}              

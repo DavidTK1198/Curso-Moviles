@@ -12,7 +12,7 @@ export default class Careers extends Component {
         this.tabledata = this.tabledata.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        this.updateCareersSort = this.updateCareersSort.bind(this);
+        this.refreshPage = this.refreshPage.bind(this);
     }
     openModal = () => {
       this.setState({ show: true });
@@ -21,9 +21,9 @@ export default class Careers extends Component {
       this.setState({ show: false });
     };
     componentDidMount() {
-      this.updateCareersSort();
+      this.refreshPage();
   }
-    updateCareersSort() {
+    refreshPage() {
       let options = {
           url: "http://localhost:8088/Matricula/api/carreras/listar",
           method: "GET",
@@ -67,7 +67,7 @@ export default class Careers extends Component {
      }
      for(let i in data.rows){
       let cName = data.rows[i]['nombre'];
-      data.rows[i]['nombre'] = <Link to={{ pathname: "/cursos", search: `?id=${data.rows[i]['id']}` }}>
+      data.rows[i]['nombre'] = <Link to={{ pathname: "/cursos", search: `?codigo=${data.rows[i]['codigo']}` }}>
       {cName}</Link> 
     }     
      return data
@@ -77,7 +77,6 @@ export default class Careers extends Component {
             <div>            
               <MDBDataTable                     
                 searchLabel='Buscar'
-                //autoWidth={true}
                 responsive
                 hover={true}
                 data={this.tabledata()}              

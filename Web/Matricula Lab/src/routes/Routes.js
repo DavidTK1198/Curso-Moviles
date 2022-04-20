@@ -3,7 +3,6 @@ import React from 'react';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Login from '../pages/Login';
 import Careers from '../pages/Careers/Careers';
-import Career from '../pages/Career/Career';
 import Courses from '../pages/Courses/Courses';
 import Professors from '../pages/Professors/Professors';
 import Students from '../pages/Students/Students';
@@ -30,7 +29,6 @@ export default function Routes() {
             <Route path="/menu" component={Menu} />            
             <Route path="/logout" component={Logout} />
             <Route path="/carreras" component={Careers}/> 
-            <Route path="/carrera" component={Career}/>
             <Route path="/cursos" component={Courses}/> 
             <Route path="/grupos" component={Groups}/> 
             <Route path="/estudiantes" component={Students}/>

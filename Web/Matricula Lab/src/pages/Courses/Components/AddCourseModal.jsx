@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import '../../../css/AddGroupModal.css';
 import { Modal, Button, Form, Stack } from "react-bootstrap";
 
-export default class AddGroupModal extends Component {
+export default class AddCourseModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -63,7 +63,7 @@ export default class AddGroupModal extends Component {
         return (
             <Modal show={render} onHide={() => { closeModal() }} >
                 <Modal.Header closeButton>
-                    Ingrese los datos del nuevo grupo
+                    Ingrese los datos del nuevo curso
                 </Modal.Header>
                 <Modal.Body>
                     <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
