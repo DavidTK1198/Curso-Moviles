@@ -16,8 +16,7 @@ export default class AddCourseModal extends Component {
     }
     
     handleSubmit = (event) => {
-        let query = new URLSearchParams(this.props.location.search);
-        console.log(query.get('codigo'))
+        //console.log(this.props.careerID)
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.preventDefault();
@@ -26,7 +25,7 @@ export default class AddCourseModal extends Component {
         else {
             event.preventDefault();
             let options = {
-                url: "",
+                url: "http://localhost:8088/Matricula/api/cursos",
                 method: 'POST',
                 header: {
                     'Accept': 'application/json',
@@ -37,7 +36,9 @@ export default class AddCourseModal extends Component {
                     'nombre': event.target.codigo.value,
                     'hsemanales': event.target.hsemanales.value,
                     'creditos': event.target.creditos.value,
-                    'idCarrera': query.get('codigo')
+                    'carrera':{
+                        'codigo': this.props.careerID
+                    }
                 }
             }
 

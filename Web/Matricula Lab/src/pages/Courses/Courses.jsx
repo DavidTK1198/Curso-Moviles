@@ -14,7 +14,8 @@ export default class Courses extends Component {
             courses: [],
             show: false,
             showDel: false,
-            delID: ""
+            delID: "",
+            careerID: ""
         }
         this.tabledata = this.tabledata.bind(this);
         this.openModal = this.openModal.bind(this);
@@ -38,7 +39,6 @@ export default class Courses extends Component {
   }
   refreshPage() {
     let query = new URLSearchParams(this.props.location.search);
-    console.log(query.get('codigo'))
     let options = {
         url: "http://localhost:8088/Matricula/api/cursos/cursoCarrera?codigo=" + query.get('codigo'),
         method: "GET",
@@ -51,7 +51,8 @@ export default class Courses extends Component {
     axios(options).then(response => {
         console.log(response.data)
         this.setState({
-            courses: response.data
+            courses: response.data,
+            careerID: query.get('codigo')
         });
     }).catch(error => {
       console.log(error);
@@ -145,9 +146,11 @@ export default class Courses extends Component {
                 responsive
                 hover={true}
                 data={this.tabledata()}              
-                />
+              />
               <AddCourseModal
                 show = {this.state.show}
+                careerID = {this.state.careerID}
+                refreshPage = {this.state.refreshPage}
                 closeModal = {this.closeModal}
               />
               <GenericModal
