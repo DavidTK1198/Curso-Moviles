@@ -32,8 +32,8 @@ export default class AddCourseModal extends Component {
                     'Content-Type': 'application/json'
                 },
                 data: {
-                    'codigo': event.target.name.value,
-                    'nombre': event.target.codigo.value,
+                    'codigo':  event.target.codigo.value,
+                    'nombre': event.target.name.value,
                     'hsemanales': event.target.hsemanales.value,
                     'creditos': event.target.creditos.value,
                     'carrera':{
