@@ -4,7 +4,6 @@ import '../../css/Courses.css'
 import axios from 'axios';
 import { MDBDataTable,  } from 'mdbreact';
 import { Link } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
 import AddCourseModal from './Components/AddCourseModal';
 import GenericModal from '../../components/GenericModal';
 export default class Courses extends Component {
@@ -29,6 +28,7 @@ export default class Courses extends Component {
       this.setState({ show: false });
     };
     openModalDel(id) {
+      console.log(id)
       this.setState({ showDel: true, delID: id });
   };
     closeModalDel = () => {
@@ -58,31 +58,23 @@ export default class Courses extends Component {
       console.log(error);
       });
 };
-  deleteCourse(idCourse){
+  deleteCourse(){
     let options = {
-      url: "",
-      method: "DELETE",
+      url: 'http://localhost:8088/Matricula/api/cursos',
+      method: 'DELETE',
       header: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
+      },
+      data: {
+        'id': this.state.delID
       }
-  }
+    }
   axios(options)
       .then(response => {
           this.refreshPage();
-          toast.success("El curso fue eliminado correctamente!", {
-              position: toast.POSITION.TOP_RIGHT,
-              pauseOnHover: true,
-              theme: 'colored',
-              autoClose: 5000
-          });
       }).catch(error => {
-          toast.error("Error al remover el curso.", {
-              position: toast.POSITION.TOP_RIGHT,
-              pauseOnHover: true,
-              theme: 'colored',
-              autoClose: 5000
-          });
+          console.log(error);
       });
   }
     tabledata() {
@@ -150,7 +142,7 @@ export default class Courses extends Component {
               <AddCourseModal
                 show = {this.state.show}
                 careerID = {this.state.careerID}
-                refreshPage = {this.state.refreshPage}
+                refreshPage = {this.refreshPage}
                 closeModal = {this.closeModal}
               />
               <GenericModal
@@ -159,7 +151,6 @@ export default class Courses extends Component {
                 action={this.deleteCourse}
                 header={"Eliminar curso"}
                 body={"¿Esta seguro que desea eliminar este curso?"} />
-              <ToastContainer />
             </div>
         );
     }
