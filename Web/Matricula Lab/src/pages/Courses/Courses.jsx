@@ -20,6 +20,7 @@ export default class Courses extends Component {
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.refreshPage = this.refreshPage.bind(this);
+        this.deleteCourse = this.deleteCourse.bind(this);
     }
     openModal = () => {
       this.setState({ show: true });
@@ -64,11 +65,13 @@ export default class Courses extends Component {
       method: 'DELETE',
       header: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods':'*',
       },
       data: {
         'id': this.state.delID
-      }
+      },
     }
   axios(options)
       .then(response => {
