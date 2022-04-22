@@ -16,7 +16,6 @@ export default class AddCourseModal extends Component {
     }
     
     handleSubmit = (event) => {
-        //console.log(this.props.careerID)
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.preventDefault();

@@ -19,6 +19,8 @@ export default class Courses extends Component {
         this.tabledata = this.tabledata.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        //this.openModalDel = this.openModalDel.bind(this);
+        //this.closeModalDel = this.closeModalDel.bind(this);
         this.refreshPage = this.refreshPage.bind(this);
         this.deleteCourse = this.deleteCourse.bind(this);
     }
@@ -29,9 +31,8 @@ export default class Courses extends Component {
       this.setState({ show: false });
     };
     openModalDel(id) {
-      console.log(id)
       this.setState({ showDel: true, delID: id });
-  };
+     };
     closeModalDel = () => {
       this.setState({ showDel: false });
     };
@@ -61,20 +62,18 @@ export default class Courses extends Component {
 };
   deleteCourse(){
     let options = {
-      url: 'http://localhost:8088/Matricula/api/cursos?id='+`${this.state.delID}`,
+      url: 'http://localhost:8088/Matricula/api/cursos?id=' + this.state.delID,
       method: 'PUT',
       header: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods':'*',
-      },
-      data: {
-        'id': this.state.delID
-      },
+      }
     }
   axios(options)
       .then(response => {
+          this.closeModalDel();
           this.refreshPage();
       }).catch(error => {
           console.log(error);

@@ -4,7 +4,6 @@ import '../../css/Courses.css'
 import axios from 'axios';
 import { MDBDataTable,  } from 'mdbreact';
 import AddGroupModal from './Components/AddGroupModal';
-import { ToastContainer, toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import GenericModal from '../../components/GenericModal';
 export default class Groups extends Component {
@@ -13,12 +12,15 @@ export default class Groups extends Component {
         this.state = {
             groups: [],
             show: false,
-            showGroup: false
+            delID: ""
         }
         this.tabledata = this.tabledata.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        //this.openModalDel = this.openModalDel.bind(this);
+        //this.closeModalDel = this.closeModalDel.bind(this);
         this.refreshPage = this.refreshPage.bind(this);
+        this.deleteGroup = this.deleteGroup.bind(this);
     }
     openModal = () => {
       this.setState({ show: true });
@@ -28,7 +30,7 @@ export default class Groups extends Component {
     };
     openModalDel(id) {
       this.setState({ showDel: true, delID: id });
-  };
+    };
     closeModalDel = () => {
       this.setState({ showDel: false });
     };
@@ -39,18 +41,19 @@ export default class Groups extends Component {
     let query = new URLSearchParams(this.props.location.search);
     console.log(query.get('codigo'))
     let options = {
-        url: "http://localhost:8088/Matricula/api/grupos/grupoCurso?codigo=" + query.get('codigo'),
+        url: 'http://localhost:8088/Matricula/api/grupos/listar?ciclo='+ query.get('ciclo') + '&codigo=' + query.get('codigo'),
         method: "GET",
         header: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods':'*',
         }
     }
     axios(options).then(response => {
         console.log(response.data)
         this.setState({
-            courses: response.data
+            groups: response.data
         });
     }).catch(error => {
         console.log(error)
@@ -58,8 +61,8 @@ export default class Groups extends Component {
 };
 deleteGroup(idGroup){
   let options = {
-    url: "",
-    method: "DELETE",
+    url: 'http://localhost:8088/Matricula/api/grupos?id=' + this.state.delID,
+    method: "PUT",
     header: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -68,44 +71,38 @@ deleteGroup(idGroup){
 axios(options)
     .then(response => {
         this.refreshPage();
-        toast.success("El grupo fue eliminado correctamente!", {
-            position: toast.POSITION.TOP_RIGHT,
-            pauseOnHover: true,
-            theme: 'colored',
-            autoClose: 5000
-        });
     }).catch(error => {
-        toast.error("Error al remover el grupo.", {
-            position: toast.POSITION.TOP_RIGHT,
-            pauseOnHover: true,
-            theme: 'colored',
-            autoClose: 5000
-        });
+      console.log(error);
     });
 }
     tabledata() {
            let data = {
             columns: [
               {
-                label: 'Codigo',
-                field: 'codigo',
+                label: 'Carrera',
+                field: 'carrera',
                 sort:  'asc',
                  
               },
               {
-                label: 'Creditos',
-                field: 'creditos',
+                label: 'Curso',
+                field: 'curso',
                 sort:  'asc',
                  
               },
               {
-                label: 'Horas semanales',
-                field: 'hsemanales',
+                label: 'Horario',
+                field: 'horario',
                 sort:  'asc',
               },
               {
-                label: 'Nombre',
-                field: 'nombre',
+                label: 'Cupo Disponible',
+                field: 'CupoDisponible',
+                sort:  'asc',
+              },
+              {
+                label: 'Profesor',
+                field: 'profesor',
                 sort:  'asc',
               }
               
@@ -151,7 +148,6 @@ axios(options)
                 action={this.deleteCourse}
                 header={"Eliminar grupo"}
                 body={"¿Esta seguro que desea eliminar este grupo?"} />
-              <ToastContainer />
             </div>
         );
     }
