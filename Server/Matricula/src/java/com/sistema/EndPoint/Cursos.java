@@ -77,15 +77,15 @@ public class Cursos {
         }
     }
     
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void actualizarCurso(Curso p) {
-        try {
-          control.actualizarCurso(p);
-        } catch (Exception ex) {
-            throw new NotFoundException("No se ha encontrado el curso");
-        }
-    }
+//    @PUT
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public void actualizarCurso(Curso p) {
+//        try {
+//          control.actualizarCurso(p);
+//        } catch (Exception ex) {
+//            throw new NotFoundException("No se ha encontrado el curso");
+//        }
+//    }
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -109,9 +109,9 @@ public class Cursos {
         }
     }*/
 
-    @DELETE
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void EliminarInscripcion(@DefaultValue("") @QueryParam("id") String id ) {
+    public void EliminarCurso(@DefaultValue("") @QueryParam("id") String id ) {
         try {
             control.eliminarCurso(id);
         } catch (Exception ex) {

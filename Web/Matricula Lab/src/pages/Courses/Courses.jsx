@@ -61,8 +61,8 @@ export default class Courses extends Component {
 };
   deleteCourse(){
     let options = {
-      url: 'http://localhost:8088/Matricula/api/cursos',
-      method: 'DELETE',
+      url: 'http://localhost:8088/Matricula/api/cursos?id='+`${this.state.delID}`,
+      method: 'PUT',
       header: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
