@@ -79,7 +79,7 @@ export default class Students extends Component {
       let cName = data.rows[i]['nombre'];
       data.rows[i]['nombre'] = 
       <Link 
-        to={{ pathname: "/alumno", search: `?codigo=${data.rows[i]['codigo']}` }}>
+        to={{ pathname: "/historial", search: `?cedula=${data.rows[i]['cedula']}` }}>
         {cName}
       </Link> 
     }     

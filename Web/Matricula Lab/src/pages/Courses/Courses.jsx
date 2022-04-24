@@ -131,11 +131,13 @@ export default class Courses extends Component {
     render() {
         return (
             <div>     
+            <div className='d-flex justify-content-end mt-3 mr-3'>   
               <Button size="sm" onClick={this.openModal} variant="success" key="AddButton">
                 <i className="bi bi-plus-square"></i> {' '}
                 Agregar curso
-              </Button>       
-              <MDBDataTable 
+              </Button>
+              </div>       
+              <MDBDataTable
                 searchLabel='Buscar'
                 responsive
                 hover={true}
