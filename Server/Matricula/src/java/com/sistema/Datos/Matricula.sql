@@ -486,8 +486,12 @@ AS
         grupo_cursor types.ref_cursor; 
 BEGIN 
   OPEN grupo_cursor FOR 
-           SELECT g.idgrupo as identidad,g.numgrupo,g.cupo,g.disponible,g.horario,p.cedula,p.nombre,p.email,p.telefono FROM grupo g, profesor p
-       WHERE  g.idgrupo=idbuscar AND g.profesorfk=p.cedula;
+           SELECT g.idgrupo as identidad,g.numgrupo,g.cupo,g.disponible,g.horario,p.cedula,p.nombre,p.email,p.telefono,
+           c.codigo,c.nombre as nomcur,c.creditos,c.hsemanales
+            FROM grupo g
+              INNER JOIN Curso c ON g.cursofk=c.codigo
+              INNER JOIN profesor p  ON g.profesorfk=p.cedula
+       WHERE  g.idgrupo=idbuscar;
 RETURN grupo_cursor; 
 END;
 /
@@ -499,8 +503,28 @@ AS
         grupo_cursor types.ref_cursor; 
 BEGIN 
   OPEN grupo_cursor FOR 
-       SELECT g.idgrupo as identidad,g.numgrupo,g.cupo,g.disponible,g.horario,p.cedula,p.nombre,p.email,p.telefono FROM grupo g, profesor p
-       WHERE  cursofk=cursoin and ciclofk=cicloin and g.profesorfk=p.cedula;
+       SELECT g.idgrupo as identidad,g.numgrupo,g.cupo,g.disponible,g.horario,p.cedula,p.nombre,p.email,p.telefono, 
+       c.codigo,c.nombre as nomcur,c.creditos,c.hsemanales
+       FROM grupo g
+         INNER JOIN Curso c ON g.cursofk=c.codigo
+           INNER JOIN profesor p  ON g.profesorfk=p.cedula
+       WHERE  g.cursofk=cursoin and g.ciclofk=cicloin;
+RETURN grupo_cursor; 
+END;
+/
+
+CREATE OR REPLACE FUNCTION listarGrupoPorProfesor(idbuscar IN grupo.profesorfk%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        grupo_cursor types.ref_cursor; 
+BEGIN 
+  OPEN grupo_cursor FOR 
+       SELECT g.idgrupo as identidad,g.numgrupo,g.cupo,g.disponible,g.horario,p.cedula,p.nombre,p.email,p.telefono, 
+       c.codigo,c.nombre as nomcur,c.creditos,c.hsemanales
+       FROM grupo g
+         INNER JOIN Curso c ON g.cursofk=c.codigo
+		  INNER JOIN profesor p  ON g.profesorfk=p.cedula
+       WHERE  g.profesorfk=idbuscar;
 RETURN grupo_cursor; 
 END;
 /
@@ -536,9 +560,12 @@ AS
 BEGIN 
   OPEN inscripcion_cursor FOR 
        SELECT i.id as identidad,i.nota,e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,
-	   g.idgrupo as identidadg,g.numgrupo,g.cupo,g.disponible,g.horario FROM  Inscripcion i
+	   g.idgrupo as identidadg,g.numgrupo,g.cupo,g.disponible,g.horario,
+           c.codigo,c.nombre as nomcur,c.creditos,c.hsemanales
+            FROM  Inscripcion i
 		INNER JOIN Alumno e ON i.fkalumno=e.cedula
 		INNER JOIN grupo g ON i.fkgrupo=g.idgrupo
+                INNER JOIN Curso c ON g.cursofk=c.codigo
        WHERE  i.fkgrupo=idbuscar;
 RETURN inscripcion_cursor; 
 END;
@@ -569,9 +596,12 @@ AS
 BEGIN 
   OPEN inscripcion_cursor FOR 
       SELECT i.id as identidad,i.nota,e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,
-	   g.idgrupo as identidadg,g.numgrupo,g.cupo,g.disponible,g.horario FROM  Inscripcion i
+	   g.idgrupo as identidadg,g.numgrupo,g.cupo,g.disponible,g.horario,
+           c.codigo,c.nombre as nomcur,c.creditos,c.hsemanales
+            FROM  Inscripcion i
 		INNER JOIN Alumno e ON i.fkalumno=e.cedula
 		INNER JOIN grupo g ON i.fkgrupo=g.idgrupo
+                INNER JOIN Curso c ON g.cursofk=c.codigo
        WHERE  i.id=idbuscar;
 RETURN inscripcion_cursor; 
 END;
