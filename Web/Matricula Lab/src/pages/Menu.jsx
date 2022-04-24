@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 import { Container, Button } from 'react-bootstrap';
+
 const cookies = new Cookies();
 
 export default class Menu extends Component {
@@ -13,8 +14,8 @@ export default class Menu extends Component {
     componentDidMount() {
         if (!(cookies.get('username', { path: process.env.REACT_APP_AUTH })
             && cookies.get('roles', { path: process.env.REACT_APP_AUTH })
-            && cookies.get('token', { path: process.env.REACT_APP_AUTH })
-            && cookies.get('full_name', { path: process.env.REACT_APP_AUTH })))
+            && cookies.get('ced', { path: process.env.REACT_APP_AUTH })
+            ))
             this.props.history.push('/login');
     }
 

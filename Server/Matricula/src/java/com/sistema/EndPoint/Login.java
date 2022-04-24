@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.sistema.Endpoint;
 
 import com.sistema.LogicaNegocio.Usuario;
@@ -32,8 +28,7 @@ public class Login {
     public Usuario login(Usuario usuario) {  
             Usuario logged=null;
             try {  
-               // logged= control.Login(usuario.getId(),usuario.getClave());
-                //if(!logged.getClave().equals(usuario.getClave())) throw new Exception("Clave incorrecta");
+                logged= control.Login(usuario.getId(),usuario.getClave());
                 request.getSession(true).setAttribute("user", logged);
                 return logged;
             } catch (Exception ex) {

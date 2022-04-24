@@ -6,6 +6,7 @@ import Careers from '../pages/Careers/Careers';
 import Courses from '../pages/Courses/Courses';
 import Professors from '../pages/Professors/Professors';
 import Students from '../pages/Students/Students';
+import Student from '../pages/Student/Student';
 import Groups from '../pages/Groups/Groups';
 import Logout from '../pages/Logout';
 import Menu from '../pages/Menu';
@@ -23,7 +24,7 @@ export default function Routes() {
     <div className="page-container">
       <HashRouter>
         <div className="content-wrap">
-          <NavigationBar />
+        <NavigationBar />
           <Switch>
             <Route path="/auth" component={Login}/>  
             <Route path="/menu" component={Menu} />            
@@ -34,7 +35,7 @@ export default function Routes() {
             <Route path="/estudiantes" component={Students}/>
             <Route path="/profesores" component={Professors}/>
             <Route path="/matricula"><h1>Matricula</h1></Route>
-            <Route path="/historial"><h1>Historial</h1></Route>
+            <Route path="/historial" component={Student}/>
             <Route path="/">
               <Redirect to="/auth" />
             </Route>

@@ -551,9 +551,12 @@ AS
 BEGIN 
   OPEN inscripcion_cursor FOR 
        SELECT i.id as identidad,i.nota,e.cedula,e.nombre,e.email,e.telefono,e.fec_nac,
-	   g.idgrupo as identidadg,g.numgrupo,g.cupo,g.disponible,g.horario FROM  Inscripcion i
+	   g.idgrupo as identidadg,g.numgrupo,g.cupo,g.disponible,g.horario,
+		c.codigo,c.nombre as nomcur,c.creditos,c.hsemanales
+	   FROM  Inscripcion i
 		INNER JOIN Alumno e ON i.fkalumno=e.cedula
 		INNER JOIN grupo g ON i.fkgrupo=g.idgrupo
+		INNER JOIN Curso c ON g.cursofk=c.codigo
        WHERE  i.fkalumno=idbuscar;
 RETURN inscripcion_cursor; 
 END;
@@ -673,7 +676,7 @@ AS
         n_cursor types.ref_cursor; 
 BEGIN 
   OPEN n_cursor FOR 
-	  SELECT COUNT(nombreUsuario) AS esta FROM usuario WHERE cedula=idin AND contrasea=passwordin;
+	  SELECT cedula,nombreUsuario,rol FROM usuario WHERE cedula=idin AND contrasea=passwordin;
 	 RETURN n_cursor; 
 END;
 /
@@ -688,6 +691,7 @@ INSERT INTO carrera VALUES('MAC','Ensenanza de Matematica','Licenciatura');
 INSERT INTO carrera VALUES('CDN','Ciencias del Movimiento Humano','Bachillerato');
 INSERT INTO Alumno VALUES('333','Emmanuel Barrientos','4030-6832','emmanuel@gmail.com','9/11/1992','EIF');
 INSERT INTO Alumno VALUES('444','Daniel Madrigal','6079-7171','ddavidb09@gmail.com','4/05/1998','MAC');
+INSERT INTO Alumno VALUES('207760240','Esteban Madrigal','6079-7271','esteban@gmail.com','5/05/1998','EIF');
 INSERT INTO profesor VALUES('111','Pedro Alvarez','4032-2525','pedroa@gmail.com');
 INSERT INTO profesor VALUES('222','Roberto Alvarez','4032-2525','pedroa@gmail.com');
 INSERT INTO curso VALUES('EIF200','Fundamentos de Informatica',3,8,'EIF');
@@ -715,6 +719,7 @@ INSERT INTO ciclo VALUES(secuenciaciclo.nextval,2,2,2021,'7/8/2021','27/11/2021'
 INSERT INTO grupo VALUES(secuenciagrupo.nextval,1,20,20,'EIF201','L-V 8-9:40',10000,'111');
 INSERT INTO grupo VALUES(secuenciagrupo.nextval,2,20,20,'EIF200','L-V 8-9:40',10000,'111');
 INSERT INTO grupo VALUES(secuenciagrupo.nextval,3,20,20,'EIF201','M-J 8-9:40',10000,'222');
+INSERT INTO Inscripcion VALUES(secuenciainscripcion.nextval,1,207760240,null);
 commit;
 
 

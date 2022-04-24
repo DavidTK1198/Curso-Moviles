@@ -12,21 +12,23 @@ import com.sistema.LogicaNegocio.UsuarioModel;
 public class UsuarioController {
 
     private static UsuarioController instance = null;
-    private static final UsuarioModel model=UsuarioModel.instance();
-    
-    
-      public static UsuarioController getInstance() {
-        if (instance == null) instance = new UsuarioController();
+    private static final UsuarioModel model = UsuarioModel.instance();
+
+    public static UsuarioController getInstance() {
+        if (instance == null) {
+            instance = new UsuarioController();
+        }
         return instance;
     }
 
     private UsuarioController() {
     }
-      
-      public boolean Login(String user, String password) throws NoDataException, GlobalException{
-          model.setUsuario(new Usuario());
-          model.getUs().setClave(password);
-          model.getUs().setNombre(user);
-          return model.getAuthorization(model.getUs());
-      }
+
+    public Usuario Login(String user, String password) throws NoDataException, GlobalException {
+        model.setUsuario(new Usuario());
+        model.getUs().setClave(password);
+        model.getUs().setNombre(user);
+        model.getAuthorization(model.getUs());
+        return model.getUs();
+    }
 }

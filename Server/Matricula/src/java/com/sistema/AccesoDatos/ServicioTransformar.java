@@ -46,7 +46,7 @@ public class ServicioTransformar {
                 rs.getInt("disponible"),
                 rs.getInt("numgrupo"),
                 rs.getString("horario"),
-                new Ciclo(), new Profesor(), new Curso()
+                new Ciclo(), new Profesor(), ObtenerCurso(rs)
         );
         grupo.setIdEntidad(rs.getInt("identidadg"));
         return grupo;
@@ -60,5 +60,13 @@ public class ServicioTransformar {
                 rs.getString("fec_nac"),
                 new Carrera()
         );
+    }
+
+    private Curso ObtenerCurso(ResultSet rs) throws SQLException {
+          Curso curso = new Curso(rs.getString("codigo"),
+                        rs.getString("nomcur"),
+                        rs.getInt("creditos"),
+                        rs.getInt("hsemanales"), new Carrera());
+          return curso;
     }
 }

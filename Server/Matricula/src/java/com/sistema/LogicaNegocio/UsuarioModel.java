@@ -23,8 +23,8 @@ public class UsuarioModel {
         this.usuario=new Usuario();
     }
     
-      public boolean getAuthorization(Usuario us)throws NoDataException, GlobalException {
-        return login.loginCliente(us.getNombre(), us.getClave());
+      public void getAuthorization(Usuario us)throws NoDataException, GlobalException {
+        usuario= login.loginCliente(us.getNombre(), us.getClave());
     }
     
     public Usuario getUs(){
