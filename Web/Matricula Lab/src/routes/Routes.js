@@ -4,6 +4,7 @@ import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Login from '../pages/Login';
 import Careers from '../pages/Careers/Careers';
 import Courses from '../pages/Courses/Courses';
+import Cycles from '../pages/Cycles/Cycles';
 import Professors from '../pages/Professors/Professors';
 import Students from '../pages/Students/Students';
 import Student from '../pages/Student/Student';
@@ -36,6 +37,7 @@ export default function Routes() {
             <Route path="/grupos" component={Groups}/> 
             <Route path="/estudiantes" component={Students}/>
             <Route path="/profesores" component={Professors}/>
+            <Route path="/ciclos" component={Cycles}/>
             <Route path="/matricula"><h1>Matricula</h1></Route>
             <Route path="/historial" component={Student}/>
             <Route path="/misGrupos" component={Professor}/>
