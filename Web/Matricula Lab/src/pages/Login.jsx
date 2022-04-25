@@ -3,9 +3,8 @@ import "../css/Login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import {TripleMaze } 
-from 'react-spinner-animated';
-import ReactDOM from 'react-dom';
+//import {TripleMaze } from 'react-spinner-animated';
+//import ReactDOM from 'react-dom';
 import 'react-spinner-animated/dist/index.css';
 import { Container, Form, Button } from "react-bootstrap";
 // <Image src={logo} fluid height={300} width={300} className='img-fluid hover-shadow' onClick={() => {console.log(cookies)}}/>

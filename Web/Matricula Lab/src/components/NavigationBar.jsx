@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Navbar, Container, Nav, Button } from "react-bootstrap";
+import { Navbar, Container, Nav } from "react-bootstrap";
 import { withRouter } from "react-router";
 import "../css/NavigationBar.css";
 class NavigationBar extends Component {
