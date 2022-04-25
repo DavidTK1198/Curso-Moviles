@@ -18,7 +18,8 @@ class NavigationBar extends Component {
               <Container>
                 <Nav>
                 <Nav.Link href="#/menu">Inicio</Nav.Link>
-                  <Nav.Link href="#/carreras">Carreras</Nav.Link>
+                  <Nav.Link href="#/carreras">Carreras</Nav.Link> 
+                  <Nav.Link href="#/ciclos">Ciclos</Nav.Link>
                   <Nav.Link href="#/grupos">Grupos</Nav.Link>
                   <Nav.Link href="#/estudiantes">Estudiantes</Nav.Link>
                   <Nav.Link href="#/profesores">Profesores</Nav.Link>
