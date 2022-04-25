@@ -41,6 +41,7 @@ public class Ciclos {
     @GET
     @Path("cicloAnnio")
     @Produces({MediaType.APPLICATION_JSON})
+    @PermitAll
     public List<Ciclo> buscarPorAnnio(@DefaultValue("") @QueryParam("annio") String annio) {
         try {
             return control.cicloPorAnnio(Integer.parseInt(annio));
@@ -53,6 +54,7 @@ public class Ciclos {
     @PUT
     @Path("cicloActivar")
     @Consumes(MediaType.APPLICATION_JSON)
+    @PermitAll
     public void activar(Ciclo p) {
         try {
             control.activarCiclo(p);
@@ -64,6 +66,7 @@ public class Ciclos {
     @PUT
     @Path("cicloDesActivar")
     @Consumes(MediaType.APPLICATION_JSON)
+    @PermitAll
     public void desactivar(Ciclo p) {
         try {
             control.desactivarCiclo(p);

@@ -153,6 +153,7 @@ public class ServicioCiclo extends Servicio {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         CallableStatement castmt = null;
+        int estado=ciclo.isEstado();
         try {
             if ("activar".equals(opc)) {
                 castmt = conexion.prepareCall(REVISARACTIVO);
@@ -167,11 +168,24 @@ public class ServicioCiclo extends Servicio {
                     throw new GlobalException("Ya existe un ciclo activo");
                 }
             }
+                castmt = conexion.prepareCall(BUSCARID);
+                castmt.registerOutParameter(1, OracleTypes.CURSOR);
+               castmt.setInt(2, ciclo.getId());
+                castmt.execute();
+                rs = (ResultSet) castmt.getObject(1);
+                while (rs.next()) {
+                    ciclo = new Ciclo(rs.getInt("id"),
+                        rs.getInt("annio"),
+                        rs.getInt("numero"),
+                        rs.getInt("estado"),
+                        rs.getString("fec_inicio"),
+                        rs.getString("fec_final"));
+                }
             pstmt = conexion.prepareStatement(MODIFICARCICLO);
             pstmt.setInt(1, ciclo.getId());
             pstmt.setInt(2, ciclo.getAnnio());
             pstmt.setInt(3, ciclo.getNumero());
-            pstmt.setInt(4, ciclo.isEstado());
+            pstmt.setInt(4, estado);
             pstmt.setString(5, ciclo.getFec_inicio());
             pstmt.setString(6, ciclo.getFec_final());
             int resultado = pstmt.executeUpdate();
