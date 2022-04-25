@@ -47,7 +47,17 @@ public class Grupos {
             throw new NotAcceptableException();
         }
     }
-
+@GET
+    @Path("profesor")
+    @PermitAll
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Grupo> GruposPorProfesor(@DefaultValue("") @QueryParam("ced") String profesor) {
+        try {
+            return control.gruposPorProfesor(profesor);
+        } catch (Exception ex) {
+            throw new NotFoundException();
+        }
+    }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
@@ -59,6 +69,15 @@ public class Grupos {
         }
     }
 
-
+  @GET
+    @Path("buscar")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Grupo buscar(@DefaultValue("") @QueryParam("id") String id) {
+        try {
+            return control.grupoid(id);
+        } catch (Exception e) {
+            throw new NotFoundException();
+        }
+    }
 
 }

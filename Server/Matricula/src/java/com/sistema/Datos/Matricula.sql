@@ -524,7 +524,8 @@ BEGIN
        FROM grupo g
          INNER JOIN Curso c ON g.cursofk=c.codigo
 		  INNER JOIN profesor p  ON g.profesorfk=p.cedula
-       WHERE  g.profesorfk=idbuscar;
+		  INNER JOIN Ciclo cl on g.ciclofk=cl.id
+       WHERE  g.profesorfk=idbuscar AND cl.estado=1;
 RETURN grupo_cursor; 
 END;
 /
@@ -565,7 +566,7 @@ BEGIN
             FROM  Inscripcion i
 		INNER JOIN Alumno e ON i.fkalumno=e.cedula
 		INNER JOIN grupo g ON i.fkgrupo=g.idgrupo
-                INNER JOIN Curso c ON g.cursofk=c.codigo
+        INNER JOIN Curso c ON g.cursofk=c.codigo
        WHERE  i.fkgrupo=idbuscar;
 RETURN inscripcion_cursor; 
 END;
@@ -714,7 +715,7 @@ PROMPT DATOS QUEMADOS
 ------------------------------------------------------
 INSERT INTO usuario VALUES('117250610','ADM','DavidTK1198','admin');
 INSERT INTO usuario VALUES('207760240','EST','EstebanUG','123');
-INSERT INTO usuario VALUES('123456789','PROF','PedritoA','111');
+INSERT INTO usuario VALUES('111','PROF','PedritoA','111');
 INSERT INTO usuario VALUES('987654321','MAT','MariaE','222');
 INSERT INTO carrera VALUES('EIF','Ingenieria en Sistemas','Bachillerato');
 INSERT INTO carrera VALUES('MAC','Ensenanza de Matematica','Licenciatura');
@@ -744,12 +745,13 @@ INSERT INTO curso VALUES('EIF208','Comunicaciones y Redes de Computadores',3,8,'
 INSERT INTO curso VALUES('CDN201','Cumbia recreativa',3,8,'CDN');
 INSERT INTO curso VALUES('CDN205','Desarrollo Humano',3,8,'CDN');
 INSERT INTO ciclo VALUES(secuenciaciclo.nextval,1,1,2022,'7/3/2022','25/6/2022');
-INSERT INTO ciclo VALUES(secuenciaciclo.nextval,2,2,2022,'8/8/2022','25/11/2022');
+INSERT INTO ciclo VALUES(secuenciaciclo.nextval,1,2,2022,'8/8/2022','25/11/2022');
 INSERT INTO ciclo VALUES(secuenciaciclo.nextval,2,2,2021,'7/8/2021','27/11/2021');
 INSERT INTO grupo VALUES(secuenciagrupo.nextval,1,20,20,'EIF201','L-V 8-9:40',10000,'111');
 INSERT INTO grupo VALUES(secuenciagrupo.nextval,2,20,20,'EIF200','L-V 8-9:40',10000,'111');
 INSERT INTO grupo VALUES(secuenciagrupo.nextval,3,20,20,'EIF201','M-J 8-9:40',10000,'222');
 INSERT INTO Inscripcion VALUES(secuenciainscripcion.nextval,1,207760240,null);
+INSERT INTO Inscripcion VALUES(secuenciainscripcion.nextval,1,333,null);
 commit;
 
 

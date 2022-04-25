@@ -68,24 +68,25 @@ class NavigationBar extends Component {
       case "PROF":
         return (
           <div className="Header  container-fluid">
-            <Navbar collapseOnSelect expand="lg" variant="dark">
+             <Navbar collapseOnSelect expand="lg" variant="dark">
               <Container>
                 <Nav>
-                  <Nav.Link href="#/carreras">Carreras</Nav.Link>
-                  <Nav.Link href="#/grupos">Grupos</Nav.Link>
-                  <Nav.Link href="#/estudiantes">Estudiantes</Nav.Link>
-                  <Nav.Link href="#/profesores">Profesores</Nav.Link>
-                  <Nav.Link href="#/matricula">Matricula</Nav.Link>
-                  <Nav.Link href="#/historial">Historial</Nav.Link>
-                  <Nav.Link
-                    onClick={() => {
-                      this.props.history.push("/logout");
-                    }}
-                  >
-                    Salir
-                  </Nav.Link>
+                  <Nav.Link href="#/menu">Inicio</Nav.Link>
+                  <Nav.Link href="#/misGrupos">Grupos</Nav.Link>
                 </Nav>
               </Container>
+              <Nav>
+              <Nav.Link  href="">
+                  {user.nombre}
+                </Nav.Link>
+                <Nav.Link
+                  onClick={() => {
+                    this.props.history.push("/logout");
+                  }}
+                >
+                  Salir
+                </Nav.Link>
+              </Nav>
             </Navbar>
           </div>
         );

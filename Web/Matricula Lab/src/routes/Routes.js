@@ -7,7 +7,9 @@ import Courses from '../pages/Courses/Courses';
 import Professors from '../pages/Professors/Professors';
 import Students from '../pages/Students/Students';
 import Student from '../pages/Student/Student';
+import Professor from '../pages/Professor/Professor';
 import Groups from '../pages/Groups/Groups';
+import Group from '../pages/Group/Group';
 import Logout from '../pages/Logout';
 import Menu from '../pages/Menu';
 import Footer from '../components/Footer';
@@ -36,6 +38,8 @@ export default function Routes() {
             <Route path="/profesores" component={Professors}/>
             <Route path="/matricula"><h1>Matricula</h1></Route>
             <Route path="/historial" component={Student}/>
+            <Route path="/misGrupos" component={Professor}/>
+            <Route path="/grupo" component={Group}/>
             <Route path="/">
               <Redirect to="/auth" />
             </Route>

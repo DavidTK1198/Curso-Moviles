@@ -3,10 +3,6 @@ import "../css/Login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import {TripleMaze } 
-from 'react-spinner-animated';
-import ReactDOM from 'react-dom';
-import 'react-spinner-animated/dist/index.css';
 import { Container, Form, Button } from "react-bootstrap";
 // <Image src={logo} fluid height={300} width={300} className='img-fluid hover-shadow' onClick={() => {console.log(cookies)}}/>
 /*
@@ -78,6 +74,7 @@ export default class Login extends React.Component {
             this.props.history.push("/menu");
             localStorage.setItem("logged",JSON.stringify(response.data));
             window.location.reload(false);
+            
           } else window.location.reload(false);
         });
       }
@@ -86,6 +83,7 @@ export default class Login extends React.Component {
   }
 
   componentDidMount() {
+    localStorage.clear();
   }
   async handleInputChange(e) {
     this.setState({ [e.target.name]: e.target.value }, () => {
@@ -128,7 +126,6 @@ export default class Login extends React.Component {
               Ingresar
             </Button>
           </div>
-          <div id="loginf"></div>
         </Form>
  
       </Container>

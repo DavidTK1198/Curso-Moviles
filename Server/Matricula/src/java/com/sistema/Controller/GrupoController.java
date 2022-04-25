@@ -13,7 +13,7 @@ import java.util.List;
 public class GrupoController {
 
     private static GrupoController instance = null;
-    private static final GrupoModel model =GrupoModel.instance();
+    private static final GrupoModel model = GrupoModel.instance();
 
     public static GrupoController getInstance() {
         if (instance == null) {
@@ -25,7 +25,7 @@ public class GrupoController {
     private GrupoController() {
     }
 
-    public List<Grupo> gruposPorCicloCurso(String ciclo,String codigo) throws GlobalException, NoDataException {
+    public List<Grupo> gruposPorCicloCurso(String ciclo, String codigo) throws GlobalException, NoDataException {
         model.getCurrent().getCiclo().setId(Integer.parseInt(ciclo));
         model.getCurrent().getCurso().setCodigo(codigo);
         model.gruposPorCicloCurso();
@@ -41,13 +41,22 @@ public class GrupoController {
         model.setCurrent(p);
         model.modificarGrupo();
     }
-    
-    public void buscarGrupo(Grupo p) throws GlobalException, NoDataException{
+
+    public void buscarGrupo(Grupo p) throws GlobalException, NoDataException {
         model.setCurrent(p);
         model.buscarGrupo();
     }
 
- 
+    public List<Grupo> gruposPorProfesor(String profesor) throws GlobalException, NoDataException {
+        model.getCurrent().getProfesor().setCedula(profesor);
+        model.grupoPorProfesor();
+        return model.getGrupos();
+    }
 
+    public Grupo grupoid(String id) throws GlobalException, NoDataException {
+       model.getCurrent().setIdEntidad(Integer.parseInt(id));
+       model.buscarGrupo();
+       return model.getCurrent();
+    }
 
 }

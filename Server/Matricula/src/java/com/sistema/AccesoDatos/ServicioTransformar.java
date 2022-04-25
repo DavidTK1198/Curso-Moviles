@@ -62,7 +62,7 @@ public class ServicioTransformar {
         );
     }
 
-    private Curso ObtenerCurso(ResultSet rs) throws SQLException {
+    public Curso ObtenerCurso(ResultSet rs) throws SQLException {
           Curso curso = new Curso(rs.getString("codigo"),
                         rs.getString("nomcur"),
                         rs.getInt("creditos"),

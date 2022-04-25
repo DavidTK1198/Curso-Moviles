@@ -54,6 +54,7 @@ public class Inscripciones {
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
+    @PermitAll
     public void actualizarNota(Inscripcion p) {
         try {
             control.asignarNota(p);

@@ -20,6 +20,7 @@ public class ServicioGrupo extends Servicio {
 
     private static final String insertarGrupo = "{call insertarGrupo (?,?,?,?,?,?,?)}";
     private static final String LISTAR = "{?=call listargrupo(?,?)}";
+    private static final String LISTARPROFESOR = "{?=call listarGrupoPorProfesor(?)}";
     private static final String BUSCARID = "{?=call buscargrupo(?)}";
     private static final String modificarGrupo = "{call modificarGrupo (?,?,?,?,?,?,?,?)}";
     private static final String eliminarGrupo = "{call eliminarGrupo(?)}";
@@ -41,7 +42,7 @@ public class ServicioGrupo extends Servicio {
         return instance;
     }
 
-    public Collection listarGrupo(int ciclo, String curso) throws GlobalException, NoDataException {
+    public Collection listarGrupo(int ciclo, String ID, String medio) throws GlobalException, NoDataException {
         try {
             conectar();
         } catch (ClassNotFoundException ex) {
@@ -55,10 +56,19 @@ public class ServicioGrupo extends Servicio {
         Grupo grupo = null;
         CallableStatement pstmt = null;
         try {
-            pstmt = conexion.prepareCall(LISTAR);
+
+            switch (medio) {
+                case "curso":
+                    pstmt = conexion.prepareCall(LISTAR);
+                    pstmt.setInt(3, ciclo);
+                    pstmt.setString(2, ID);
+                    break;
+                case "profesor":
+                    pstmt = conexion.prepareCall(LISTARPROFESOR);
+                    pstmt.setString(2, ID);
+                    break;
+            }
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
-            pstmt.setInt(3, ciclo);
-            pstmt.setString(2, curso);
             pstmt.execute();
             rs = (ResultSet) pstmt.getObject(1);
             while (rs.next()) {
@@ -66,7 +76,7 @@ public class ServicioGrupo extends Servicio {
                         rs.getInt("disponible"),
                         rs.getInt("numgrupo"),
                         rs.getString("horario"),
-                        new Ciclo(), helper.obtenerProfesor(rs), new Curso()
+                        new Ciclo(), helper.obtenerProfesor(rs), helper.ObtenerCurso(rs)
                 );
                 grupo.setIdEntidad(rs.getInt("identidad"));
                 coleccion.add(grupo);
@@ -232,7 +242,7 @@ public class ServicioGrupo extends Servicio {
                     rs.getInt("disponible"),
                     rs.getInt("numgrupo"),
                     rs.getString("horario"),
-                    new Ciclo(), helper.obtenerProfesor(rs), new Curso()
+                    new Ciclo(), helper.obtenerProfesor(rs), helper.ObtenerCurso(rs)
             );
             grupo.setIdEntidad(rs.getInt("identidad"));
             coleccion.add(grupo);

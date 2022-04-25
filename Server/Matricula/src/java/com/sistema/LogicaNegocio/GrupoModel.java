@@ -52,7 +52,7 @@ public class GrupoModel {
     }
 
     public void gruposPorCicloCurso() throws GlobalException, NoDataException {
-        grupos = (List<Grupo>) grupo_DBA.listarGrupo(current.getCiclo().getId(),current.getCurso().getCodigo());
+        grupos = (List<Grupo>) grupo_DBA.listarGrupo(current.getCiclo().getId(),current.getCurso().getCodigo(),"curso");
     }
 
     public void modificarGrupo() throws GlobalException, NoDataException {
@@ -61,6 +61,10 @@ public class GrupoModel {
 
     public void buscarGrupo() throws GlobalException, NoDataException {
         this.grupo_DBA.buscarGrupo(current.getIdEntidad());
+    }
+
+    public void grupoPorProfesor() throws GlobalException, NoDataException {
+        this.grupos=(List<Grupo>) grupo_DBA.listarGrupo(0, current.getProfesor().getCedula(), "profesor");
     }
 
 

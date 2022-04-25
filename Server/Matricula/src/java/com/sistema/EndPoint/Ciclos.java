@@ -37,7 +37,7 @@ public class Ciclos {
         }
     }
 
-    // http://localhost:8088/Matricula/api/ciclos/cicloAnnio?annio=2022
+    // http://localhost:8088/Matricula/api/ciclos/cicloActivar?annio=2022
     @GET
     @Path("cicloAnnio")
     @Produces({MediaType.APPLICATION_JSON})
