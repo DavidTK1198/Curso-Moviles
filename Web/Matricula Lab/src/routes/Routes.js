@@ -11,8 +11,10 @@ import Student from '../pages/Student/Student';
 import Professor from '../pages/Professor/Professor';
 import Groups from '../pages/Groups/Groups';
 import Group from '../pages/Group/Group';
+import Enrollment from '../pages/Enrollment/Enrollment';
 import Logout from '../pages/Logout';
 import Menu from '../pages/Menu';
+import OfertaAcademica from "../pages/OfertaAcademica/OfertaAcademica"
 import Footer from '../components/Footer';
 import NavigationBar from '../components/NavigationBar';
 import '../css/Routes.css';
@@ -38,9 +40,10 @@ export default function Routes() {
             <Route path="/estudiantes" component={Students}/>
             <Route path="/profesores" component={Professors}/>
             <Route path="/ciclos" component={Cycles}/>
-            <Route path="/matricula"><h1>Matricula</h1></Route>
+            <Route path="/matricula" component={Enrollment}/>
             <Route path="/historial" component={Student}/>
             <Route path="/misGrupos" component={Professor}/>
+            <Route path="/oferta" component={OfertaAcademica}/>
             <Route path="/grupo" component={Group}/>
             <Route path="/">
               <Redirect to="/auth" />

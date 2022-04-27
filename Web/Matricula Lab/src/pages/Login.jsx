@@ -83,7 +83,6 @@ export default class Login extends React.Component {
   }
 
   componentDidMount() {
-    localStorage.clear();
   }
   async handleInputChange(e) {
     this.setState({ [e.target.name]: e.target.value }, () => {

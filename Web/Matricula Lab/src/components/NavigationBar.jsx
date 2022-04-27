@@ -1,8 +1,22 @@
 import React, { Component } from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { withRouter } from "react-router";
+import Cookies from "universal-cookie";
 import "../css/NavigationBar.css";
+const cookies = new Cookies();
 class NavigationBar extends Component {
+  componentDidMount() {
+    if (
+      !(
+        cookies.get("username", { path: process.env.REACT_APP_AUTH }) &&
+        cookies.get("roles", { path: process.env.REACT_APP_AUTH }) &&
+        cookies.get("ced", { path: process.env.REACT_APP_AUTH })
+      )
+    ) {
+      this.props.history.push("/login");
+      localStorage.clear();
+    }
+  }
   render() {
     const isLoggedIn = localStorage.getItem("logged");
     const user = JSON.parse(isLoggedIn);
@@ -17,19 +31,16 @@ class NavigationBar extends Component {
             <Navbar collapseOnSelect expand="lg" variant="dark">
               <Container>
                 <Nav>
-                <Nav.Link href="#/menu">Inicio</Nav.Link>
-                  <Nav.Link href="#/carreras">Carreras</Nav.Link> 
+                  <Nav.Link href="#/menu">Inicio</Nav.Link>
+                  <Nav.Link href="#/carreras">Carreras</Nav.Link>
                   <Nav.Link href="#/ciclos">Ciclos</Nav.Link>
-                  <Nav.Link href="#/grupos">Grupos</Nav.Link>
                   <Nav.Link href="#/estudiantes">Estudiantes</Nav.Link>
                   <Nav.Link href="#/profesores">Profesores</Nav.Link>
-                  <Nav.Link href="#/matricula">Matricula</Nav.Link>
+                  <Nav.Link href="#/oferta"> Oferta académica</Nav.Link>
                 </Nav>
               </Container>
               <Nav>
-              <Nav.Link  href="">
-                  {user.nombre}
-                </Nav.Link>
+                <Nav.Link href="">{user.nombre}</Nav.Link>
                 <Nav.Link
                   onClick={() => {
                     this.props.history.push("/logout");
@@ -52,9 +63,7 @@ class NavigationBar extends Component {
                 </Nav>
               </Container>
               <Nav>
-              <Nav.Link  href="">
-                  {user.nombre}
-                </Nav.Link>
+                <Nav.Link href="">{user.nombre}</Nav.Link>
                 <Nav.Link
                   onClick={() => {
                     this.props.history.push("/logout");
@@ -69,7 +78,7 @@ class NavigationBar extends Component {
       case "PROF":
         return (
           <div className="Header  container-fluid">
-             <Navbar collapseOnSelect expand="lg" variant="dark">
+            <Navbar collapseOnSelect expand="lg" variant="dark">
               <Container>
                 <Nav>
                   <Nav.Link href="#/menu">Inicio</Nav.Link>
@@ -77,9 +86,7 @@ class NavigationBar extends Component {
                 </Nav>
               </Container>
               <Nav>
-              <Nav.Link  href="">
-                  {user.nombre}
-                </Nav.Link>
+                <Nav.Link href="">{user.nombre}</Nav.Link>
                 <Nav.Link
                   onClick={() => {
                     this.props.history.push("/logout");
@@ -120,8 +127,7 @@ class NavigationBar extends Component {
           <div className="Header  container-fluid">
             <Navbar collapseOnSelect expand="lg" variant="dark">
               <Container>
-                <Nav>
-                </Nav>
+                <Nav></Nav>
               </Container>
             </Navbar>
           </div>

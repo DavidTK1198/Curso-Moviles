@@ -78,9 +78,22 @@ public class Ciclos {
     @GET
     @Path("cicloCodigo")
     @Produces({MediaType.APPLICATION_JSON})
+    @PermitAll
     public Ciclo buscarPorCodigo(@DefaultValue("") @QueryParam("codigo") String codigo) {
         try {
             return control.cicloPorCodigo(Integer.parseInt(codigo));
+        } catch (Exception e) {
+            throw new NotFoundException();
+        }
+    }
+
+    @GET
+    @Path("activo")
+    @Produces({MediaType.APPLICATION_JSON})
+    @PermitAll
+    public Ciclo obtenerActivo(@DefaultValue("") @QueryParam("codigo") String codigo) {
+        try {
+            return control.cicloActivo();
         } catch (Exception e) {
             throw new NotFoundException();
         }

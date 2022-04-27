@@ -60,7 +60,7 @@ public class CicloModel {
 
     
     public void buscarId() throws GlobalException, NoDataException{
-        current= ciclo_DBA.buscarCiclo(current.getId());
+        current= ciclo_DBA.buscarCiclo(current.getId(),"normal");
     }
     
      public void buscarAnnio() throws GlobalException, NoDataException{
@@ -73,5 +73,9 @@ public class CicloModel {
     
     public void desactivarCiclo() throws GlobalException, NoDataException {
         ciclo_DBA.modificarCiclo(current,"desactivar");
+    }
+
+    public void cicloActivo() throws GlobalException, NoDataException {
+        current= ciclo_DBA.buscarCiclo(0,"activo");
     }
 }

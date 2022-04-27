@@ -52,4 +52,9 @@ public class CicloController {
         model.desactivarCiclo();
     }
 
+    public Ciclo cicloActivo() throws GlobalException, NoDataException {
+        model.cicloActivo();
+        return model.getCurrent();
+    }
+
 }

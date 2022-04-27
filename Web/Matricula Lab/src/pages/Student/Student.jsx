@@ -3,7 +3,6 @@ import "../../css/Courses.css";
 import axios from "axios";
 import { MDBDataTable } from "mdbreact";
 import Cookies from "universal-cookie";
-import { Link } from 'react-router-dom';
 const cookies = new Cookies();
 const requestURL = "http://localhost:8088/Matricula/api/inscripciones/alumno";
 const isLoggedIn = localStorage.getItem("logged");
@@ -91,12 +90,7 @@ export default class Student extends Component {
       rows: this.state.inscripciones,
     };
     for(let i in data.rows){
-      let cName = data.rows[i]['nombre'];
-      data.rows[i]['nombre'] = 
-      <Link 
-        to={{ pathname: "/historial", search: `?codigo=${data.rows[i]['codigo']}` }}>
-        {cName}
-      </Link> 
+      data.rows[i]['curso'] = data.rows[i].grupo.curso.nombre
     } 
     return data;
   }

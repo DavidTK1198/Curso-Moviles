@@ -242,6 +242,17 @@ BEGIN
 RETURN ciclo_cursor; 
 END;
 /
+
+CREATE OR REPLACE FUNCTION cicloactivo
+RETURN Types.ref_cursor 
+AS 
+        ciclo_cursor types.ref_cursor; 
+BEGIN 
+  OPEN ciclo_cursor FOR 
+       SELECT id,estado,numero,annio,fec_inicio,fec_final FROM ciclo WHERE estado=1; 
+RETURN ciclo_cursor; 
+END;
+/
 CREATE OR REPLACE FUNCTION revisaractivo
 RETURN Types.ref_cursor 
 AS 

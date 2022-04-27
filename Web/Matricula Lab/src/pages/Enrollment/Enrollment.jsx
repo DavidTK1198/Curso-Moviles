@@ -3,27 +3,23 @@ import "../../css/Professors.css";
 import axios from "axios";
 import { MDBDataTable } from "mdbreact";
 import { Link } from "react-router-dom";
-export default class Students extends Component {
+export default class Enrollment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      students: [],
+      student: {},
+      cycle: {},
+      cycles: [],
+      groups: [],
+      inscripciones: []
     };
-    this.tabledata = this.tabledata.bind(this);
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.updateStudentsSort = this.updateStudentsSort.bind(this);
+    this.refreshPage = this.refreshPage.bind(this);
   }
-  openModal = () => {
-    this.setState({ show: true });
-  };
-  closeModal = () => {
-    this.setState({ show: false });
-  };
+
   componentDidMount() {
-    this.updateStudentsSort();
+    this.refreshPage();
   }
-  updateStudentsSort() {
+  refreshPage() {
     let options = {
       url: "http://localhost:8088/Matricula/api/alumnos/listar",
       method: "GET",
@@ -81,8 +77,7 @@ export default class Students extends Component {
           label: "Matricula",
           field: "matricula",
           sort: "asc",
-        }
-      
+        },
       ],
       rows: this.state.students,
     };
@@ -101,11 +96,11 @@ export default class Students extends Component {
       data.rows[i]["matricula"] = (
         <Link
           to={{
-            pathname: "/matricula",
+            pathname: "/historial",
             search: `?cedula=${data.rows[i]["cedula"]}`,
           }}
         >
-        ver
+          ver
         </Link>
       );
     }

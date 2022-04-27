@@ -111,15 +111,7 @@ export default class Courses extends Component {
               }            
             ],
             rows: this.state.courses   
-            }    
-            for(let i in data.rows){
-              let cName = data.rows[i]['nombre'];
-              data.rows[i]['nombre'] = 
-              <Link 
-                to={{ pathname: "/grupos", search: `?codigo=${data.rows[i]['codigo']}` }}>
-                {cName}
-              </Link> 
-            }      
+            }          
             for(let i in data.rows){
               data.rows[i]['delete'] = 
               <Button variant="secondary" onClick={() => this.openModalDel(data.rows[i]['codigo'])}>
