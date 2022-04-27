@@ -5,7 +5,7 @@ import axios from "axios";
 import { MDBDataTable } from "mdbreact";
 import { Link } from "react-router-dom";
 import SelectCycleModal from "./SelectCycleModal";
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter} from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import SelectCarrerModal from "./SelectCarrerModal";
 export default class Courses extends Component {
@@ -59,14 +59,14 @@ export default class Courses extends Component {
           courses: response.data,
         });
         ReactDOM.render(
-          <BrowserRouter>
+          <HashRouter>
             <MDBDataTable
             searchLabel="Buscar"
             responsive
             hover={true}
             data={this.tabledata()}
           />
-      </BrowserRouter>,
+      </HashRouter>,
           document.getElementById('tabla')
         );
       resolve("ok")
