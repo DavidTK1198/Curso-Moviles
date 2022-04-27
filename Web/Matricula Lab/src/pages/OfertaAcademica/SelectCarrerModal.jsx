@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import "../../css/Careers.css";
 import axios from "axios";
 import { MDBDataTable } from "mdbreact";
-import { Link } from "react-router-dom";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 export default class SelectCarrerModal extends Component {
   constructor(props) {
     super(props);

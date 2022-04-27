@@ -3,7 +3,6 @@ import '../../css/Cycles.css'
 import axios from 'axios';
 import { Button } from "react-bootstrap";
 import { MDBDataTable } from 'mdbreact';
-import { Link } from "react-router-dom";
 export default class Cycles extends Component {
     constructor(props) {
         super(props);

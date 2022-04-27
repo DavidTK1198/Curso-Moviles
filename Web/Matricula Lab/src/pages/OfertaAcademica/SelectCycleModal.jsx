@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "../../css/AddGroupModal.css";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import { MDBDataTable } from 'mdbreact';
 
 export default class SelectCycleModal extends Component {
@@ -51,7 +51,7 @@ selecionarCiclo(codigo) {
   let ciclo = this.state.cycles.find(element => element.id === codigo);
   input.value = `${ciclo.annio}-${ciclo.numero}`;
   //https://stackoverflow.com/questions/5309926/how-can-i-get-the-data-id-attribute
-   input.setAttribute('data-ciclo',`${ciclo.id}`);
+  input.setAttribute('data-ciclo',`${ciclo.id}`);
 }
   tabledata() {
     let data = {

@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import "../../css/Courses.css";
 import axios from "axios";
 import { MDBDataTable } from "mdbreact";
 import { Link } from "react-router-dom";
 import SelectCycleModal from "./SelectCycleModal";
-import GenericModal from "../../components/GenericModal";
 import ReactDOM from 'react-dom';
 import SelectCarrerModal from "./SelectCarrerModal";
 export default class Courses extends Component {
@@ -20,7 +19,6 @@ export default class Courses extends Component {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.refreshPage = this.refreshPage.bind(this);
-    this.deleteCourse = this.deleteCourse.bind(this);
     this.openModalDel=this.openModalDel.bind(this)
     this.closeModalDel=this.closeModalDel.bind(this);
   }
@@ -76,27 +74,10 @@ export default class Courses extends Component {
       });
     })
   }
-  deleteCourse() {
-    let options = {
-      url: "http://localhost:8088/Matricula/api/cursos?id=" + this.state.delID,
-      method: "PUT",
-      header: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "*",
-      },
-    };
-    axios(options)
-      .then((response) => {
-        this.closeModalDel();
-        this.refreshPage();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
   tabledata() {
+    let ciclo = document.getElementById("ciclo");
+    let id = ciclo.getAttribute("data-ciclo");
+    console.log(id);
     let data = {
       columns: [
         {
@@ -127,9 +108,10 @@ export default class Courses extends Component {
       ],
       rows: this.state.courses,
     };
-    for (let i in data.rows) {
-      data.rows[i]["grupos"] = "aqui se pone el acceso a agregar grupos de ese curso"
-    }
+    for(let i in data.rows){
+      data.rows[i]['grupos'] = <Link to={{ pathname: "/grupos", search: `?ciclo=${id}&codigo=${data.rows[i]['codigo']}` }}>
+      Grupos</Link> 
+    }   
     return data;
   }
   render() {

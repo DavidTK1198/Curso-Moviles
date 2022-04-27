@@ -40,6 +40,7 @@ export default class Groups extends Component {
   refreshPage() {
     let query = new URLSearchParams(this.props.location.search);
     console.log(query.get('codigo'))
+    console.log(query.get('ciclo'))
     let options = {
         url: 'http://localhost:8088/Matricula/api/grupos/listar?ciclo='+ query.get('ciclo') + '&codigo=' + query.get('codigo'),
         method: "GET",

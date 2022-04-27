@@ -3,7 +3,6 @@ import { Button } from 'react-bootstrap';
 import '../../css/Courses.css'
 import axios from 'axios';
 import { MDBDataTable,  } from 'mdbreact';
-import { Link } from 'react-router-dom';
 import AddCourseModal from './Components/AddCourseModal';
 import GenericModal from '../../components/GenericModal';
 export default class Courses extends Component {
