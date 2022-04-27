@@ -136,7 +136,8 @@ export default class Courses extends Component {
     return (
       <div>   
         <div className="d-flex justify-content-end mt-3 mr-3  w-50">
-          <input type="text" className="w-100" placeholder="Ciclo a selecionar..." readOnly  id="ciclo"></input>
+          <input type="text" className="w-100" placeholder="Ciclo a selecionar..." readOnly  id="ciclo"       
+           data-ciclo=""></input>
 
           <Button
             size="sm"

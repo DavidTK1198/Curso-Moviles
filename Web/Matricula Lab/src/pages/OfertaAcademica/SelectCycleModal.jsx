@@ -50,6 +50,8 @@ selecionarCiclo(codigo) {
   let input = document.getElementById("ciclo");
   let ciclo = this.state.cycles.find(element => element.id === codigo);
   input.value = `${ciclo.annio}-${ciclo.numero}`;
+  //https://stackoverflow.com/questions/5309926/how-can-i-get-the-data-id-attribute
+   input.setAttribute('data-ciclo',`${ciclo.id}`);
 }
   tabledata() {
     let data = {
