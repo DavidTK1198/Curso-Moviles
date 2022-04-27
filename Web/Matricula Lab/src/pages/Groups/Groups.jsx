@@ -80,12 +80,6 @@ axios(options)
            let data = {
             columns: [
               {
-                label: 'Carrera',
-                field: 'carrera',
-                sort:  'asc',
-                 
-              },
-              {
                 label: 'Curso',
                 field: 'curso',
                 sort:  'asc',
@@ -97,8 +91,13 @@ axios(options)
                 sort:  'asc',
               },
               {
-                label: 'Cupo Disponible',
-                field: 'CupoDisponible',
+                label: 'Total',
+                field: 'cupo',
+                sort:  'asc',
+              },
+              {
+                label: 'Disponible',
+                field: 'disponible',
                 sort:  'asc',
               },
               {
@@ -111,19 +110,10 @@ axios(options)
             rows: this.state.groups   
             }
             for(let i in data.rows){
-              let cName = data.rows[i]['nombre'];
-              data.rows[i]['nombre'] = 
-              <Link 
-                to={{ pathname: "/grupo", search: `?codigo=${data.rows[i]['codigo']}` }}>
-                {cName}
-              </Link> 
+              data.rows[i]['curso'] =data.rows[i].curso.nombre;
+              data.rows[i]['profesor'] =data.rows[i].profesor.nombre;
             } 
-            for(let i in data.rows){
-              data.rows[i]['delete'] = 
-              <Button variant="secondary" onClick={() => this.openModalDel(data.rows[i]['codigo'])}>
-                Eliminar
-              </Button>
-            }          
+                
             return data
     }   
     render() {
