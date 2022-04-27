@@ -67,28 +67,7 @@ export default class AddGroupModal extends Component {
                 </Modal.Header>
                 <Modal.Body>
                     <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
-                        <Form.Group>
-                            <div className="form-group">
-                                <Form.Label>Nombre:</Form.Label>
-                                <Form.Control
-                                    name="name"
-                                    id="name"
-                                    type="text"
-                                    placeholder="Nombre"
-                                    className="form-control"
-                                    required
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    Por favor ingresar nombre.
-                                </Form.Control.Feedback>
-                            </div>
-                        </Form.Group>
-                        <div className="form-group">
-                            <Stack direction="horizontal" gap={3}>
-                                <label>Descripción:</label>
-                            </Stack>
-                            <textarea name="description" id="description" type="text" placeholder="Descripción" className="form-control" style={{ height: '150px' }} required />
-                        </div>
+
                         <div className='text-center'>
                             <Button className='btn-sfr' type="submit">
                                 Guardar

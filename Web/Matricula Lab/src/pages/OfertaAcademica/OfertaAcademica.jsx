@@ -54,7 +54,6 @@ export default class Courses extends Component {
     };
     axios(options)
       .then((response) => {
-        console.log(response.data);
         this.setState({
           courses: response.data,
         });
@@ -80,7 +79,6 @@ export default class Courses extends Component {
   tabledata() {
     let ciclo = document.getElementById("ciclo");
     let id = ciclo.getAttribute("data-ciclo");
-    console.log(id);
     let data = {
       columns: [
         {

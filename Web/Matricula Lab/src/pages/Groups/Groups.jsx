@@ -104,7 +104,12 @@ axios(options)
                 label: 'Profesor',
                 field: 'profesor',
                 sort:  'asc',
-              }
+              },              
+              {
+                label: 'Editar',
+                field: 'editar',
+                sort:  'asc',
+              } 
               
             ],
             rows: this.state.groups   
@@ -113,6 +118,12 @@ axios(options)
               data.rows[i]['curso'] =data.rows[i].curso.nombre;
               data.rows[i]['profesor'] =data.rows[i].profesor.nombre;
             } 
+            for(let i in data.rows){
+              data.rows[i]['editar'] = 
+              <Button variant="secondary" onClick={() => this.openModalDel(data.rows[i]['codigo'])}>
+                Editar
+              </Button> 
+            }  
                 
             return data
     }   
