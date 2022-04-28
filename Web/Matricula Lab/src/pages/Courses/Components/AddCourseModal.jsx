@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import '../../../css/AddGroupModal.css';
 import { Modal, Button, Form } from "react-bootstrap";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default class AddCourseModal extends Component {
     constructor(props) {
         super(props);
@@ -45,8 +46,20 @@ export default class AddCourseModal extends Component {
                 .then(response => {
                     this.props.closeModal();
                     this.props.refreshPage();
+                    toast.success("Se agrego el curso correctamente!", {
+                        position: toast.POSITION.TOP_RIGHT,
+                        pauseOnHover: true,
+                        theme: 'colored',
+                        autoClose: 5000
+                    });  
                 }).catch(error => {
                     console.log(error);
+                    toast.success("Error agregando curso!", {
+                        position: toast.POSITION.TOP_RIGHT,
+                        pauseOnHover: true,
+                        theme: 'colored',
+                        autoClose: 5000
+                    });
                 });
         }
     }
@@ -132,6 +145,7 @@ export default class AddCourseModal extends Component {
                         </div>
                     </Form>
                 </Modal.Body>
+                <ToastContainer />
             </Modal>
         );
     }

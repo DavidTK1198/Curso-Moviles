@@ -4,6 +4,8 @@ import axios from "axios";
 import { MDBDataTable } from "mdbreact";
 import { Link } from 'react-router-dom';
 import Cookies from "universal-cookie";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const cookies = new Cookies();
 const requestURL = "http://localhost:8088/Matricula/api/grupos/profesor";
 const isLoggedIn = localStorage.getItem("logged");
@@ -52,6 +54,12 @@ export default class Professor extends Component {
         });
     }).catch(error => {
       console.log(error);
+      toast.error("Error cargando datos del profesor!.", {
+        position: toast.POSITION.TOP_RIGHT,
+        pauseOnHover: true,
+        theme: 'colored',
+        autoClose: 5000
+    });
       });
   }
   tabledata() {
@@ -94,6 +102,7 @@ export default class Professor extends Component {
             hover={true}
             data={this.tabledata()}
           />
+          <ToastContainer />
       </div>
     );
   }

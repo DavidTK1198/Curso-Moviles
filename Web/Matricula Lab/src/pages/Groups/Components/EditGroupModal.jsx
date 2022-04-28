@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import '../../../css/AddGroupModal.css';
 import { Modal, Button, Form } from "react-bootstrap";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default class AddGroupModal extends Component {
     constructor(props) {
         super(props);
@@ -40,8 +41,20 @@ export default class AddGroupModal extends Component {
                 .then(response => {
                     this.props.closeModal();
                     this.props.refreshPage();
+                    toast.success("Se hicieron las ediciones del grupo correctamente!", {
+                        position: toast.POSITION.TOP_RIGHT,
+                        pauseOnHover: true,
+                        theme: 'colored',
+                        autoClose: 5000
+                    });
                 }).catch(error => {
                     console.log(error);
+                    toast.error("No se pudo editar el grupo.", {
+                        position: toast.POSITION.TOP_RIGHT,
+                        pauseOnHover: true,
+                        theme: 'colored',
+                        autoClose: 5000
+                    });
                 });
         }
     }
@@ -132,7 +145,8 @@ export default class AddGroupModal extends Component {
                             </Button>
                         </div>
                     </Form>
-                </Modal.Body>
+                </Modal.Body> 
+                <ToastContainer />
             </Modal>
         );
     }

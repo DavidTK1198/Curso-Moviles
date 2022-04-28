@@ -8,6 +8,7 @@ import SelectCycleModal from "./SelectCycleModal";
 import { HashRouter} from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import SelectCarrerModal from "./SelectCarrerModal";
+import { ToastContainer, toast } from 'react-toastify';
 export default class Courses extends Component {
   constructor(props) {
     super(props);
@@ -70,11 +71,18 @@ export default class Courses extends Component {
       </HashRouter>,
           document.getElementById('tabla')
         );
+        
       resolve("ok")
       })
       .catch((error) => {
         console.log(error);
         reject("fail")
+        toast.success("Error oferta grupos!", {
+          position: toast.POSITION.TOP_RIGHT,
+          pauseOnHover: true,
+          theme: 'colored',
+          autoClose: 5000
+      });
       });
     })
     
@@ -168,6 +176,7 @@ export default class Courses extends Component {
           show={this.state.showDel}
           closeModal={this.closeModalDel}
         />
+        <ToastContainer />
       </div>
     );
   }

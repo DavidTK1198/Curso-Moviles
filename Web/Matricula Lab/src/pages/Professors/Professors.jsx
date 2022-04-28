@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import '../../css/Professors.css'
 import axios from 'axios';
 import { MDBDataTable,  } from 'mdbreact';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default class Professors extends Component {
     constructor(props){
         super(props);
@@ -39,6 +41,12 @@ export default class Professors extends Component {
           });
       }).catch(error => {
         console.log(error);
+        toast.error("Error cargando datos del profesor!.", {
+          position: toast.POSITION.TOP_RIGHT,
+          pauseOnHover: true,
+          theme: 'colored',
+          autoClose: 5000
+      });
         });
   }; 
   tabledata() {
@@ -82,6 +90,7 @@ export default class Professors extends Component {
                 hover={true}
                 data={this.tabledata()}              
                 />
+                <ToastContainer />
             </div>
         );
     }

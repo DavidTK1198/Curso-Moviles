@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import '../../../css/AddGroupModal.css';
 import { Modal, Button, Form, Stack } from "react-bootstrap";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default class AddGroupModal extends Component {
     constructor(props) {
         super(props);
@@ -38,7 +39,13 @@ export default class AddGroupModal extends Component {
                   (async ()=>{
                     const response = await fetch(request);
                     this.closeModal();
-                    this.refreshPage();                           
+                    this.refreshPage();  
+                    toast.success("Se agrego el grupo correctamente!", {
+                        position: toast.POSITION.TOP_RIGHT,
+                        pauseOnHover: true,
+                        theme: 'colored',
+                        autoClose: 5000
+                    });                         
                 })();
             }
             }
@@ -126,7 +133,8 @@ export default class AddGroupModal extends Component {
                             </Button>
                         </div>
                     </Form>
-                </Modal.Body>
+                </Modal.Body> 
+                <ToastContainer />
             </Modal>
         );
     }

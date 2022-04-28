@@ -6,6 +6,8 @@ import { MDBDataTable,  } from 'mdbreact';
 import AddGroupModal from './Components/AddGroupModal';
 import EditGroupModal from './Components/EditGroupModal';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default class Groups extends Component {
     constructor(props){
         super(props);
@@ -64,6 +66,12 @@ export default class Groups extends Component {
             groups: response.data
         });
     }).catch(error => {
+      toast.success("Error cargando grupos!", {
+        position: toast.POSITION.TOP_RIGHT,
+        pauseOnHover: true,
+        theme: 'colored',
+        autoClose: 5000
+    });
         console.log(error)
       });
 };
@@ -147,6 +155,7 @@ export default class Groups extends Component {
                 refreshPage={this.refreshPage}
                 closeModal={this.closeModalEdit}
               />
+               <ToastContainer />
             </div>
         );
     }
