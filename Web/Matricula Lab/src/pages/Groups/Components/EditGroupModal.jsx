@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-//import axios from 'axios';
+import axios from 'axios';
 import '../../../css/AddGroupModal.css';
-import { Modal, Button, Form, Stack } from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap";
 
 export default class AddGroupModal extends Component {
     constructor(props) {
@@ -26,39 +26,25 @@ export default class AddGroupModal extends Component {
             event.preventDefault();
             let options = {
                 url: 'http://localhost:8088/Matricula/api/grupos/listar?ciclo='+ query.get('ciclo') + '&codigo=' + query.get('codigo'),
-                method: 'POST',
+                method: 'PUT',
                 header: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                },
-                data: {
-                    'name': event.target.name.value,
-                    'description': event.target.description.value,
-                    'entryDate': this.state.startDate.getTime(),
-                    'affectation': event.target.affectation.value,
-                    'cause': event.target.cause.value,
-                    'risk': event.target.risk.value,
-                    'planID': this.props.planID
                 }
             }
-
             axios(options)
                 .then(response => {
                     this.props.closeModal();
                     this.props.refreshPage();
                 }).catch(error => {
                     console.log(error);
-                    toast.error("ID de la incidencia ya se encuentra registrado en el sistema.", {
-                        position: toast.POSITION.TOP_RIGHT,
-                        pauseOnHover: true,
-                        theme: 'colored',
-                        autoClose: 5000
-                    });
                 });
         }
     }*/
 
     render() {
+        let curso = this.props.curso
+        let profesor = this.props.profesor
         let render = this.props.show;
         let closeModal = this.props.closeModal;
         return (
@@ -69,6 +55,42 @@ export default class AddGroupModal extends Component {
                 <Modal.Body>
                     <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
                     <Form.Group>
+                            <div className="form-group">
+                                <Form.Label>Curso:</Form.Label>
+                                <Form.Control
+                                    name="curso"
+                                    id="curso"
+                                    type="text"
+                                    placeholder="Curso"
+                                    defaultValue={curso}
+                                    className="form-control"
+                                    disabled
+                                    required
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Por favor ingresar curso.
+                                </Form.Control.Feedback>
+                            </div>
+                        </Form.Group>
+                        <Form.Group>
+                            <div className="form-group">
+                                <Form.Label>Profesor:</Form.Label>
+                                <Form.Control
+                                    name="profesor"
+                                    id="profesor"
+                                    type="text"
+                                    placeholder="Profesor"
+                                    defaultValue={profesor}
+                                    className="form-control"
+                                    disabled
+                                    required
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Por favor ingresar profesor.
+                                </Form.Control.Feedback>
+                            </div>
+                        </Form.Group>
+                        <Form.Group>
                             <div className="form-group">
                                 <Form.Label>Cupo:</Form.Label>
                                 <Form.Control

@@ -110,7 +110,7 @@ export default class Courses extends Component {
       rows: this.state.courses,
     };
     for(let i in data.rows){
-      data.rows[i]['grupos'] = <Link to={{ pathname: "/grupos", search: `?ciclo=${id}&codigo=${data.rows[i]['codigo']}` }}>
+      data.rows[i]['grupos'] = <Link to={{pathname: "/grupos", search: `?ciclo=${id}&codigo=${data.rows[i]['codigo']}` }}>
       Grupos</Link> 
     }   
     return data;

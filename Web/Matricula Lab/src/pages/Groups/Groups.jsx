@@ -4,15 +4,18 @@ import '../../css/Courses.css'
 import axios from 'axios';
 import { MDBDataTable,  } from 'mdbreact';
 import AddGroupModal from './Components/AddGroupModal';
+import EditGroupModal from './Components/EditGroupModal';
 import { Link } from 'react-router-dom';
-import GenericModal from '../../components/GenericModal';
 export default class Groups extends Component {
     constructor(props){
         super(props);
         this.state = {
             groups: [],
             show: false,
-            delID: ""
+            showEdit: false,
+            curso: "",
+            ciclo: "",
+            profesor: ""
         }
         this.tabledata = this.tabledata.bind(this);
         this.openModal = this.openModal.bind(this);
@@ -20,7 +23,6 @@ export default class Groups extends Component {
         //this.openModalDel = this.openModalDel.bind(this);
         //this.closeModalDel = this.closeModalDel.bind(this);
         this.refreshPage = this.refreshPage.bind(this);
-        this.deleteGroup = this.deleteGroup.bind(this);
     }
     openModal = () => {
       this.setState({ show: true });
@@ -28,11 +30,14 @@ export default class Groups extends Component {
     closeModal = () => {
       this.setState({ show: false });
     };
-    openModalDel(id) {
-      this.setState({ showDel: true, delID: id });
+    openModalEdit(cur, cic, prof) {
+      console.log(cur)
+      console.log(cic.id)
+      console.log(prof)
+      this.setState({ showEdit: true, curso: cur, ciclo: cic, profesor: prof });
     };
-    closeModalDel = () => {
-      this.setState({ showDel: false });
+    closeModalEdit = () => {
+      this.setState({ showEdit: false });
     };
     componentDidMount() {
       this.refreshPage();
@@ -60,22 +65,6 @@ export default class Groups extends Component {
         console.log(error)
       });
 };
-deleteGroup(idGroup){
-  let options = {
-    url: 'http://localhost:8088/Matricula/api/grupos?id=' + this.state.delID,
-    method: "PUT",
-    header: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    }
-}
-axios(options)
-    .then(response => {
-        this.refreshPage();
-    }).catch(error => {
-      console.log(error);
-    });
-}
     tabledata() {
            let data = {
             columns: [
@@ -120,7 +109,7 @@ axios(options)
             } 
             for(let i in data.rows){
               data.rows[i]['editar'] = 
-              <Button variant="secondary" onClick={() => this.openModalDel(data.rows[i]['codigo'])}>
+              <Button variant="secondary" key="EditButton" onClick={() => this.openModalEdit(data.rows[i].curso, data.rows[i].ciclo, data.rows[i].profesor)}>
                 Editar
               </Button> 
             }  
@@ -141,15 +130,18 @@ axios(options)
                 data={this.tabledata()}              
                 />
               <AddGroupModal
+                curso = {this.state.curso}
+                ciclo = {this.state.ciclo}
                 show = {this.state.show}
                 closeModal = {this.closeModal}
               />
-              <GenericModal
-                show={this.state.showDel}
-                close={this.closeModalDel}
-                action={this.deleteCourse}
-                header={"Eliminar grupo"}
-                body={"¿Esta seguro que desea eliminar este grupo?"} />
+              <EditGroupModal
+                curso = {this.state.curso}
+                ciclo = {this.state.ciclo}
+                profesor = {this.state.profesor}
+                show={this.state.showEdit}
+                closeModal={this.closeModalEdit}
+              />
             </div>
         );
     }
