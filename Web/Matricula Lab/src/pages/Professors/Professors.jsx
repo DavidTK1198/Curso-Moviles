@@ -46,7 +46,7 @@ export default class Professors extends Component {
      columns: [
        {
          label: 'Cédula',
-         field: 'cédula',
+         field: 'cedula',
          sort:  'asc',
           
        },

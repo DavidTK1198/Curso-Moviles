@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import axios from 'axios';
+import axios from 'axios';
 import '../../../css/AddGroupModal.css';
 import { Modal, Button, Form, Stack } from "react-bootstrap";
 
@@ -14,9 +14,8 @@ export default class AddGroupModal extends Component {
     onChange = e => {
         this.setState({ value: e.target.value })
     }
-    /*
+    
     handleSubmit = (event) => {
-        let query = new URLSearchParams(this.props.location.search);
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.preventDefault();
@@ -24,43 +23,30 @@ export default class AddGroupModal extends Component {
         }
         else {
             event.preventDefault();
-            let options = {
-                url: 'http://localhost:8088/Matricula/api/grupos/listar?ciclo='+ query.get('ciclo') + '&codigo=' + query.get('codigo'),
-                method: 'POST',
-                header: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                data: {
-                    'name': event.target.name.value,
-                    'description': event.target.description.value,
-                    'entryDate': this.state.startDate.getTime(),
-                    'affectation': event.target.affectation.value,
-                    'cause': event.target.cause.value,
-                    'risk': event.target.risk.value,
-                    'planID': this.props.planID
+            let data;
+                data = {
+                    'curso': event.target.curso.value,
+                    'profesor': event.target.profesor.value,
+                    'horario': event.target.horario.value,
+                    'cupo': event.target.cupo.value,
                 }
+                var url='http://localhost:8088/Matricula/api/grupos';
+                let request = new Request(url, {method: 'POST', headers: { 'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods':'*',
+            },body: JSON.stringify(data)});
+                  (async ()=>{
+                    const response = await fetch(request);
+                    this.closeModal();
+                    this.refreshPage();                           
+                })();
             }
-
-            axios(options)
-                .then(response => {
-                    this.props.closeModal();
-                    this.props.refreshPage();
-                }).catch(error => {
-                    console.log(error);
-                    toast.error("ID de la incidencia ya se encuentra registrado en el sistema.", {
-                        position: toast.POSITION.TOP_RIGHT,
-                        pauseOnHover: true,
-                        theme: 'colored',
-                        autoClose: 5000
-                    });
-                });
-        }
-    }*/
+            }
 
     render() {
         let render = this.props.show;
         let closeModal = this.props.closeModal;
+        let codigo = this.props.codigo
         return (
             <Modal show={render} onHide={() => { closeModal() }} >
                 <Modal.Header closeButton>
@@ -77,6 +63,8 @@ export default class AddGroupModal extends Component {
                                     type="text"
                                     placeholder="curso"
                                     className="form-control"
+                                    defaultValue={codigo}
+                                    disabled
                                     required
                                 />
                                 <Form.Control.Feedback type="invalid">
@@ -86,12 +74,12 @@ export default class AddGroupModal extends Component {
                     </Form.Group>
                     <Form.Group>
                             <div className="form-group">
-                                <Form.Label>Profesor:</Form.Label>
+                                <Form.Label>Cedula profesor:</Form.Label>
                                 <Form.Control
                                     name="profesor"
                                     id="profesor"
                                     type="text"
-                                    placeholder="Profesor"
+                                    placeholder="Cedula profesor"
                                     className="form-control"
                                     required
                                 />

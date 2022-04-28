@@ -15,7 +15,8 @@ export default class Groups extends Component {
             showEdit: false,
             curso: "",
             ciclo: "",
-            profesor: ""
+            profesor: "",
+            idG: ""
         }
         this.tabledata = this.tabledata.bind(this);
         this.openModal = this.openModal.bind(this);
@@ -26,18 +27,19 @@ export default class Groups extends Component {
     }
     openModal = () => {
       this.setState({ show: true });
+      this.refreshPage();
     };
     closeModal = () => {
       this.setState({ show: false });
+      this.refreshPage();
     };
-    openModalEdit(cur, cic, prof) {
-      console.log(cur)
-      console.log(cic.id)
-      console.log(prof)
-      this.setState({ showEdit: true, curso: cur, ciclo: cic, profesor: prof });
+    openModalEdit(cur, cic, prof, id) {
+      this.refreshPage();
+      this.setState({ showEdit: true, curso: cur, ciclo: cic, profesor: prof, idG: id });
     };
     closeModalEdit = () => {
       this.setState({ showEdit: false });
+      this.refreshPage();
     };
     componentDidMount() {
       this.refreshPage();
@@ -109,7 +111,7 @@ export default class Groups extends Component {
             } 
             for(let i in data.rows){
               data.rows[i]['editar'] = 
-              <Button variant="secondary" key="EditButton" onClick={() => this.openModalEdit(data.rows[i].curso, data.rows[i].ciclo, data.rows[i].profesor)}>
+              <Button variant="secondary" key="EditButton" onClick={() => this.openModalEdit(data.rows[i].curso, data.rows[i].ciclo, data.rows[i].profesor, data.rows[i].idEntidad)}>
                 Editar
               </Button> 
             }  
@@ -117,6 +119,7 @@ export default class Groups extends Component {
             return data
     }   
     render() {
+      let query = new URLSearchParams(this.props.location.search);
         return (
             <div>
               <Button size="sm" onClick={this.openModal} variant="success" key="AddButton">
@@ -130,14 +133,18 @@ export default class Groups extends Component {
                 data={this.tabledata()}              
                 />
               <AddGroupModal
+                codigo={query.get('codigo')}
                 show = {this.state.show}
+                refreshPage={this.refreshPage}
                 closeModal = {this.closeModal}
               />
               <EditGroupModal
+                idG = {this.state.idG}
                 curso = {this.state.curso}
                 ciclo = {this.state.ciclo}
                 profesor = {this.state.profesor}
                 show={this.state.showEdit}
+                refreshPage={this.refreshPage}
                 closeModal={this.closeModalEdit}
               />
             </div>

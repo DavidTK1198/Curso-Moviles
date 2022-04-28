@@ -8,15 +8,14 @@ export default class AddGroupModal extends Component {
         super(props);
         this.state = {
         };
-        //this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
     }
     onChange = e => {
         this.setState({ value: e.target.value })
     }
-    /*
+    
     handleSubmit = (event) => {
-        let query = new URLSearchParams(this.props.location.search);
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.preventDefault();
@@ -25,11 +24,16 @@ export default class AddGroupModal extends Component {
         else {
             event.preventDefault();
             let options = {
-                url: 'http://localhost:8088/Matricula/api/grupos/listar?ciclo='+ query.get('ciclo') + '&codigo=' + query.get('codigo'),
+                url: 'http://localhost:8088/Matricula/api/grupos',
                 method: 'PUT',
                 header: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
+                },
+                data: {
+                    'idEntidad': this.props.idG,
+                    'cupo': event.target.cupo.value,
+                    'horario': event.target.horario.value
                 }
             }
             axios(options)
@@ -40,7 +44,7 @@ export default class AddGroupModal extends Component {
                     console.log(error);
                 });
         }
-    }*/
+    }
 
     render() {
         let curso = this.props.curso

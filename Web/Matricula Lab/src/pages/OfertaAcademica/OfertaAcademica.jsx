@@ -41,6 +41,8 @@ export default class Courses extends Component {
     return new Promise((resolve,reject)=>{
     let query = document.getElementById("carrera");
     let codigo=query.value.split("-").pop()
+    let ciclo = document.getElementById("ciclo");
+   if(codigo === "" || ciclo.value === ""){return reject("error")}
     let options = {
       url:
         "http://localhost:8088/Matricula/api/cursos/cursoCarrera?codigo=" +
@@ -75,6 +77,7 @@ export default class Courses extends Component {
         reject("fail")
       });
     })
+    
   }
   tabledata() {
     let ciclo = document.getElementById("ciclo");
@@ -119,7 +122,7 @@ export default class Courses extends Component {
     return (
       <div>   
         <div className="d-flex justify-content-end mt-3 mr-3  w-50">
-          <input type="text" className="w-100" placeholder="Ciclo a selecionar..." readOnly  id="ciclo"       
+          <input type="text" className="w-100" placeholder="" readOnly  id="ciclo"       
            data-ciclo=""></input>
 
           <Button
@@ -135,7 +138,7 @@ export default class Courses extends Component {
         <div className="d-flex justify-content-end mt-3 mr-3 w-50">
           <input
             type="text"
-            placeholder="Carrera a selecionar..."
+            placeholder=""
             readOnly 
             className="w-100"
             id="carrera"
