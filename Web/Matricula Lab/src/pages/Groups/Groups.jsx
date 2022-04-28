@@ -130,8 +130,6 @@ export default class Groups extends Component {
                 data={this.tabledata()}              
                 />
               <AddGroupModal
-                curso = {this.state.curso}
-                ciclo = {this.state.ciclo}
                 show = {this.state.show}
                 closeModal = {this.closeModal}
               />

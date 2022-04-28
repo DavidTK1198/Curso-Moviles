@@ -70,6 +70,38 @@ export default class AddGroupModal extends Component {
                     <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
                     <Form.Group>
                             <div className="form-group">
+                                <Form.Label>Curso:</Form.Label>
+                                <Form.Control
+                                    name="curso"
+                                    id="curso"
+                                    type="text"
+                                    placeholder="curso"
+                                    className="form-control"
+                                    required
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Por favor ingresar cupo.
+                                </Form.Control.Feedback>
+                            </div>
+                    </Form.Group>
+                    <Form.Group>
+                            <div className="form-group">
+                                <Form.Label>Profesor:</Form.Label>
+                                <Form.Control
+                                    name="profesor"
+                                    id="profesor"
+                                    type="text"
+                                    placeholder="Profesor"
+                                    className="form-control"
+                                    required
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Por favor ingresar cupo.
+                                </Form.Control.Feedback>
+                            </div>
+                    </Form.Group>
+                    <Form.Group>
+                            <div className="form-group">
                                 <Form.Label>Cupo:</Form.Label>
                                 <Form.Control
                                     name="cupo"
