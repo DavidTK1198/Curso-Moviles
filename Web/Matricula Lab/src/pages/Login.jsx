@@ -3,6 +3,11 @@ import "../css/Login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import { ToastContainer, toast } from 'react-toastify';
+import ReactDOM from 'react-dom';
+import {TripleMaze } 
+from 'react-spinner-animated';
+import 'react-spinner-animated/dist/index.css';
 import { Container, Form, Button } from "react-bootstrap";
 // <Image src={logo} fluid height={300} width={300} className='img-fluid hover-shadow' onClick={() => {console.log(cookies)}}/>
 /*
@@ -57,6 +62,11 @@ export default class Login extends React.Component {
             clave: this.state.pwd,
           },
         };
+        ReactDOM.render(
+          <TripleMaze text={"Redireccionando..."}
+          center={true} width={"100px"} height={"200px"}/>,
+        document.getElementById('loader')
+      );
         axios(options).then((response) => {
           if (response.status===200) {
             cookies.set("username", response.data.nombre, {
@@ -74,8 +84,22 @@ export default class Login extends React.Component {
             this.props.history.push("/menu");
             localStorage.setItem("logged",JSON.stringify(response.data));
             window.location.reload(false);
-            
+          setTimeout(() => { }, 2000);
+          toast.success("Usuario Conectado", {
+            position: toast.POSITION.TOP_RIGHT,
+            pauseOnHover: true,
+            theme: 'colored',
+            autoClose: 5000
+        });
           } else window.location.reload(false);
+        }).catch(()=>{
+          toast.error("Error de credenciales", {
+            position: toast.POSITION.TOP_RIGHT,
+            pauseOnHover: true,
+            theme: 'colored',
+            autoClose: 5000
+        });
+        document.getElementById("loader").innerHTML="";
         });
       }
     );
@@ -96,7 +120,10 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <Container className="w-auto text-center mx-auto p-3 mt-2 container">
+      <div>
+      <div id="loader" className="d-flex mt-5 pt-5 mt-5 pd-5 mb-5">
+      </div>
+      <Container className="w-auto text-center mx-auto p-3 mt-5 container position-relative">
         <Form className="centered-element" onSubmit={this.handleSubmit} >
           <Form.Group className="mb-3"></Form.Group>
           <Form.Group className="mb-3">
@@ -126,8 +153,12 @@ export default class Login extends React.Component {
             </Button>
           </div>
         </Form>
- 
+        
+        <ToastContainer />
+        
       </Container>
+      
+      </div>
     );
   }
 }

@@ -104,12 +104,8 @@ class NavigationBar extends Component {
             <Navbar collapseOnSelect expand="lg" variant="dark">
               <Container>
                 <Nav>
-                  <Nav.Link href="#/carreras">Carreras</Nav.Link>
-                  <Nav.Link href="#/grupos">Grupos</Nav.Link>
+                <Nav.Link href="#/menu">Inicio</Nav.Link>
                   <Nav.Link href="#/estudiantes">Estudiantes</Nav.Link>
-                  <Nav.Link href="#/profesores">Profesores</Nav.Link>
-                  <Nav.Link href="#/matricula">Matricula</Nav.Link>
-                  <Nav.Link href="#/historial">Historial</Nav.Link>
                   <Nav.Link
                     onClick={() => {
                       this.props.history.push("/logout");
@@ -126,8 +122,10 @@ class NavigationBar extends Component {
         return (
           <div className="Header  container-fluid">
             <Navbar collapseOnSelect expand="lg" variant="dark">
-              <Container>
-                <Nav></Nav>
+              <Container className="d-flex justify-content-center">
+                <Nav>
+                <Nav.Link href="">Sistema de Gestión Académica</Nav.Link>
+                </Nav>
               </Container>
             </Navbar>
           </div>
