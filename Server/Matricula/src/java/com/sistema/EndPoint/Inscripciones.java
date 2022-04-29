@@ -65,6 +65,7 @@ public class Inscripciones {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+        @PermitAll
     public void agregarInscripcion(Inscripcion p) {
         try {
             control.agregarInscripcion(p);
@@ -75,6 +76,7 @@ public class Inscripciones {
 
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
+        @PermitAll
     public void EliminarInscripcion(@DefaultValue("") @QueryParam("id") String id ) {
         try {
             control.eliminarInscripcion(id);
