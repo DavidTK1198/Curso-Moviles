@@ -27,9 +27,11 @@ export default class Student extends Component {
     this.tabledata = this.tabledata.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.cargar=this.cargar.bind(this);
+    this.cargar = this.cargar.bind(this);
     this.tabledata2 = this.tabledata2.bind(this);
     this.tabledata3 = this.tabledata3.bind(this);
+    this.matricular = this.matricular.bind(this);
+    this.desmatricular = this.desmatricular.bind(this);
   }
 
   openModal = () => {
@@ -80,6 +82,87 @@ export default class Student extends Component {
       });
       });
 
+  }
+
+  matricular(idG){
+    let options;
+    let query = new URLSearchParams(this.props.location.search);
+     options = {
+      url: 'http://localhost:8088/Matricula/api/inscripciones',
+      method: "POST",
+      header: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        'estudiante': {
+          'cedula': query.get('cedula'),
+        },
+        'grupo': {
+          'idEntidad': idG
+        }
+      }
+    };
+
+  axios(options)
+    .then((response) => {
+      console.log(response.status)
+      if(response.status === 204) {
+        this.refreshPage();
+        toast.success("Matriculado correctamente!.", {
+          position: toast.POSITION.TOP_RIGHT,
+          pauseOnHover: true,
+          theme: 'colored',
+          autoClose: 5000
+      });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error("Error al matricular.", {
+        position: toast.POSITION.TOP_RIGHT,
+        pauseOnHover: true,
+        theme: 'colored',
+        autoClose: 5000
+    });
+    });
+  }
+
+  desmatricular(idI){
+    let options;
+     options = {
+      url: 'http://localhost:8088/Matricula/api/inscripciones?id=' + idI,
+      method: "DELETE",
+      header: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        'Access-Control-Allow-Methods':'*'
+      }
+    }
+  axios(options)
+    .then((response) => {
+      console.log(response.status)
+      if(response.status === 204) {
+        this.refreshPage();
+        toast.success("Desmatriculado correctamente!.", {
+          position: toast.POSITION.TOP_RIGHT,
+          pauseOnHover: true,
+          theme: 'colored',
+          autoClose: 5000
+      });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error("Error al desmatricular.", {
+        position: toast.POSITION.TOP_RIGHT,
+        pauseOnHover: true,
+        theme: 'colored',
+        autoClose: 5000
+    });
+    });
   }
 
   cargar(){
@@ -172,7 +255,7 @@ export default class Student extends Component {
       data.rows[i]['horario'] = data.rows[i].grupo.horario
       data.rows[i]['profesor'] = data.rows[i].grupo.profesor.nombre
       data.rows[i]['delete'] = 
-      <Button variant="secondary" onClick={() => this.openModalDel(data.rows[i]['codigo'])}>
+      <Button variant="secondary" onClick={() => this.desmatricular(data.rows[i].idEntidad)}>
         Eliminar
       </Button> 
       
@@ -210,7 +293,7 @@ export default class Student extends Component {
       data.rows[i]['curso'] = data.rows[i].curso.nombre
       data.rows[i]['profesor'] = data.rows[i].profesor.nombre
       data.rows[i]['add'] = 
-      <Button variant="primary" >
+      <Button variant="primary"  onClick={() => this.matricular(data.rows[i].idEntidad)}>
         Matricular
       </Button> 
       
@@ -247,7 +330,7 @@ export default class Student extends Component {
     };
     for(let i in data.rows){
       data.rows[i]['add'] = 
-      <Button variant="primary" >
+      <Button variant="primary">
         Matricular
       </Button> 
       
@@ -297,12 +380,12 @@ export default class Student extends Component {
         />
         </div>
       </div>
-      <ToastContainer />
       <SelectCycleModal
           show={this.state.show}
           careerID={this.state.careerID}
           closeModal={this.closeModal}
         />
+         <ToastContainer />
     </div>
     );
   }
