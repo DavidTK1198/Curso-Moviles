@@ -36,8 +36,8 @@ public class ServicioTransformar {
     }
 
     Profesor obtenerProfesor(ResultSet rs) throws SQLException {
-        return new Profesor(rs.getString("cedula"), rs.getString("nombre"), rs.getString("telefono"),
-                rs.getString("email"));
+        return new Profesor(rs.getString("cedp"), rs.getString("nomp"), rs.getString("emailp"),
+                rs.getString("telp"));
     }
 
     Grupo obtenerGrupo(ResultSet rs) throws SQLException {
@@ -46,7 +46,7 @@ public class ServicioTransformar {
                 rs.getInt("disponible"),
                 rs.getInt("numgrupo"),
                 rs.getString("horario"),
-                new Ciclo(), new Profesor(), ObtenerCurso(rs)
+                new Ciclo(), obtenerProfesor(rs), ObtenerCurso(rs)
         );
         grupo.setIdEntidad(rs.getInt("identidadg"));
         return grupo;

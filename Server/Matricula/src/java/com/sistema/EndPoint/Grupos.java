@@ -26,11 +26,12 @@ public class Grupos {
 
     GrupoController control = GrupoController.getInstance();
 //http://localhost:8088/Matricula/api/grupos/listar?ciclo=10000&codigo=EIF201
+
     @GET
     @Path("listar")
     @PermitAll
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Grupo> getGrupos(@DefaultValue("") @QueryParam("ciclo") String ciclo,@DefaultValue("") @QueryParam("codigo") String codigo) {
+    public List<Grupo> getGrupos(@DefaultValue("") @QueryParam("ciclo") String ciclo, @DefaultValue("") @QueryParam("codigo") String codigo) {
         try {
             return control.gruposPorCicloCurso(ciclo, codigo);
         } catch (Exception ex) {
@@ -39,6 +40,8 @@ public class Grupos {
     }
 
     @POST
+    @PermitAll
+      @Path("agregar")
     @Consumes(MediaType.APPLICATION_JSON)
     public void agregarGrupo(Grupo p) {
         try {
@@ -47,7 +50,8 @@ public class Grupos {
             throw new NotAcceptableException();
         }
     }
-@GET
+
+    @GET
     @Path("profesor")
     @PermitAll
     @Produces({MediaType.APPLICATION_JSON})
@@ -59,17 +63,29 @@ public class Grupos {
         }
     }
 
+    @GET
+    @Path("ciclo")
+    @PermitAll
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Grupo> GruposPorCiclo(@DefaultValue("") @QueryParam("id") String id) {
+        try {
+            return control.gruposPorCiclo(id);
+        } catch (Exception ex) {
+            throw new NotFoundException();
+        }
+    }
+    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void Actualizar(Grupo p) {
         try {
-         control.actualizarGrupo(p);
+            control.actualizarGrupo(p);
         } catch (Exception ex) {
             throw new NotAcceptableException();
         }
     }
 
-  @GET
+    @GET
     @Path("buscar")
     @Produces({MediaType.APPLICATION_JSON})
     public Grupo buscar(@DefaultValue("") @QueryParam("id") String id) {

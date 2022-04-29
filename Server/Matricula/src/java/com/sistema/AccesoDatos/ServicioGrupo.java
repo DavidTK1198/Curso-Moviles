@@ -21,6 +21,7 @@ public class ServicioGrupo extends Servicio {
     private static final String insertarGrupo = "{call insertarGrupo (?,?,?,?,?,?,?)}";
     private static final String LISTAR = "{?=call listargrupo(?,?)}";
     private static final String LISTARPROFESOR = "{?=call listarGrupoPorProfesor(?)}";
+      private static final String LISTARCICLO = "{?=call listarporCiclo(?)}";
     private static final String BUSCARID = "{?=call buscargrupo(?)}";
     private static final String modificarGrupo = "{call modificarGrupo (?,?,?,?,?,?,?,?)}";
     private static final String eliminarGrupo = "{call eliminarGrupo(?)}";
@@ -66,6 +67,11 @@ public class ServicioGrupo extends Servicio {
                 case "profesor":
                     pstmt = conexion.prepareCall(LISTARPROFESOR);
                     pstmt.setString(2, ID);
+                    break;
+                    
+                    case "ciclo":
+                    pstmt = conexion.prepareCall(LISTARCICLO);
+                    pstmt.setInt(2, ciclo);
                     break;
             }
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);

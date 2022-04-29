@@ -16,7 +16,7 @@ export default class Groups extends Component {
             show: false,
             showEdit: false,
             curso: "",
-            ciclo: "",
+            ciclo: {},
             profesor: "",
             idG: ""
         }
@@ -49,7 +49,6 @@ export default class Groups extends Component {
   refreshPage() {
     let query = new URLSearchParams(this.props.location.search);
     console.log(query.get('codigo'))
-    console.log(query.get('ciclo'))
     let options = {
         url: 'http://localhost:8088/Matricula/api/grupos/listar?ciclo='+ query.get('ciclo') + '&codigo=' + query.get('codigo'),
         method: "GET",
@@ -58,13 +57,18 @@ export default class Groups extends Component {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods':'*',
-        }
+
+   
+        },
+
     }
     axios(options).then(response => {
         console.log(response.data)
         this.setState({
-            groups: response.data
+            groups: response.data,
+            ciclo:{'id':query.get('ciclo')}
         });
+        console.log(this.state.ciclo)
     }).catch(error => {
       toast.success("Error cargando grupos!", {
         position: toast.POSITION.TOP_RIGHT,
@@ -130,10 +134,12 @@ export default class Groups extends Component {
       let query = new URLSearchParams(this.props.location.search);
         return (
             <div>
+               <div className='d-flex justify-content-end mt-3 mr-3'>   
               <Button size="sm" onClick={this.openModal} variant="success" key="AddButton">
                 <i className="bi bi-plus-square"></i> {' '}
-                    Agregar grupo
-              </Button>           
+                Agregar grupo
+              </Button>
+              </div>            
               <MDBDataTable 
                 searchLabel='Buscar'
                 responsive
@@ -144,6 +150,7 @@ export default class Groups extends Component {
                 codigo={query.get('codigo')}
                 show = {this.state.show}
                 refreshPage={this.refreshPage}
+                ciclo={this.state.ciclo}
                 closeModal = {this.closeModal}
               />
               <EditGroupModal

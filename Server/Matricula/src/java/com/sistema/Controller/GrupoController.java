@@ -59,4 +59,10 @@ public class GrupoController {
        return model.getCurrent();
     }
 
+    public List<Grupo> gruposPorCiclo(String id) throws GlobalException, NoDataException {
+        model.getCurrent().getCiclo().setId(Integer.parseInt(id));
+        model.grupoPorCiclo();
+        return model.getGrupos();
+    }
+
 }

@@ -88,8 +88,11 @@ export default class Courses extends Component {
     
   }
   tabledata() {
+    let id;
     let ciclo = document.getElementById("ciclo");
-    let id = ciclo.getAttribute("data-ciclo");
+    if(ciclo!==null){
+     id= ciclo.getAttribute("data-ciclo");
+    }
     let data = {
       columns: [
         {
@@ -166,7 +169,14 @@ export default class Courses extends Component {
                 Cargar Datos
               </Button>
               </div> 
-        <div id="tabla"></div>
+        <div id="tabla">
+        <MDBDataTable
+            searchLabel="Buscar"
+            responsive
+            hover={true}
+            data={this.tabledata()}
+          />
+        </div>
         <SelectCycleModal
           show={this.state.show}
           careerID={this.state.careerID}

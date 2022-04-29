@@ -67,5 +67,9 @@ public class GrupoModel {
         this.grupos=(List<Grupo>) grupo_DBA.listarGrupo(0, current.getProfesor().getCedula(), "profesor");
     }
 
+    public void grupoPorCiclo() throws GlobalException, NoDataException {
+        this.grupos=(List<Grupo>) grupo_DBA.listarGrupo(current.getCiclo().getId(), "", "ciclo");
+    }
+
 
 }

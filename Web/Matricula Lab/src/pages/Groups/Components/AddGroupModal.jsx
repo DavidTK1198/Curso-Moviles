@@ -25,17 +25,20 @@ export default class AddGroupModal extends Component {
         else {
             event.preventDefault();
             let data;
+            console.log(this.props.ciclo)
                 data = {
-                    'curso': event.target.curso.value,
-                    'profesor': event.target.profesor.value,
+                    'curso': {'codigo':event.target.curso.value},
+                    'profesor': {'cedula':event.target.profesor.value},
                     'horario': event.target.horario.value,
                     'cupo': event.target.cupo.value,
+                    'numero':event.target.num.value,
+                    'ciclo':this.props.ciclo
                 }
-                var url='http://localhost:8088/Matricula/api/grupos';
+                var url='http://localhost:8088/Matricula/api/grupos/agregar';
                 let request = new Request(url, {method: 'POST', headers: { 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods':'*',
-            },body: JSON.stringify(data)});
+                'Access-Control-Allow-Origin':'*'
+            },body: JSON.stringify(data),mode:'cors'});
                   (async ()=>{
                     const response = await fetch(request);
                     this.closeModal();
@@ -108,6 +111,22 @@ export default class AddGroupModal extends Component {
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     Por favor ingresar cupo.
+                                </Form.Control.Feedback>
+                            </div>
+                        </Form.Group>
+                        <Form.Group>
+                            <div className="form-group">
+                                <Form.Label>Número de grupo:</Form.Label>
+                                <Form.Control
+                                    name="num"
+                                    id="num"
+                                    type="text"
+                                    placeholder="número de grupo"
+                                    className="form-control"
+                                    required
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Por favor el numero de grupo.
                                 </Form.Control.Feedback>
                             </div>
                         </Form.Group>
