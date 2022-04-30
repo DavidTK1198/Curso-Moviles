@@ -481,14 +481,15 @@ END;
 
 --ACTUALIZAR
 ------------------------------------------------------
-CREATE OR REPLACE PROCEDURE modificarGrupo (idin grupo.idgrupo%TYPE,numgrupoin IN grupo.numgrupo%TYPE,cupoin IN grupo.cupo%TYPE,disponiblein IN grupo.disponible%TYPE,cursoin IN grupo.cursofk%TYPE,
-horarioin IN grupo.horario%type,cicloin IN grupo.ciclofk%TYPE,profesorin IN grupo.profesorfk%TYPE)
+CREATE OR REPLACE PROCEDURE modificarGrupo (idin grupo.idgrupo%TYPE,cupoin IN grupo.cupo%TYPE,
+horarioin IN grupo.horario%type)
 AS
 BEGIN
-UPDATE grupo SET numgrupo=numgrupo,cupo=cupoin,disponible=disponiblein,cursofk=cursoin,horario=horarioin,ciclofk=cicloin,profesorfk=profesorin 
+UPDATE grupo SET cupo=cupoin,horario=horarioin
 WHERE idgrupo=idin;
 END;
 /
+
 --CONSULTAR
 ------------------------------------------------------
 CREATE OR REPLACE FUNCTION buscargrupo(idbuscar IN grupo.idgrupo%TYPE)
@@ -566,7 +567,8 @@ id number,
 fkgrupo number not null,
 fkalumno varchar(15)not null,
 nota NUMBER,
-CONSTRAINTS pkInscripcion PRIMARY KEY (id)
+CONSTRAINTS pkInscripcion PRIMARY KEY (id),
+CONSTRAINTS ukinscripcion UNIQUE (fkgrupo,fkalumno)
 );
 alter table  Inscripcion add constraint FKGRUPO foreign key (fkgrupo) references Grupo; 
 alter table  Inscripcion add constraint FKALUMNO foreign key (fkalumno) references Alumno; 
@@ -774,7 +776,7 @@ INSERT INTO curso VALUES('EIF208','Comunicaciones y Redes de Computadores',3,8,'
 INSERT INTO curso VALUES('CDN201','Cumbia recreativa',3,8,'CDN');
 INSERT INTO curso VALUES('CDN205','Desarrollo Humano',3,8,'CDN');
 INSERT INTO ciclo VALUES(secuenciaciclo.nextval,1,1,2022,'7/3/2022','25/6/2022');
-INSERT INTO ciclo VALUES(secuenciaciclo.nextval,1,2,2022,'8/8/2022','25/11/2022');
+INSERT INTO ciclo VALUES(secuenciaciclo.nextval,2,2,2022,'8/8/2022','25/11/2022');
 INSERT INTO ciclo VALUES(secuenciaciclo.nextval,2,2,2021,'7/8/2021','27/11/2021');
 INSERT INTO grupo VALUES(secuenciagrupo.nextval,1,20,20,'EIF201','L-V 8-9:40',10000,'111');
 INSERT INTO grupo VALUES(secuenciagrupo.nextval,2,20,20,'EIF200','L-V 8-9:40',10000,'111');

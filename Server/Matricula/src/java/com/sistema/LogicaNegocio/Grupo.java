@@ -1,11 +1,14 @@
 package com.sistema.LogicaNegocio;
+
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *
  * @author DavidTK1198
  */
 public class Grupo {
+
     private int numero;
     private Ciclo ciclo;
     private String horario;
@@ -13,6 +16,8 @@ public class Grupo {
     private Profesor profesor;
     private Curso curso;
     private int idEntidad;
+    private int cupo;
+    private int disponible;
 
     public int getIdEntidad() {
         return idEntidad;
@@ -21,18 +26,16 @@ public class Grupo {
     public void setIdEntidad(int idEntidad) {
         this.idEntidad = idEntidad;
     }
-    private int cupo;
-    private int disponible;
 
-    public Grupo(int cupo,int disponible,int numero,String horario,Ciclo ciclo, Profesor profesor, Curso curso) {
+    public Grupo(int cupo, int disponible, int numero, String horario, Ciclo ciclo, Profesor profesor, Curso curso) {
         this.numero = numero;////
         this.horario = horario;
         this.profesor = profesor;
         this.curso = curso;
         estudiantes = new ArrayList();
-        this.ciclo=ciclo;
-        this.cupo=cupo;
-        this.disponible=disponible;
+        this.ciclo = ciclo;
+        this.cupo = cupo;
+        this.disponible = cupo;
     }
 
     public Ciclo getCiclo() {
@@ -57,10 +60,10 @@ public class Grupo {
         estudiantes = new ArrayList();
         profesor = new Profesor();
         curso = new Curso();
-        ciclo=new Ciclo();
-        this.cupo=0;
-        this.disponible=0;
-        this.idEntidad=0;
+        ciclo = new Ciclo();
+        this.cupo = 0;
+        this.disponible = 0;
+        this.idEntidad = 0;
     }
 
     public Curso getCurso() {

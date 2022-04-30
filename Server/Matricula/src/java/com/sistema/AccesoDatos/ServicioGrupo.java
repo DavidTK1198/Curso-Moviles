@@ -1,9 +1,7 @@
 package com.sistema.AccesoDatos;
 
 import com.sistema.LogicaNegocio.Ciclo;
-import com.sistema.LogicaNegocio.Curso;
 import com.sistema.LogicaNegocio.Grupo;
-import com.sistema.LogicaNegocio.Profesor;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,8 +21,9 @@ public class ServicioGrupo extends Servicio {
     private static final String LISTARPROFESOR = "{?=call listarGrupoPorProfesor(?)}";
       private static final String LISTARCICLO = "{?=call listarporCiclo(?)}";
     private static final String BUSCARID = "{?=call buscargrupo(?)}";
-    private static final String modificarGrupo = "{call modificarGrupo (?,?,?,?,?,?,?,?)}";
+    private static final String modificarGrupo = "{call modificarGrupo (?,?,?)}";
     private static final String eliminarGrupo = "{call eliminarGrupo(?)}";
+     private static final String MODDISPONIBLE = "{?=call modificardisponible(?,?)}";
     private static ServicioGrupo instance = null;
     private static ServicioTransformar helper = null;
 
@@ -162,13 +161,8 @@ public class ServicioGrupo extends Servicio {
         try {
             pstmt = conexion.prepareStatement(modificarGrupo);
             pstmt.setInt(1, grupo.getIdEntidad());
-            pstmt.setInt(2, grupo.getNumero());
-            pstmt.setInt(3, grupo.getCupo());
-            pstmt.setInt(4, grupo.getDisponible());
-            pstmt.setString(5, grupo.getCurso().getCodigo());
-            pstmt.setString(6, grupo.getHorario());
-            pstmt.setInt(7, grupo.getCiclo().getId());
-            pstmt.setString(8, grupo.getProfesor().getCedula());
+            pstmt.setInt(2, grupo.getCupo());
+            pstmt.setString(3, grupo.getHorario());
             int resultado = pstmt.executeUpdate();
 
             //si es diferente de 0 es porq si afecto un registro o mas

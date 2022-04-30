@@ -41,8 +41,8 @@ export default class AddGroupModal extends Component {
             },body: JSON.stringify(data),mode:'cors'});
                   (async ()=>{
                     const response = await fetch(request);
-                    this.closeModal();
-                    this.refreshPage();  
+                    this.props.closeModal();
+                    this.props.refreshPage();  
                     toast.success("Se agrego el grupo correctamente!", {
                         position: toast.POSITION.TOP_RIGHT,
                         pauseOnHover: true,

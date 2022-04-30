@@ -25,6 +25,7 @@ public class Login {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)    
+    @PermitAll
     public Usuario login(Usuario usuario) {  
             Usuario logged=null;
             try {  
@@ -37,6 +38,7 @@ public class Login {
     }
     
     @DELETE 
+    @PermitAll
     public void logout() {  
         HttpSession session = request.getSession(true);
         session.removeAttribute("user");           

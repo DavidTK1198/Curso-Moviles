@@ -1,5 +1,7 @@
 package com.sistema.AccesoDatos;
 
+import com.sistema.LogicaNegocio.Ciclo;
+import com.sistema.LogicaNegocio.Grupo;
 import com.sistema.LogicaNegocio.Inscripcion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,6 +23,7 @@ public class ServicioInscripcion extends Servicio {
     private static final String BUSCARID = "{?=call buscarInscripcion(?)}";
     private static final String modificarInscripcion = "{call modificarInscripcion (?,?)}";
     private static final String eliminarInscripcion = "{call eliminarInscripcion(?)}";
+    private static final String BUSCARGRUPOID = "{?=call buscargrupo(?)}";
     private static ServicioInscripcion instance = null;
     private static ServicioTransformar helper = null;
 
@@ -108,7 +111,45 @@ public class ServicioInscripcion extends Servicio {
         CallableStatement pstmt = null;
 
         try {
+            ResultSet rs = null;
+            ArrayList coleccion = new ArrayList();
+            Inscripcion ins = null;
+            Grupo grupo = null;
+            pstmt = conexion.prepareCall(BUSCARALUMNO);
+            pstmt.setString(2, inscripcion.getEstudiante().getCedula());
+            pstmt.registerOutParameter(1, OracleTypes.CURSOR);
+            pstmt.execute();
+            rs = (ResultSet) pstmt.getObject(1);
+            while (rs.next()) {
+                ins = new Inscripcion(helper.obtenerAlumno(rs),
+                        rs.getInt("nota"),
+                        helper.obtenerGrupo(rs));
+                ins.setIdEntidad(rs.getInt("identidad"));
+                coleccion.add(ins);
+            }
 
+            pstmt = conexion.prepareCall(BUSCARGRUPOID);
+            pstmt.setInt(2, inscripcion.getGrupo().getIdEntidad());
+            pstmt.registerOutParameter(1, OracleTypes.CURSOR);
+            pstmt.execute();
+            rs = (ResultSet) pstmt.getObject(1);
+            while (rs.next()) {
+                grupo = new Grupo(rs.getInt("cupo"),
+                        rs.getInt("disponible"),
+                        rs.getInt("numgrupo"),
+                        rs.getString("horario"),
+                        new Ciclo(), helper.obtenerProfesor(rs), helper.ObtenerCurso(rs)
+                );
+            }
+
+            for (int i = 0; i < coleccion.size(); i++) {
+               ins=  (Inscripcion) coleccion.get(i);
+                if (ins.getGrupo().getCurso().getCodigo().equals(grupo.getCurso().getCodigo())
+                        && ins.getNota()<7
+                        ) {
+                    throw new GlobalException("No se realizo la inserción");
+                }
+            }
             pstmt = conexion.prepareCall(insertarInscripcion);
             pstmt.setInt(1, inscripcion.getGrupo().getIdEntidad());
             pstmt.setString(2, inscripcion.getEstudiante().getCedula());

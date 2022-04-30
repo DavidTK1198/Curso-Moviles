@@ -5,6 +5,8 @@ import { MDBDataTable } from "mdbreact";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 export default class Students extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +17,19 @@ export default class Students extends Component {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.updateStudentsSort = this.updateStudentsSort.bind(this);
+  }
+
+  componentDidMount() {
+    if (
+      !(
+        cookies.get("username", { path: process.env.REACT_APP_AUTH }) &&
+        cookies.get("roles", { path: process.env.REACT_APP_AUTH }) &&
+        cookies.get("ced", { path: process.env.REACT_APP_AUTH })
+      )
+    ) {
+      this.props.history.push("/login");
+      localStorage.clear();
+    }
   }
   openModal = () => {
     this.setState({ show: true });
@@ -95,6 +110,7 @@ export default class Students extends Component {
       rows: this.state.students,
     };
     for (let i in data.rows) {
+      if( cookies.get("roles")==="ADM")
       data.rows[i]["historial"] = (
         <Link
           to={{
