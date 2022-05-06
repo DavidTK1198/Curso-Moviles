@@ -248,4 +248,17 @@
           app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="12dp"
           android:layout_marginEnd="24dp" app:layout_constraintEnd_toEndOf="parent"
   />
+  <RadioGroup
+          android:layout_width="111dp"
+          android:layout_height="75dp" tools:layout_editor_absoluteY="288dp"
+          tools:layout_editor_absoluteX="2dp" android:id="@+id/RadioGroup">
+    <RadioButton
+            android:text="M"
+            android:layout_width="match_parent"
+            android:layout_height="33dp" android:id="@+id/M"/>
+    <RadioButton
+            android:text="H"
+            android:layout_width="match_parent"
+            android:layout_height="32dp" android:id="@+id/H"/>
+  </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

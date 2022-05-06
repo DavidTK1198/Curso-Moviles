@@ -31,8 +31,6 @@ class LoginActivity : AppCompatActivity() {
                     intent.putExtra("job_form",us as java.io.Serializable)
                     startActivity(intent);
             }else Toast.makeText(this,"Datos Incorrectos",Toast.LENGTH_SHORT).show()
-
-
         }
 
     }
