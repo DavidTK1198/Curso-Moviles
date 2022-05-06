@@ -9,6 +9,7 @@ import android.widget.Toast
 import model.*
 
 class LoginActivity : AppCompatActivity() {
+    var user=User()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -18,7 +19,12 @@ class LoginActivity : AppCompatActivity() {
         send.setOnClickListener {
             var u  = username.text.toString()
             var p = password.text.toString()
-
+            val userskills=user.skills
+            userskills.add("Java")
+            userskills.add("C++")
+            userskills.add("Kotlin")
+            userskills.add("C")
+            userskills.add("Kotlin")
             val intent = Intent(this, ActivityJopApp::class.java)
             if(login(u,p) ){
                 var us = user
@@ -29,6 +35,14 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
+    }
+
+
+    fun login(Username:String,Password:String):Boolean{
+        if (user.username==Username && user.password==Password){
+            return true
+        }
+        return false
     }
 
 }

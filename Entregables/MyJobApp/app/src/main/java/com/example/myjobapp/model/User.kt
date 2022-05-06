@@ -2,7 +2,7 @@ package model
 import java.io.Serializable
 //https://www.youtube.com/watch?v=3p_Nwn-oD4k&t=291s
 //referencia para serializar
-data class User (
+class User (
 
     var username:String = "MasterKotlin",
     var password:String="123",
@@ -18,16 +18,10 @@ data class User (
     var phoneNumber: String = "6079-7171",
     var area:String="506",
     var position: String = "Backend Junior",
-    var startDate: String="01/01/2022"
+    var startDate: String="01/01/2022",
+    val skills: MutableList<String> = mutableListOf()
     ): Serializable {
 
     }
 
-val user=User()
 
-fun login(Username:String,Password:String):Boolean{
-    if (user.email==Username && user.password==Password){
-        return true
-    }
-    return false
-}

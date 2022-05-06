@@ -5,7 +5,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ActivityJopApp" android:id="@+id/back">
+        tools:context=".ActivityJopApp" android:id="@+id/back"
+        android:background="#673AB7">
   <TextView
           android:text="Entry Date"
           android:layout_width="wrap_content"
@@ -82,12 +83,12 @@
   <Button
           android:text="Back"
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content" android:id="@+id/btnBack"
+          android:layout_height="48dp" android:id="@+id/btnBack"
           android:backgroundTint="@color/teal_200"
-          app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="161dp"
-          app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
-          android:layout_marginEnd="162dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="9dp"
-          app:layout_constraintTop_toBottomOf="@+id/Dateinput"/>
+          app:layout_constraintBottom_toBottomOf="parent"
+          android:layout_marginBottom="12dp" app:layout_constraintStart_toStartOf="parent"
+          android:layout_marginStart="64dp"
+  />
   <EditText
           android:layout_width="285dp"
           android:layout_height="43dp"
@@ -202,8 +203,8 @@
           android:text="Phone Number"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content" android:id="@+id/phone"
-          app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
-          android:layout_marginBottom="19dp" app:layout_constraintBottom_toTopOf="@+id/pos"/>
+          app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="4dp"
+          android:layout_marginBottom="20dp" app:layout_constraintBottom_toTopOf="@+id/pos"/>
   <TextView
           android:text="Applying for position"
           android:layout_width="84dp"
@@ -211,7 +212,7 @@
           app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
           android:layout_marginBottom="34dp" app:layout_constraintBottom_toTopOf="@+id/date"/>
   <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                              android:id="@+id/guideline2" app:layout_constraintGuide_begin="20dp"
+                                              android:id="@+id/guideline2" app:layout_constraintGuide_begin="-12dp"
                                               android:orientation="vertical"/>
   <ImageView
           android:layout_width="104dp"
@@ -239,4 +240,12 @@
           app:layout_constraintBottom_toTopOf="@+id/nameInput" android:layout_marginEnd="74dp"
           app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="30dp"
           app:layout_constraintStart_toEndOf="@+id/imageView"/>
+  <Button
+          android:text="Skill Information"
+          android:layout_width="189dp"
+          android:layout_height="50dp" android:id="@+id/Skill"
+          android:backgroundTint="@color/teal_200"
+          app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="12dp"
+          android:layout_marginEnd="24dp" app:layout_constraintEnd_toEndOf="parent"
+  />
 </androidx.constraintlayout.widget.ConstraintLayout>

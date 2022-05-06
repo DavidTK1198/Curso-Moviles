@@ -11,8 +11,9 @@ class ActivityJopApp : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_jop_app)
-        val user = intent.extras?.get("job_form") as User
+        val us = intent.extras?.get("job_form") as User
         val back = findViewById<Button>(R.id.btnBack)
+      val skill = findViewById<Button>(R.id.Skill)
         val nameInput = findViewById<TextView>(R.id.nameInput)
         val lastNameInput = findViewById<TextView>(R.id.lastNameInput)
         val addres1 = findViewById<TextView>(R.id.address1Input)
@@ -27,23 +28,29 @@ class ActivityJopApp : AppCompatActivity() {
         val date= findViewById<TextView>(R.id.Dateinput)
         val email=findViewById<TextView>(R.id.emailid)
 
-        nameInput.text = user.firstname
-        lastNameInput.text = user.lastname
-        addres1.text =user.address1
-        address2.text =user.address2
-            city.text =user.city
-            state.text =user.state
-            code.text =user.code
-            country.text =user.country
-            area.text =user.area
-            phone.text =user.phoneNumber
-            position.text =user.position
-            date.text =user.startDate
-        email.text=user.email
+        nameInput.text = us.firstname
+        lastNameInput.text = us.lastname
+        addres1.text =us.address1
+        address2.text =us.address2
+            city.text =us.city
+            state.text =us.state
+            code.text =us.code
+            country.text =us.country
+            area.text =us.area
+            phone.text =us.phoneNumber
+            position.text =us.position
+            date.text =us.startDate
+        email.text=us.email
 
             back.setOnClickListener {
-            val intent= Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+            val login= Intent(this, LoginActivity::class.java)
+            startActivity(login)
+        }
+
+        skill.setOnClickListener{
+            val skillmenu = Intent(this, SkillActivity::class.java)
+            intent.putExtra("job_form",us as java.io.Serializable)
+            startActivity(skillmenu)
         }
     }
 }
