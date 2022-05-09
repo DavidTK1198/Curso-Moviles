@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
-import android.widget.ToggleButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import model.*
 
@@ -29,15 +29,6 @@ class ActivityJopApp : AppCompatActivity() {
         val otro = findViewById<RadioButton>(R.id.otro)
         val M = findViewById<RadioButton>(R.id.M)
         val H = findViewById<RadioButton>(R.id.H)
-        val availability = findViewById<ToggleButton>(R.id.toggleButton)
-        availability.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                availability.setTextOn("Yes");
-            } else {
-                availability.setTextOff("No");
-            }
-        }
-
 
         when {
             us.gender == "M" -> rg.check(M.id)
