@@ -22,34 +22,35 @@ class ActivityJopApp : AppCompatActivity() {
         val nameInput = findViewById<TextView>(R.id.nameInput)
         val lastNameInput = findViewById<TextView>(R.id.lastNameInput)
         val addres1 = findViewById<TextView>(R.id.address1Input)
-        val address2 = findViewById<TextView>(R.id.address2Input)
-        val city = findViewById<TextView>(R.id.cityInput)
-        val state = findViewById<TextView>(R.id.stateInput)
-        val code = findViewById<TextView>(R.id.zipCodeInput)
-        val country = findViewById<TextView>(R.id.country)
-        val area = findViewById<TextView>(R.id.areaCode)
         val phone = findViewById<TextView>(R.id.phoneNumber)
         val position = findViewById<TextView>(R.id.positionInput)
-        val date = findViewById<TextView>(R.id.Dateinput)
         val email = findViewById<TextView>(R.id.emailid)
         val rg = findViewById<RadioGroup>(R.id.RadioGroup)
+        val otro = findViewById<RadioButton>(R.id.otro)
+        val M = findViewById<RadioButton>(R.id.M)
+        val H = findViewById<RadioButton>(R.id.H)
+
+        when {
+            us.gender == "M" -> rg.check(M.id)
+            us.gender == "H" -> rg.check(H.id)
+            else -> rg.check(otro.id)
+        }
 
         nameInput.text = us.firstname
         lastNameInput.text = us.lastname
         addres1.text = us.address1
-        address2.text = us.address2
-        city.text = us.city
-        state.text = us.state
-        code.text = us.code
-        country.text = us.country
-        area.text = us.area
         phone.text = us.phoneNumber
         position.text = us.position
-        date.text = us.startDate
         email.text = us.email
-
         back.setOnClickListener {
             val login = Intent(this, LoginActivity::class.java)
+            us.firstname = nameInput.text.toString()
+            us.lastname = lastNameInput.text.toString()
+            us.address1 = addres1.text.toString()
+            us.phoneNumber = phone.text.toString()
+            us.position = position.text.toString()
+            us.email = email.text.toString()
+            intent.putExtra("User", us as java.io.Serializable)
             startActivity(login)
         }
 
@@ -59,8 +60,9 @@ class ActivityJopApp : AppCompatActivity() {
             startActivity(skillmenu)
         }
 
-        rg.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener{group, checkedId ->
-            val radio:RadioButton = group.findViewById<RadioButton>(checkedId)
-            Log.e("selectedtext-->",radio.text.toString())})
+        rg.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
+            val radio: RadioButton = group.findViewById<RadioButton>(checkedId)
+            Log.e("selectedtext-->", radio.text.toString())
+        })
     }
 }

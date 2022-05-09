@@ -10,6 +10,9 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.MyJobApp">
         <activity
+                android:name=".ApplyActivity"
+                android:exported="true"/>
+        <activity
                 android:name=".SkillActivity"
                 android:exported="true"/>
         <activity
