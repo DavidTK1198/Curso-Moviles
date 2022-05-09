@@ -10,6 +10,15 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.MyJobApp">
         <activity
+                android:name=".AppliedActivity"
+                android:exported="true"/>
+        <activity
+                android:name=".Applied_Activity"
+                android:exported="true"/>
+        <activity
+                android:name=".CompanyActivity"
+                android:exported="true"/>
+        <activity
                 android:name=".ApplyActivity"
                 android:exported="true"/>
         <activity

@@ -19,7 +19,6 @@ class SkillActivity : AppCompatActivity() {
         val back = findViewById<Button>(R.id.backjob)
         val add= findViewById<Button>(R.id.add)
         val text = findViewById<EditText>(R.id.editText)
-        val img=findViewById<ImageButton>(R.id.save)
         chipgroup.setOnCheckedChangeListener { group, checkedId ->
             val chip = chipgroup.findViewById<Chip>(checkedId)
             chipgroup.removeView(chip)
@@ -34,9 +33,6 @@ class SkillActivity : AppCompatActivity() {
                 addChip(text.text.toString())
                 text.setText("")
             }
-        }
-        img.setOnClickListener(){
-            Toast.makeText(applicationContext,"Datos Guardados",Toast.LENGTH_SHORT).show()
         }
     }
 

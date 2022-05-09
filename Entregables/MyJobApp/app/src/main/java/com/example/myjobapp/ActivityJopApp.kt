@@ -8,6 +8,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import model.*
 
@@ -19,6 +20,7 @@ class ActivityJopApp : AppCompatActivity() {
         val us = intent.extras?.get("job_form") as User
         val back = findViewById<Button>(R.id.btnBack)
         val skill = findViewById<Button>(R.id.Skill)
+        val apply = findViewById<Button>(R.id.apply)
         val nameInput = findViewById<TextView>(R.id.nameInput)
         val lastNameInput = findViewById<TextView>(R.id.lastNameInput)
         val addres1 = findViewById<TextView>(R.id.address1Input)
@@ -29,7 +31,10 @@ class ActivityJopApp : AppCompatActivity() {
         val otro = findViewById<RadioButton>(R.id.otro)
         val M = findViewById<RadioButton>(R.id.M)
         val H = findViewById<RadioButton>(R.id.H)
-
+        val botonsw = findViewById<ToggleButton>(R.id.tog)
+        botonsw.setTextOff("PART-TIME");
+        botonsw.setTextOn("FULL-TIME");
+        botonsw.text="PART-TIME"
         when {
             us.gender == "M" -> rg.check(M.id)
             us.gender == "H" -> rg.check(H.id)
@@ -42,6 +47,7 @@ class ActivityJopApp : AppCompatActivity() {
         phone.text = us.phoneNumber
         position.text = us.position
         email.text = us.email
+
         back.setOnClickListener {
             val login = Intent(this, LoginActivity::class.java)
             us.firstname = nameInput.text.toString()
@@ -54,6 +60,14 @@ class ActivityJopApp : AppCompatActivity() {
             startActivity(login)
         }
 
+        botonsw.setOnCheckedChangeListener { _, isChecked ->
+
+            Toast.makeText(this, if(isChecked) "Mode Update to Full time" else "Mode Update to part time", Toast.LENGTH_SHORT).show()
+        }
+        apply.setOnClickListener{
+            val applymenu = Intent(this, ApplyActivity::class.java)
+            startActivity(applymenu)
+        }
         skill.setOnClickListener {
             val skillmenu = Intent(this, SkillActivity::class.java)
             intent.putExtra("job_form", us as java.io.Serializable)
@@ -62,7 +76,7 @@ class ActivityJopApp : AppCompatActivity() {
 
         rg.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
             val radio: RadioButton = group.findViewById<RadioButton>(checkedId)
-            Log.e("selectedtext-->", radio.text.toString())
+            Toast.makeText(applicationContext,"Gender Update to ${radio.text}",Toast.LENGTH_SHORT).show()
         })
     }
 }
