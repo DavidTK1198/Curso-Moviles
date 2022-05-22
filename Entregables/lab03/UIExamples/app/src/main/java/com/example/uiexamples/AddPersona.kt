@@ -8,7 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 
 class AddPersona : AppCompatActivity() {
-    var personas: Personas = Personas.instance
+    var users: Users = Users.instance
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_persona)
@@ -24,7 +24,7 @@ class AddPersona : AppCompatActivity() {
                 Toast.makeText(this,"Por favor rellene todos los campos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-           personas.addPersona(Persona(username,password,name, R.drawable.foto01))
+          // users.addPersona(User(username,password,name, R.drawable.ic_launcher_background))
             Toast.makeText(this,"Registro agregado", Toast.LENGTH_SHORT).show()
 
         }

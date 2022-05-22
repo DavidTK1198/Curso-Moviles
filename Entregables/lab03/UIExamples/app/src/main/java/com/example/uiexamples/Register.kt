@@ -12,7 +12,7 @@ class Register : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        var personas: Personas = Personas.instance
+        var users: Users = Users.instance
 
         val add = findViewById<Button>(R.id.register)
         val terms = findViewById<CheckBox>(R.id.terms)
@@ -28,10 +28,10 @@ class Register : AppCompatActivity() {
                 Toast.makeText(this,"Por favor acepte los terminos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            personas.addPersona(Persona(username,password,name, R.drawable.ic_launcher_background))
+            //users.addPersona(User(username,password,name, R.drawable.ic_launcher_background))
             Toast.makeText(this,"Registro agregado", Toast.LENGTH_SHORT).show()
             Thread.sleep(1000)
-            val login = Intent(this, LoginExample::class.java)
+            val login = Intent(this, Login::class.java)
             startActivity(login)
 
         }
