@@ -5,9 +5,8 @@ class Users private constructor() {
     private var users: ArrayList<User> = ArrayList<User>()
 
     init{
-        addPersona(User("mar", "123","Marcos", R.drawable.foto01,"Standard","Alajuela",
-            "San Rafael","Alajuela","20108","Costa Rica","mar@email.com","60793333","BackEnd","01/01/2022"))
-       // addPersona(User("jul", "123", "Julia", R.drawable.foto02,"Administrador"))
+        addPersona(User("mar", "123","Marcos", R.drawable.foto01,"Standard","Alajuela","Alajuela","20108","Costa Rica","mar@email.com","60793333","BackEnd"))
+        addPersona(User("jul", "123", "Julia", R.drawable.foto02,"Administrador","","","","","",""))
 
     }
 
@@ -58,6 +57,20 @@ class Users private constructor() {
 
     fun deletePerson(position: Int){
         users!!.removeAt(position)
+    }
+
+    fun search(user:User):Int{ var count=0
+
+        for(p: User in users!!) {
+
+            if (p.user.equals(user.user) && p.email.equals(user.email)) {
+                return count
+            }
+
+            count++
+        }
+
+        return -1
     }
 
     fun editPerson(p: User, position: Int){

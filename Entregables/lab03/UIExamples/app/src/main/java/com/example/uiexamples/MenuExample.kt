@@ -94,17 +94,20 @@ class MenuExample : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 val i = Intent(this, ActivityJopApp::class.java)
                 i.putExtra("user", user)
                 startActivity(i)
+                finish()
 
             }
 
             R.id.nav_gallery -> {
                 val i = Intent(this, CrudPersonas::class.java)
                 startActivity(i)
+                finish()
             }
 
             R.id.logoutm -> {
                 val i = Intent(this, Login::class.java)
                 startActivity(i)
+                finish()
             }
         }
         return true

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
@@ -21,6 +22,12 @@ class Login : AppCompatActivity() {
         var et_password = findViewById(R.id.passl) as EditText
         var btn_submit = findViewById(R.id.buttonLogin) as Button
         val register = findViewById<Button>(R.id.singup)
+        val forgot=findViewById<TextView>(R.id.forgot)
+        forgot.setOnClickListener{
+            val intent = Intent(this, EditPersona::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         register.setOnClickListener{
             val reg = Intent(this, Register::class.java)

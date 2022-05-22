@@ -13,34 +13,31 @@ class EditPersona : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_persona)
-        val user = intent.extras?.get("editar") as User
         val edit = findViewById<Button>(R.id.edit)
-        val back = findViewById<Button>(R.id.back)
-        var name = findViewById<TextView>(R.id.nameE)
-        var username=findViewById<TextView>(R.id.usernameE)
-        var password=findViewById<TextView>(R.id.passwordE)
-        var logo=findViewById<ImageView>(R.id.imageView2)
-        var pos =intent.extras?.get("pos") as Int
-         name.text=user.nombre
-        username.text=user.user
-        password.text=user.password
-        logo.setImageResource(user.foto)
-
-
-
         edit.setOnClickListener{
-            user.nombre=name.text.toString()
-            user.user=username.text.toString()
-            user.password=password.text.toString()
-            users.editPerson(user,pos)
+
+            var email = findViewById<TextView>(R.id.emailE).text.toString()
+            var username=findViewById<TextView>(R.id.nameE).text.toString()
+            var password=findViewById<TextView>(R.id.passwordE).text.toString()
+            if(username=="" || password==""||email==""){
+                Toast.makeText(this,"Por favor rellene todos los campos", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            var us=User(username,password, "", R.drawable.foto02,"","","","","",email,"")
+            var pos= users.search(us)
+            if(pos==-1){
+                Toast.makeText(this,"Usuario no encontrado", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            us=users.getPersonas().get(pos)
+            us.password=password
             Toast.makeText(this,"Registro modificado", Toast.LENGTH_SHORT).show()
+            Thread.sleep(1000)
+            val login = Intent(this, Login::class.java)
+            startActivity(login)
+            finish()
         }
 
-        back.setOnClickListener{
-            val crud = Intent(this, CrudPersonas::class.java)
-            startActivity(crud)
-
-        }
 
     }
 

@@ -28,9 +28,21 @@
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/UIExamples/app/src/main/res/layout/activity_crud_personas.xml" value="0.1015625" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/UIExamples/app/src/main/res/layout/templatepersonas.xml" value="0.1015625" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/lab03/UIExamples/app/src/main/res/drawable/button_background.xml" value="0.2712962962962963" />
-        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/lab03/UIExamples/app/src/main/res/layout/activity_jop_app.xml" value="0.25" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/lab03/UIExamples/app/src/main/res/layout/activity_crud_personas.xml" value="0.18" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/lab03/UIExamples/app/src/main/res/layout/activity_edit_persona.xml" value="0.22" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/lab03/UIExamples/app/src/main/res/layout/activity_jop_app.xml" value="0.33" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/lab03/UIExamples/app/src/main/res/layout/activity_login_example.xml" value="0.25" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/lab03/UIExamples/app/src/main/res/layout/activity_menu_example.xml" value="0.1" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/lab03/UIExamples/app/src/main/res/layout/activity_register.xml" value="0.33" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/lab03/UIExamples/app/src/main/res/layout/app_bar_main.xml" value="0.1" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/lab03/UIExamples/app/src/main/res/layout/content_main.xml" value="0.1" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/lab03/UIExamples/app/src/main/res/layout/fragment_gallery.xml" value="0.1" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/lab03/UIExamples/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/lab03/UIExamples/app/src/main/res/layout/fragment_slideshow.xml" value="0.1" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/lab03/UIExamples/app/src/main/res/layout/nav_header_main.xml" value="0.1" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/lab03/UIExamples/app/src/main/res/layout/templatepersonas.xml" value="0.33" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/lab03/UIExamples/app/src/main/res/menu/activity_main_drawer.xml" value="0.10677083333333333" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Entregables/lab03/UIExamples/app/src/main/res/menu/menu_example.xml" value="0.10677083333333333" />
       </map>
     </option>
   </component>

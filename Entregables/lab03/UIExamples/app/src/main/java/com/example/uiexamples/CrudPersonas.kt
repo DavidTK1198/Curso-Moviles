@@ -25,10 +25,7 @@ class CrudPersonas : AppCompatActivity() {
     lateinit var lista:RecyclerView
     lateinit var adaptador:RecyclerView_Adapter
     lateinit var user: User
-    var archived = ArrayList<User>()
     var position: Int = 0
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,12 +89,12 @@ class CrudPersonas : AppCompatActivity() {
                             adaptador = RecyclerView_Adapter(users.getPersonas())
                             lista.adapter = adaptador
                         }else{
-                            user = User(users.getPersonas()[position].user, users.getPersonas()[position].password, users.getPersonas()[position].nombre, users.getPersonas()[position].foto,users.getPersonas()[position].rol,"","","","","","","")
-                            Snackbar.make(lista, user.nombre + "Se editaría...", Snackbar.LENGTH_LONG).setAction("Undo") {
-                            }.show()
-                            intent.putExtra("editar",user as java.io.Serializable)
-                            intent.putExtra("pos",position)
-                            startActivity(intent)
+//                            user = User(users.getPersonas()[position].user, users.getPersonas()[position].password, users.getPersonas()[position].nombre, users.getPersonas()[position].foto,users.getPersonas()[position].rol,"","","","","","","")
+//                            Snackbar.make(lista, user.nombre + "Se editaría...", Snackbar.LENGTH_LONG).setAction("Undo") {
+//                            }.show()
+//                            intent.putExtra("editar",user as java.io.Serializable)
+//                            intent.putExtra("pos",position)
+//                            startActivity(intent)
                         }
                     }
 
@@ -122,10 +119,11 @@ class CrudPersonas : AppCompatActivity() {
 
 
 
-        val add: FloatingActionButton = findViewById(R.id.add)
+        val add: FloatingActionButton = findViewById(R.id.BacktoMenu)
         add.setOnClickListener { view ->
             val addp = Intent(this, AddPersona::class.java)
             startActivity(addp)
+            finish()
         }
 
 
@@ -136,6 +134,7 @@ class CrudPersonas : AppCompatActivity() {
     private fun getListOfPersons() {
         val Npersonas = ArrayList<User>()
         for (p in users.getPersonas()) {
+            if(p.rol!="Administrador")
             Npersonas.add(p)
         }
         adaptador = RecyclerView_Adapter(Npersonas)

@@ -62,7 +62,7 @@
                 android:layout_marginBottom="30dp"
                 android:gravity="right"
                 android:text="Forgot password ?"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" android:id="@+id/forgot"/>
 
         <Button
                 android:id="@+id/buttonLogin"
