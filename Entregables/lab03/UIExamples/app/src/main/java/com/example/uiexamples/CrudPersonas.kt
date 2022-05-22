@@ -81,7 +81,7 @@ class CrudPersonas : AppCompatActivity() {
                         position = viewHolder.adapterPosition
 
                         if(direction == ItemTouchHelper.LEFT){
-                            user = User(users.getPersonas()[position].user, users.getPersonas()[position].password, users.getPersonas()[position].nombre, users.getPersonas()[position].foto,users.getPersonas()[position].rol)
+                            user = User(users.getPersonas()[position].user, users.getPersonas()[position].password, users.getPersonas()[position].nombre, users.getPersonas()[position].foto,users.getPersonas()[position].rol,"","","","","","","")
                             users.deletePerson(position)
                             lista.adapter?.notifyItemRemoved(position)
 
@@ -92,7 +92,7 @@ class CrudPersonas : AppCompatActivity() {
                             adaptador = RecyclerView_Adapter(users.getPersonas())
                             lista.adapter = adaptador
                         }else{
-                            user = User(users.getPersonas()[position].user, users.getPersonas()[position].password, users.getPersonas()[position].nombre, users.getPersonas()[position].foto,users.getPersonas()[position].rol)
+                            user = User(users.getPersonas()[position].user, users.getPersonas()[position].password, users.getPersonas()[position].nombre, users.getPersonas()[position].foto,users.getPersonas()[position].rol,"","","","","","","")
                             Snackbar.make(lista, user.nombre + "Se editaría...", Snackbar.LENGTH_LONG).setAction("Undo") {
                             }.show()
                             intent.putExtra("editar",user as java.io.Serializable)

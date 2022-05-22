@@ -5,8 +5,9 @@ class Users private constructor() {
     private var users: ArrayList<User> = ArrayList<User>()
 
     init{
-        addPersona(User("mar", "123","Marcos", R.drawable.foto01,"Standard"))
-        addPersona(User("jul", "123", "Julia", R.drawable.foto02,"Administrador"))
+        addPersona(User("mar", "123","Marcos", R.drawable.foto01,"Standard","Alajuela",
+            "San Rafael","Alajuela","20108","Costa Rica","mar@email.com","60793333","BackEnd","01/01/2022"))
+       // addPersona(User("jul", "123", "Julia", R.drawable.foto02,"Administrador"))
 
     }
 
