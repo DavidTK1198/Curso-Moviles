@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         var tVExample = findViewById(R.id.tVExample) as TextView
         bTExample.setOnClickListener {
             // make a toast on button click event
-            Toast.makeText(this, "Hola Mundo", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Hello world", Toast.LENGTH_LONG).show()
             tVExample.setText(eTExample.text)
 
         }

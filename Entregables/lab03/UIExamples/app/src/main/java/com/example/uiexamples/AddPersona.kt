@@ -43,12 +43,12 @@ class AddPersona : AppCompatActivity() {
 
             if (radioGroup.getCheckedRadioButtonId() == -1)
             {
-                Toast.makeText(this,"Por favor selecione un tipo de usuario", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Please select a user type", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }else{
                 if(name=="" || usern=="" || pass==""||emailu==""||countryu==""||cityu==""||addressu==""||cod==""
                     ||cel==""||applied==""){
-                    Toast.makeText(this,"Por favor rellene todos los campos", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,"Please fill all the fields", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
                var idr= radioGroup.checkedRadioButtonId
@@ -58,7 +58,7 @@ class AddPersona : AppCompatActivity() {
                 var photo=hashMap.get(key)
                 users.addPersona(User(usern,pass,name, photo!!,role,cityu,
                     addressu,cod,countryu,emailu,cel,applied))
-                Toast.makeText(this,"Registro agregado", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"added log", Toast.LENGTH_SHORT).show()
             }
 
 

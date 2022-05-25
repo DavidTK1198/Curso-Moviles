@@ -41,14 +41,14 @@ class Register : AppCompatActivity() {
 
             if(name=="" || usern=="" || pass==""||emailu==""||countryu==""||cityu==""||addressu==""||cod==""
                 ||cel==""||applied==""){
-                Toast.makeText(this,"Por favor rellene todos los campos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Please fill in all the fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             var key=(1..7).random()
             var photo=hashMap.get(key)
             users.addPersona(User(usern,pass,name, photo!!,"Standard",cityu,
                 addressu,cod,countryu,emailu,cel,applied))
-            Toast.makeText(this,"Registro agregado", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"added log", Toast.LENGTH_SHORT).show()
             Thread.sleep(1000)
             val login = Intent(this, Login::class.java)
             startActivity(login)

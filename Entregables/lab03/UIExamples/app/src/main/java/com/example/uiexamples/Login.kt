@@ -48,7 +48,7 @@ class Login : AppCompatActivity() {
                 startActivity(i)
                 finish()
             }else{
-                Toast.makeText(this, "El usuario no se encuentra registrado", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "The user is not registered", Toast.LENGTH_SHORT).show()
             }
 
         }

@@ -20,18 +20,18 @@ class EditPersona : AppCompatActivity() {
             var username=findViewById<TextView>(R.id.nameE).text.toString()
             var password=findViewById<TextView>(R.id.passwordE).text.toString()
             if(username=="" || password==""||email==""){
-                Toast.makeText(this,"Por favor rellene todos los campos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Please fill all the fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             var us=User(username,password, "", R.drawable.foto02,"","","","","",email,"")
             var pos= users.search(us)
             if(pos==-1){
-                Toast.makeText(this,"Usuario no encontrado", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"User not found", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             us=users.getPersonas().get(pos)
             us.password=password
-            Toast.makeText(this,"Registro modificado", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"Record modified", Toast.LENGTH_SHORT).show()
             Thread.sleep(1000)
             val login = Intent(this, Login::class.java)
             startActivity(login)
