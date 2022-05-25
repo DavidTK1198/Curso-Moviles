@@ -30,7 +30,7 @@ class CrudPersonas : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crud_personas)
-
+        user = intent.extras?.get("user") as User
         val searchIcon = findViewById<ImageView>(R.id.search_mag_icon)
         searchIcon.setColorFilter(Color.BLACK)
 
@@ -119,17 +119,26 @@ class CrudPersonas : AppCompatActivity() {
 
 
 
-        val add: FloatingActionButton = findViewById(R.id.BacktoMenu)
+        val backbutton: FloatingActionButton = findViewById(R.id.addb)
+        backbutton.setOnClickListener { view ->
+            val addp = Intent(this, MenuExample::class.java)
+            addp.putExtra("msg", "MENSAJE DE CRUD al Menú")
+            addp.putExtra("Login", user)
+            startActivity(addp)
+            finish()
+        }
+
+        val add: FloatingActionButton = findViewById(R.id.addb2)
         add.setOnClickListener { view ->
             val addp = Intent(this, AddPersona::class.java)
+            addp.putExtra("msg", "MENSAJE DE CRUD al Menú")
+            addp.putExtra("user", user)
             startActivity(addp)
             finish()
         }
 
 
     }
-
-
 
     private fun getListOfPersons() {
         val Npersonas = ArrayList<User>()

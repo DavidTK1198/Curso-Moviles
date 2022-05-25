@@ -26,8 +26,6 @@ class MenuExample : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var homeFragment: HomeFragment
-    private lateinit var galleryFragment: GalleryFragment
-    private lateinit var slideshowFragment: SlideshowFragment
     private lateinit var user:User
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,12 +98,14 @@ class MenuExample : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
             R.id.nav_gallery -> {
                 val i = Intent(this, CrudPersonas::class.java)
+                i.putExtra("user", user)
                 startActivity(i)
                 finish()
             }
 
             R.id.logoutm -> {
                 val i = Intent(this, Login::class.java)
+
                 startActivity(i)
                 finish()
             }
