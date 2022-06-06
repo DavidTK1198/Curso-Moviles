@@ -1,10 +1,7 @@
 package com.sistema.logicaDeNegocio
 
 
-/**
- *
- * @author DavidTK1198
- */
+
 class Grupo {
     var numero: Int
     private var ciclo: Ciclo
