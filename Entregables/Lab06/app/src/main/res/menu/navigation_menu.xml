@@ -2,9 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_item_home"
-        android:title="Estudiantes"/>
+        android:title="Inicio"/>
+
     <item
-        android:id="@+id/nav_item_about"
+            android:id="@+id/nav_item_estudiantes"
+            android:title="Estudiantes"/>
+    <item
+        android:id="@+id/nav_item_cursos"
         android:title="Cursos" />
 
     <item

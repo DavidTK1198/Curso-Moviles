@@ -20,8 +20,11 @@ class DatabaseHelper(context: Context) :
      * should happen.
      */
     override fun onCreate(db: SQLiteDatabase) {
-        db.execSQL("CREATE TABLE $TABLE_NAME (ID INTEGER PRIMARY KEY " +
-                "AUTOINCREMENT,NAME TEXT,GALAXY TEXT,TYPE TEXT)")
+        db.execSQL("CREATE TABLE $TABLE_NAME_Estudiante (ID INTEGER PRIMARY KEY " +
+                "AUTOINCREMENT,NOMBRE TEXT,APELLIDO TEXT,EDAD INTEGER)")
+
+        db.execSQL("CREATE TABLE $TABLE_NAME_Curso(ID INTEGER PRIMARY KEY " +
+                "AUTOINCREMENT,DESCRIPCION TEXT,CREDITOS INTEGER)")
     }
 
     /**
@@ -31,7 +34,8 @@ class DatabaseHelper(context: Context) :
      * to upgrade to the new schema version.
      */
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME)
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_Estudiante)
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_Curso)
         onCreate(db)
     }
 
@@ -39,55 +43,63 @@ class DatabaseHelper(context: Context) :
      * Let's create our insertData() method.
      * It Will insert data to SQLIte database.
      */
-    fun insertData(name: String, surname: String, marks: String) {
+    fun insertDataEstudiante(name: String, surname: String, edad: Int) {
         val db = this.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(COL_2, name)
-        contentValues.put(COL_3, surname)
-        contentValues.put(COL_4, marks)
-        db.insert(TABLE_NAME, null, contentValues)
+        contentValues.put(ESTUDIANTE_COL_2, name)
+        contentValues.put(ESTUDIANTE_COL_3, surname)
+        contentValues.put(ESTUDIANTE_COL_4, edad)
+        db.insert(TABLE_NAME_Estudiante, null, contentValues)
     }
 
-    /**
-     * Let's create  a method to update a row with new field values.
-     */
-    fun updateData(id: String, name: String, surname: String, marks: String):
-            Boolean {
-        val db = this.writableDatabase
+//    fun insertDataCurso(name: String, surname: String, marks: String) {
+//        val db = this.writableDatabase
+//        val contentValues = ContentValues()
+//        contentValues.put(COL_2, name)
+//        contentValues.put(COL_3, surname)
+//        contentValues.put(COL_4, marks)
+//        db.insert(TABLE_NAME, null, contentValues)
+//    }
+
+//    /**
+//     * Let's create  a method to update a row with new field values.
+//     */
+     fun updateDataEstudiante(id: String, name: String, surname: String, edad: String):Boolean {
+      val db = this.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(COL_1, id)
-        contentValues.put(COL_2, name)
-        contentValues.put(COL_3, surname)
-        contentValues.put(COL_4, marks)
-        db.update(TABLE_NAME, contentValues, "ID = ?", arrayOf(id))
+        contentValues.put(ESTUDIANTE_COL_1, id)
+        contentValues.put(ESTUDIANTE_COL_2, name)
+       contentValues.put(ESTUDIANTE_COL_3, surname)
+        contentValues.put(ESTUDIANTE_COL_4, edad.toInt())
+        db.update(TABLE_NAME_Estudiante, contentValues, "ID = ?", arrayOf(id))
         return true
     }
-
-    /**
-     * Let's create a function to delete a given row based on the id.
-     */
-    fun deleteData(id : String) : Int {
-        val db = this.writableDatabase
-        return db.delete(TABLE_NAME,"ID = ?", arrayOf(id))
-    }
-
-    /**
-     * The below getter property will return a Cursor containing our dataset.
-     */
-    val allData : Cursor
+//
+//    /**
+//     * Let's create a function to delete a given row based on the id.
+//     */
+   fun deleteDataEstudiante(id : String) : Int {
+         val db = this.writableDatabase
+        return db.delete(TABLE_NAME_Estudiante,"ID = ?", arrayOf(id))
+     }
+//
+//    /**
+//     * The below getter property will return a Cursor containing our dataset.
+//     */
+    val allEstudiante : Cursor
         get() {
             val db = this.writableDatabase
-            val res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null)
+            val res = db.rawQuery("SELECT * FROM " + TABLE_NAME_Estudiante, null)
             return res
         }
-
-    fun searchData (id: String) :Cursor
-    {
-        val db = this.writableDatabase
-        val querySearch = "SELECT * FROM " + TABLE_NAME + " WHERE ID = '"+id+"'"
-        val res = db.rawQuery(querySearch, null)
-        return res
-    }
+//
+//    fun searchData (id: String) :Cursor
+//    {
+//        val db = this.writableDatabase
+//        val querySearch = "SELECT * FROM " + TABLE_NAME + " WHERE ID = '"+id+"'"
+//        val res = db.rawQuery(querySearch, null)
+//        return res
+//    }
 
     /**
      * Let's create a companion object to hold our static fields.
@@ -95,12 +107,17 @@ class DatabaseHelper(context: Context) :
      * class.
      */
     companion object {
-        val DATABASE_NAME = "stars.db"
-        val TABLE_NAME = "star_table"
-        val COL_1 = "ID"
-        val COL_2 = "NAME"
-        val COL_3 = "GALAXY"
-        val COL_4 = "TYPE"
+        val DATABASE_NAME = "matricula.db"
+        val TABLE_NAME_Estudiante = "estudiante_table"
+        val TABLE_NAME_Curso = "curso_table"
+        val ESTUDIANTE_COL_1 = "ID"
+        val ESTUDIANTE_COL_2 = "NOMBRE"
+        val ESTUDIANTE_COL_3 = "APELLIDO"
+        val ESTUDIANTE_COL_4 = "EDAD"
+        val CURSO_COL_1 = "ID"
+        val CURSO_COL_2 = "DESCRIPCION"
+        val CURSO_COL_3 = "CREDITOS"
+
     }
 }
 //end
