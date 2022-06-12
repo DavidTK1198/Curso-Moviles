@@ -1,5 +1,7 @@
 package com.sistema.logicaDeNegocio
 
+import com.matricula.mobile.models.Carrera
+
 class Alumno {
     var cedula: String
     var nombre: String

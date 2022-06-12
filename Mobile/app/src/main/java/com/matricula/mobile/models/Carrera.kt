@@ -1,6 +1,8 @@
-package com.sistema.logicaDeNegocio
+package com.matricula.mobile.models
+import com.sistema.logicaDeNegocio.Curso
+import java.io.Serializable
 
-class Carrera {
+class Carrera:Serializable {
     var codigo: String? = null
     var nombre: String? = null
     var titulo: String? = null
