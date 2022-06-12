@@ -12,9 +12,9 @@ import com.matricula.sqllite.R
 import com.matricula.sqllite.logicanegocio.Curso
 import com.matricula.sqllite.logicanegocio.Estudiante
 
-class RecyclerView_Adapter(private var items: ArrayList<Estudiante>): RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
+class RecyclerView_Adapter_Curso(private var items: ArrayList<Curso>): RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
-    var itemsList: ArrayList<Estudiante>? = null
+    var itemsList: ArrayList<Curso>? = null
 
     lateinit var mcontext: Context
 
@@ -40,8 +40,8 @@ class RecyclerView_Adapter(private var items: ArrayList<Estudiante>): RecyclerVi
 
         val item = itemsList?.get(position)
 
-        holder.itemView.findViewById<TextView>(R.id.ID_Es)?.text = item?.cedula.toString()
-        holder.itemView.findViewById<TextView>(R.id.tvNombre)?.text = item?.nombre +" " +item?.apellido
+        holder.itemView.findViewById<TextView>(R.id.ID_Es)?.text = item?.codigo.toString()
+        holder.itemView.findViewById<TextView>(R.id.tvNombre)?.text = item?.nombre
 
 
     }
@@ -54,7 +54,7 @@ class RecyclerView_Adapter(private var items: ArrayList<Estudiante>): RecyclerVi
                 if (charSearch.isEmpty()) {
                     itemsList = items
                 } else {
-                    val resultList = ArrayList<Estudiante>()
+                    val resultList = ArrayList<Curso>()
                     for (row in items) {
                         if (row.nombre.toLowerCase().contains(charSearch.toLowerCase())) {
                             resultList.add(row)
@@ -69,7 +69,7 @@ class RecyclerView_Adapter(private var items: ArrayList<Estudiante>): RecyclerVi
 
             @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                itemsList = results?.values as ArrayList<Estudiante>
+                itemsList = results?.values as ArrayList<Curso>
                 notifyDataSetChanged()
             }
 
@@ -78,4 +78,5 @@ class RecyclerView_Adapter(private var items: ArrayList<Estudiante>): RecyclerVi
 
 
 }
+
 

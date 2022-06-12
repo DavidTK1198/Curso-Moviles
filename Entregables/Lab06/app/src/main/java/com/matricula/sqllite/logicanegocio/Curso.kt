@@ -8,6 +8,12 @@ class Curso{
     var nombre: String
     var creditos: Int
 
+    constructor(){
+        codigo = 0
+        nombre = ""
+        creditos = 0
+    }
+
     constructor(codigo: Int, nombre: String, creditos: Int) {
         this.codigo = codigo
         this.nombre=nombre

@@ -51,7 +51,14 @@ class DatabaseHelper(context: Context) :
         contentValues.put(ESTUDIANTE_COL_4, edad)
         db.insert(TABLE_NAME_Estudiante, null, contentValues)
     }
-
+    fun insertDataCurso(codigo: Int, nombre: String, creditos: Int) {
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(CURSO_COL_1, codigo)
+        contentValues.put(CURSO_COL_2, nombre)
+        contentValues.put(CURSO_COL_3, creditos)
+        db.insert(TABLE_NAME_Curso, null, contentValues)
+    }
 //    fun insertDataCurso(name: String, surname: String, marks: String) {
 //        val db = this.writableDatabase
 //        val contentValues = ContentValues()
@@ -74,6 +81,15 @@ class DatabaseHelper(context: Context) :
         db.update(TABLE_NAME_Estudiante, contentValues, "ID = ?", arrayOf(id))
         return true
     }
+    fun updateDataCurso(codigo: Int, nombre: String, creditos: Int):Boolean {
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(CURSO_COL_1, codigo)
+        contentValues.put(CURSO_COL_2, nombre)
+        contentValues.put(CURSO_COL_3, creditos)
+        db.update(TABLE_NAME_Curso, contentValues, "ID = ?", arrayOf(codigo.toString()))
+        return true
+    }
 //
 //    /**
 //     * Let's create a function to delete a given row based on the id.
@@ -82,6 +98,10 @@ class DatabaseHelper(context: Context) :
          val db = this.writableDatabase
         return db.delete(TABLE_NAME_Estudiante,"ID = ?", arrayOf(id))
      }
+    fun deleteDataCurso(id : String) : Int {
+        val db = this.writableDatabase
+        return db.delete(TABLE_NAME_Estudiante,"ID = ?", arrayOf(id))
+    }
 //
 //    /**
 //     * The below getter property will return a Cursor containing our dataset.
@@ -90,6 +110,12 @@ class DatabaseHelper(context: Context) :
         get() {
             val db = this.writableDatabase
             val res = db.rawQuery("SELECT * FROM " + TABLE_NAME_Estudiante, null)
+            return res
+        }
+    val allCurso : Cursor
+        get() {
+            val db = this.writableDatabase
+            val res = db.rawQuery("SELECT * FROM " + TABLE_NAME_Curso, null)
             return res
         }
 //
