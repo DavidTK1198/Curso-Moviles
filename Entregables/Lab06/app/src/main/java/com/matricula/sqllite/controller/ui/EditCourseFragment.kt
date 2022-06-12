@@ -29,15 +29,15 @@ class EditCursoFragment : FragmentUtils() {
         view.findViewById<Button>(R.id.btn_volver).setOnClickListener {
             volver()
         }
-
-        var editTextName = view?.findViewById<EditText>(R.id.Nombre)
-        var editTextCredits = view?.findViewById<EditText>(R.id.Creditos)
-        var editTextID = view?.findViewById<EditText>(R.id.ID)
-
-        editTextID!!.setText(model.curso.codigo.toString())
-        editTextName!!.setText(model.curso.nombre)
-        editTextCredits!!.setText(model.curso.creditos)
-        editTextID.isEnabled=false
+//
+//        var editTextName = view?.findViewById<EditText>(R.id.Nombre)
+//        var editTextCredits = view?.findViewById<EditText>(R.id.Creditos)
+//        var editTextID = view?.findViewById<EditText>(R.id.ID)
+//
+//        editTextID!!.setText(model.curso.codigo.toString())
+//        editTextName!!.setText(model.curso.nombre)
+//        editTextCredits!!.setText(model.curso.creditos)
+//        editTextID.isEnabled=false
 
         return view
     }

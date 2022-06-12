@@ -11,6 +11,7 @@ import com.example.peopleapp.EstudiantesFragment
 import com.google.android.material.navigation.NavigationView
 import com.matricula.sqllite.R
 import com.matricula.sqllite.accesodatos.DatabaseHelper
+import com.matricula.sqllite.controller.ui.CoursesFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -37,6 +38,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_item_estudiantes -> {
                 setToolbarTitle("Estudiantes")
                 changeFragment(EstudiantesFragment(dbHelper))
+            }
+
+            R.id.nav_item_cursos -> {
+                setToolbarTitle("Cursos")
+                changeFragment(CoursesFragment(dbHelper))
             }
 
             R.id.nav_item_logout -> {

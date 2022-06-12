@@ -50,11 +50,11 @@ class CoursesFragment (helper: DatabaseHelper): FragmentUtils(){
         val textView = view.findViewById<TextView>(R.id.search_src_text)
         textView.setTextColor(Color.BLACK)
 
-        recyclerViewElement = view.findViewById(R.id.recycleView)
+        recyclerViewElement = view.findViewById(R.id.recycleView_curso)
         recyclerViewElement.layoutManager = LinearLayoutManager(recyclerViewElement.context)
         recyclerViewElement.setHasFixedSize(true)
 
-        view.findViewById<SearchView>(R.id.person_search)
+        view.findViewById<SearchView>(R.id.curso_search)
             .setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     return false
@@ -152,7 +152,7 @@ class CoursesFragment (helper: DatabaseHelper): FragmentUtils(){
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(recyclerViewElement)
 
-        val add: FloatingActionButton = view.findViewById(R.id.add)
+        val add: FloatingActionButton = view.findViewById(R.id.addcurso)
         add.setOnClickListener { view ->
             changeFragment(CreateEstudianteFragment())
         }
