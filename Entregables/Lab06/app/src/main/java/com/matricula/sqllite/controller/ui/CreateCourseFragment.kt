@@ -21,13 +21,13 @@ class CreateCourseFragmentFragment : FragmentUtils() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view = inflater.inflate(R.layout.fragment_create_estudiante, container, false)
+        var view = inflater.inflate(R.layout.fragment_create_curso, container, false)
 
-        view.findViewById<Button>(R.id.btn_guardarPersona).setOnClickListener{
+        view.findViewById<Button>(R.id.btn_guardarCurso).setOnClickListener{
             createCurso()
         }
 
-        view.findViewById<Button>(R.id.btn_volver).setOnClickListener {
+        view.findViewById<Button>(R.id.btn_volver_curso).setOnClickListener {
             volver()
         }
 
@@ -36,13 +36,13 @@ class CreateCourseFragmentFragment : FragmentUtils() {
 
     private fun createCurso(){
         var message:String? = null
-        var editTextName = view?.findViewById<EditText>(R.id.editText_Name)
-        var editTextUser = view?.findViewById<EditText>(R.id.editText_User)
-        var editTextPassword = view?.findViewById<EditText>(R.id.exitText_edad)
+        var editText_Name_Curso = view?.findViewById<EditText>(R.id.editText_Name_Curso)
+        var editText_Codigo = view?.findViewById<EditText>(R.id.editText_Codigo)
+        var editText_Creditos = view?.findViewById<EditText>(R.id.editText_Creditos)
 
-        var codigo = editTextName?.text.toString()
-        var nombre = editTextUser?.text.toString()
-        var creditos = editTextPassword?.text.toString()
+        var nombre = editText_Name_Curso?.text.toString()
+        var codigo = editText_Codigo?.text.toString()
+        var creditos = editText_Creditos?.text.toString()
         model.curso.codigo=codigo.toInt()
         model.curso.nombre=nombre
         model.curso.creditos=creditos.toInt()
@@ -52,12 +52,12 @@ class CreateCourseFragmentFragment : FragmentUtils() {
             .make(view!!, message!!, Snackbar.LENGTH_LONG)
             .setAction("Action", null)
             .show()
-        editTextName?.setText("")
-        editTextUser?.setText("")
-        editTextPassword?.setText("")
+        editText_Name_Curso?.setText("")
+        editText_Codigo?.setText("")
+        editText_Creditos?.setText("")
     }
     private fun volver(){
-        setToolbarTitle("Personas")
-        changeFragment(EstudiantesFragment(model.getHelper()))
+        setToolbarTitle("Cursos")
+        changeFragment(CoursesFragment(model.getHelper()))
     }
 }
