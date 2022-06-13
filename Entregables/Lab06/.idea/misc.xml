@@ -27,8 +27,12 @@
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Lab06/app/src/main/res/layout/activity_main.xml" value="0.1956521739130435" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Lab06/app/src/main/res/layout/content_main.xml" value="0.1956521739130435" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Lab06/app/src/main/res/menu/navigation_menu.xml" value="0.29375" />
+        <entry key="..\:/Users/USER/Desktop/Curso-Moviles/Entregables/Lab06/app/src/main/res/layout/fragment_create_curso.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/USER/Desktop/Curso-Moviles/Entregables/Lab06/app/src/main/res/layout/fragment_create_estudiante.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/USER/Desktop/Curso-Moviles/Entregables/Lab06/app/src/main/res/layout/fragment_edit_cursos.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/USER/Desktop/Curso-Moviles/Entregables/Lab06/app/src/main/res/layout/fragment_edit_estudiante.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/USER/Desktop/Curso-Moviles/Entregables/Lab06/app/src/main/res/layout/fragment_estudiantes.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/USER/Desktop/Curso-Moviles/Entregables/Lab06/app/src/main/res/layout/template_estudiantes.xml" value="0.22826086956521738" />
       </map>
     </option>
   </component>
