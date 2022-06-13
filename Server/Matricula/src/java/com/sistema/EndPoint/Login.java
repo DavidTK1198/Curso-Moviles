@@ -21,7 +21,6 @@ public class Login {
     UsuarioController control= UsuarioController.getInstance();
     @Context
     HttpServletRequest request;
-    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)    

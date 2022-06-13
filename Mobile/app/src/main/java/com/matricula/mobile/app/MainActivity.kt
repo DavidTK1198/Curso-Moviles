@@ -42,12 +42,4 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
-    private fun getRetrofit():Retrofit{
-        return Retrofit.Builder()
-            .baseUrl("http//$WEB_URL:$WEB_PORT/$WEB_PATH/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-
 }
