@@ -52,23 +52,6 @@ class EstudianteModel private constructor() {
     fun update(){
         this.dbHelper.updateDataEstudiante(estudiante.cedula.toString(),estudiante.nombre,estudiante.apellido,estudiante.edad.toString())
     }
-    fun cursos(){
-        val res=  this.dbHelper.allCurso_Estudiante(estudiante.cedula.toString())
-        if (res.count == 0) {
 
-        } else {
-            val buffer = StringBuffer()
-            while (res.moveToNext()) {
-                var id=res.getColumnIndex("ID")
-                var des=res.getColumnIndex("DESCRIPCION")
-                var cred=res.getColumnIndex("CREDITOS")
-               var curso=Curso(res.getInt(id),res.getString(des),res.getInt(cred))
-                Log.d("curso",curso.nombre)
-
-            }
-
-
-        }
-    }
 
 }

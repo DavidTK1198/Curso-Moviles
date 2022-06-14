@@ -105,6 +105,8 @@ class CoursesFragment (helper: DatabaseHelper): FragmentUtils(){
 
                     adaptador = RecyclerView_Adapter_Curso(model.getAllCursos()!!)
                     recyclerViewElement.adapter = adaptador
+                    adaptador.setOnItemClickListener(object: RecyclerView_Adapter_Curso.onItemClickListener{})
+
 
                 } else { //Edit
                     getIndex(position)
@@ -163,6 +165,7 @@ class CoursesFragment (helper: DatabaseHelper): FragmentUtils(){
         }
         adaptador = RecyclerView_Adapter_Curso(Ncursos)
         recyclerViewElement.adapter = adaptador
+        adaptador.setOnItemClickListener(object: RecyclerView_Adapter_Curso.onItemClickListener{})
     }
     private fun getIndex(index: Int){
         var index = index

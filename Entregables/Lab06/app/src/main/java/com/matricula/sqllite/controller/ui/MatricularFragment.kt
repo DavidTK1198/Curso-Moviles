@@ -14,6 +14,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.matricula.sqllite.R
 import com.matricula.sqllite.accesodatos.DatabaseHelper
@@ -54,7 +55,6 @@ class MatricularFragment (helper: DatabaseHelper): FragmentUtils(){
         var est=arguments!!.get("estudiante").toString()
         estudiante= gson.fromJson(est,Estudiante::class.java)
         modelEst.estudiante=estudiante
-        modelEst.cursos()
         recyclerViewElement = view.findViewById(R.id.recycleView_curso)
         recyclerViewElement.layoutManager = LinearLayoutManager(recyclerViewElement.context)
         recyclerViewElement.setHasFixedSize(true)
@@ -85,7 +85,19 @@ class MatricularFragment (helper: DatabaseHelper): FragmentUtils(){
         recyclerViewElement.adapter = adaptador
         adaptador.setOnItemClickListener(object: RecyclerView_Adapter_Curso.onItemClickListener{
             override fun onItemClick(position: Int) {
-                model.matricular(estudiante.cedula,position)
+                if(model.matricular(estudiante.cedula,position)){
+                    var message = "Curso matriculado"
+                    Snackbar
+                        .make(view!!, message!!, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null)
+                        .show()
+                }else{
+                   var  message = "Curso ya matriculado"
+                    Snackbar
+                        .make(view!!, message!!, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null)
+                        .show()
+                }
 
             }
         })

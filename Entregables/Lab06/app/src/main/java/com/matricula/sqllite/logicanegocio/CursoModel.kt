@@ -1,4 +1,5 @@
 package com.matricula.sqllite.logicanegocio
+import android.util.Log
 import com.matricula.sqllite.accesodatos.DatabaseHelper
 class CursoModel {
     var curso:Curso=Curso()
@@ -48,10 +49,30 @@ class CursoModel {
     fun delete(){
         this.dbHelper.deleteDataCurso(curso.codigo.toString())
     }
-    fun matricular(ID:Int,pos:Int){
-        this.dbHelper.insertDataCurso_Estudiante(cursos[pos].codigo,ID)
+    fun matricular(ID:Int,pos:Int):Boolean{
+        return dbHelper.insertDataCurso_Estudiante(cursos[pos].codigo,ID)
     }
     fun update(){
         this.dbHelper.updateDataCurso(curso.codigo, curso.nombre, curso.creditos)
+    }
+
+    fun cursosPorEstudiante(id: Int):ArrayList<Curso>? {
+        val res=  this.dbHelper.allCurso_Estudiante(id.toString())
+        this.cursos=ArrayList()
+        if (res.count == 0) {
+            return cursos
+        } else {
+            val buffer = StringBuffer()
+            while (res.moveToNext()) {
+                var id=res.getColumnIndex("ID")
+                var des=res.getColumnIndex("DESCRIPCION")
+                var cred=res.getColumnIndex("CREDITOS")
+                var curso=Curso(res.getInt(id),res.getString(des),res.getInt(cred))
+                cursos.add(curso)
+            }
+
+
+        }
+        return  cursos
     }
 }

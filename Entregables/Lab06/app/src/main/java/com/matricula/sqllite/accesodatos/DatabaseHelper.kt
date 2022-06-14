@@ -1,10 +1,11 @@
 package com.matricula.sqllite.accesodatos
 
-import android.content.Context
-import android.database.sqlite.SQLiteOpenHelper
 import android.content.ContentValues
+import android.content.Context
 import android.database.Cursor
+import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
 
 /**
  * Let's start by creating our database CRUD helper class
@@ -65,12 +66,15 @@ class DatabaseHelper(context: Context) :
     }
 
 
-    fun insertDataCurso_Estudiante(codigo: Int, ID: Int) {
+    fun insertDataCurso_Estudiante(codigo: Int, ID: Int):Boolean {
         val db = this.writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put("ESTUDIANTE", ID)
-        contentValues.put("CURSO", codigo)
-        db.insert("Curso_Estudiante", null, contentValues)
+        try {
+            val sql = "INSERT INTO Curso_Estudiante (ESTUDIANTE,CURSO) VALUES (?,?)"
+            db.execSQL(sql, arrayOf<Any>(ID,codigo))
+        }catch (e:SQLException){
+            return false
+        }
+            return true
     }
 
 

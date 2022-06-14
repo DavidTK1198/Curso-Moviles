@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import com.matricula.mobile.*
+import com.matricula.mobile.apiService.LoginService
 import com.matricula.mobile.models.Usuario
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -66,7 +67,7 @@ class Login : AppCompatActivity() {
         initLoading()
         CoroutineScope(Dispatchers.IO).launch {
             val login=login()
-            val call =LoginService.Companion.getInstance().login(login)
+            val call = LoginService.Companion.getInstance().login(login)
             val logged = call.body()
             if(call.isSuccessful){
                 toMainActivity(logged!!)
