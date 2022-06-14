@@ -25,6 +25,9 @@ class DatabaseHelper(context: Context) :
 
         db.execSQL("CREATE TABLE $TABLE_NAME_Curso(ID INTEGER PRIMARY KEY " +
                 "AUTOINCREMENT,DESCRIPCION TEXT,CREDITOS INTEGER)")
+
+        db.execSQL("CREATE TABLE Curso_Estudiante(ID INTEGER PRIMARY KEY " +
+                "AUTOINCREMENT,ESTUDIANTE INTEGER,CURSO INTEGER,UNIQUE(ESTUDIANTE,CURSO) )")
     }
 
     /**
@@ -36,6 +39,7 @@ class DatabaseHelper(context: Context) :
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_Estudiante)
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_Curso)
+        db.execSQL("DROP TABLE IF EXISTS " + "Curso_Estudiante")
         onCreate(db)
     }
 
@@ -56,17 +60,19 @@ class DatabaseHelper(context: Context) :
         val contentValues = ContentValues()
         contentValues.put(CURSO_COL_1, codigo)
         contentValues.put(CURSO_COL_2, nombre)
-        contentValues.put(CURSO_COL_3, creditos)
+        contentValues.put(CURSO_COL_3, creditos.toString())
         db.insert(TABLE_NAME_Curso, null, contentValues)
     }
-//    fun insertDataCurso(name: String, surname: String, marks: String) {
-//        val db = this.writableDatabase
-//        val contentValues = ContentValues()
-//        contentValues.put(COL_2, name)
-//        contentValues.put(COL_3, surname)
-//        contentValues.put(COL_4, marks)
-//        db.insert(TABLE_NAME, null, contentValues)
-//    }
+
+
+    fun insertDataCurso_Estudiante(codigo: Int, ID: Int) {
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put("ESTUDIANTE", ID)
+        contentValues.put("CURSO", codigo)
+        db.insert("Curso_Estudiante", null, contentValues)
+    }
+
 
 //    /**
 //     * Let's create  a method to update a row with new field values.
@@ -100,7 +106,7 @@ class DatabaseHelper(context: Context) :
      }
     fun deleteDataCurso(id : String) : Int {
         val db = this.writableDatabase
-        return db.delete(TABLE_NAME_Estudiante,"ID = ?", arrayOf(id))
+        return db.delete(TABLE_NAME_Curso,"ID = ?", arrayOf(id))
     }
 //
 //    /**
@@ -118,6 +124,20 @@ class DatabaseHelper(context: Context) :
             val res = db.rawQuery("SELECT * FROM " + TABLE_NAME_Curso, null)
             return res
         }
+
+
+    fun  allCurso_Estudiante(id:String):Cursor{
+
+        val db = this.writableDatabase
+        val res = db.rawQuery(
+            "SELECT C.ID, C.DESCRIPCION, C.CREDITOS" +
+                    "        FROM Curso_Estudiante AS D " +
+                    "INNER JOIN curso_table C ON C.ID = D.CURSO" +
+                    "        WHERE D.ESTUDIANTE = ?", arrayOf(id)
+        )
+        return res
+    }
+
 //
 //    fun searchData (id: String) :Cursor
 //    {

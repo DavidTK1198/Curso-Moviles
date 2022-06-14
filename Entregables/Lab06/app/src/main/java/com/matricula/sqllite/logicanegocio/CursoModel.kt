@@ -30,7 +30,10 @@ class CursoModel {
         } else {
             val buffer = StringBuffer()
             while (res.moveToNext()) {
-                curso=Curso(res.getInt(0),res.getString(1),res.getInt(3))
+                var id=res.getColumnIndex("ID")
+                var des=res.getColumnIndex("DESCRIPCION")
+                var cred=res.getColumnIndex("CREDITOS")
+                curso=Curso(res.getInt(id),res.getString(des),res.getInt(cred))
                 cursos.add(curso)
             }
 
@@ -45,7 +48,9 @@ class CursoModel {
     fun delete(){
         this.dbHelper.deleteDataCurso(curso.codigo.toString())
     }
-
+    fun matricular(ID:Int,pos:Int){
+        this.dbHelper.insertDataCurso_Estudiante(cursos[pos].codigo,ID)
+    }
     fun update(){
         this.dbHelper.updateDataCurso(curso.codigo, curso.nombre, curso.creditos)
     }

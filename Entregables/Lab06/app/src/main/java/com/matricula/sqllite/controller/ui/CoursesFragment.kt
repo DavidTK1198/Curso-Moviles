@@ -100,7 +100,6 @@ class CoursesFragment (helper: DatabaseHelper): FragmentUtils(){
                     recyclerViewElement.adapter?.notifyItemRemoved(position)
 
                     Snackbar.make(recyclerViewElement, model.curso.nombre + " eliminado/a", Snackbar.LENGTH_LONG).setAction("Undo") {
-                        //estudiantes.getestudiantes().add(position, Estudiante)
                         recyclerViewElement.adapter?.notifyItemInserted(position)
                     }.show()
 
@@ -109,9 +108,8 @@ class CoursesFragment (helper: DatabaseHelper): FragmentUtils(){
 
                 } else { //Edit
                     getIndex(position)
-                    var editFragment = EditEstudianteFragment()
                     setToolbarTitle("Editar Curso")
-                    changeFragment(fragmentUtils = editFragment)
+                    changeFragment(EditCursoFragment())
                 }
             }
 
@@ -154,7 +152,7 @@ class CoursesFragment (helper: DatabaseHelper): FragmentUtils(){
 
         val add: FloatingActionButton = view.findViewById(R.id.addcurso)
         add.setOnClickListener { view ->
-            changeFragment(CreateEstudianteFragment())
+            changeFragment(CreateCourseFragment())
         }
         return view;
     }

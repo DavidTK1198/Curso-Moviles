@@ -14,7 +14,7 @@ import com.matricula.sqllite.logicanegocio.EstudianteModel
 import com.matricula.sqllite.util.FragmentUtils
 
 
-class CreateCourseFragmentFragment : FragmentUtils() {
+class CreateCourseFragment : FragmentUtils() {
     private var model = CursoModel.instance
 
     override fun onCreateView(

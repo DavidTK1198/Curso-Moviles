@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import com.example.peopleapp.EstudiantesFragment
 import com.google.android.material.snackbar.Snackbar
 import com.matricula.sqllite.R
 import com.matricula.sqllite.logicanegocio.CursoModel
@@ -21,7 +20,7 @@ class EditCursoFragment : FragmentUtils() {
         var view = inflater.inflate(R.layout.fragment_edit_cursos, container, false)
 
         view.findViewById<Button>(R.id.btn_guardarCurso).setOnClickListener{
-            EditEstudiante()
+            EditCurso()
         }
 
         view.findViewById<Button>(R.id.btn_volver_curso).setOnClickListener {
@@ -34,13 +33,13 @@ class EditCursoFragment : FragmentUtils() {
 
         codigo_Curso!!.setText(model.curso.codigo.toString())
         Nombre!!.setText(model.curso.nombre)
-        creditos_Curso!!.setText(model.curso.creditos)
+        creditos_Curso!!.setText(model.curso.creditos.toString())
         codigo_Curso.isEnabled=false
 
         return view
     }
 
-    private fun EditEstudiante(){
+    private fun EditCurso(){
         var message:String? = null
         var nombre_Curso = view?.findViewById<EditText>(R.id.nombre_Curso)
         var codigo_Curso = view?.findViewById<EditText>(R.id.codigo_Curso)
@@ -58,12 +57,12 @@ class EditCursoFragment : FragmentUtils() {
             .make(view!!, message!!, Snackbar.LENGTH_LONG)
             .setAction("Action", null)
             .show()
-        codigo_Curso?.setText(model.curso.codigo)
+        codigo_Curso?.setText(model.curso.codigo.toString())
         nombre_Curso?.setText(model.curso.nombre)
         creditos_Curso?.setText(model.curso.creditos.toString())
     }
     private fun volver(){
-        setToolbarTitle("Personas")
+        setToolbarTitle("Cursos")
         changeFragment(CoursesFragment(model.getHelper()))
     }
 }

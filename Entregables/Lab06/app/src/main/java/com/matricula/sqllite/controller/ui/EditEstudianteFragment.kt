@@ -1,7 +1,6 @@
 package com.matricula.sqllite.controller.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +8,11 @@ import android.widget.Button
 import android.widget.EditText
 import com.example.peopleapp.EstudiantesFragment
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.matricula.sqllite.R
 import com.matricula.sqllite.logicanegocio.EstudianteModel
 import com.matricula.sqllite.util.FragmentUtils
+
 class EditEstudianteFragment : FragmentUtils() {
     private var model = EstudianteModel.instance
 
@@ -27,6 +28,10 @@ class EditEstudianteFragment : FragmentUtils() {
 
         view.findViewById<Button>(R.id.btn_volver).setOnClickListener {
             volver()
+        }
+
+        view.findViewById<Button>(R.id.mat).setOnClickListener {
+            matricula()
         }
 
         var editTextName = view?.findViewById<EditText>(R.id.Nombre)
@@ -65,8 +70,19 @@ class EditEstudianteFragment : FragmentUtils() {
         editTextUser?.setText(model.estudiante.apellido)
         editTextPassword?.setText(model.estudiante.edad.toString())
     }
+
+    private  fun matricula(){
+        setToolbarTitle("Matricula")
+        val bundle = Bundle()
+        val gson=Gson()
+        var estudiante=gson.toJson(model.estudiante)
+        bundle.putString("estudiante", estudiante);
+        val mat=MatricularFragment(model.getHelper())
+        mat.arguments=bundle
+        changeFragment(mat)
+    }
     private fun volver(){
-        setToolbarTitle("Personas")
+        setToolbarTitle("Estudiantes")
         changeFragment(EstudiantesFragment(model.getHelper()))
     }
 }

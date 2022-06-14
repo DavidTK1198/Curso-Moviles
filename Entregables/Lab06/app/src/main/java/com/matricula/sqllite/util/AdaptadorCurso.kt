@@ -15,18 +15,34 @@ import com.matricula.sqllite.logicanegocio.Estudiante
 class RecyclerView_Adapter_Curso(private var items: ArrayList<Curso>): RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     var itemsList: ArrayList<Curso>? = null
-
+    private  lateinit var  mlistener: onItemClickListener
     lateinit var mcontext: Context
+     interface onItemClickListener{
+         fun onItemClick(position: Int){
 
-    class PersonHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+         }
+     }
+    fun setOnItemClickListener(listener: onItemClickListener){
+        mlistener=listener
+    }
+    class PersonHolder(itemView: View,listener: onItemClickListener) : RecyclerView.ViewHolder(itemView){
+            init {
+                itemView.setOnClickListener{
+                    listener.onItemClick(adapterPosition )
+                }
+            }
+
+    }
 
     init {
         this.itemsList = items
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val personListView = LayoutInflater.from(parent.context).inflate(R.layout.template_estudiantes, parent, false)
-        val sch = PersonHolder(personListView)
+        val sch = PersonHolder(personListView,mlistener)
         mcontext = parent.context
         return sch
     }
