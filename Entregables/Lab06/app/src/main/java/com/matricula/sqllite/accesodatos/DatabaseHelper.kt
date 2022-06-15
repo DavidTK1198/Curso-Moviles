@@ -65,7 +65,6 @@ class DatabaseHelper(context: Context) :
         db.insert(TABLE_NAME_Curso, null, contentValues)
     }
 
-
     fun insertDataCurso_Estudiante(codigo: Int, ID: Int):Boolean {
         val db = this.writableDatabase
         try {
@@ -111,6 +110,11 @@ class DatabaseHelper(context: Context) :
     fun deleteDataCurso(id : String) : Int {
         val db = this.writableDatabase
         return db.delete(TABLE_NAME_Curso,"ID = ?", arrayOf(id))
+    }
+
+    fun RetireCurso(ID : String)  {
+        val db = this.writableDatabase
+        val res = db.rawQuery( "DELETE FROM Curso_Estudiante WHERE ESTUDIANTE= ?",  arrayOf(ID))
     }
 //
 //    /**

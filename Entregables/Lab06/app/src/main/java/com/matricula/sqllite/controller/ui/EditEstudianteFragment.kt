@@ -12,6 +12,7 @@ import com.google.gson.Gson
 import com.matricula.sqllite.R
 import com.matricula.sqllite.logicanegocio.EstudianteModel
 import com.matricula.sqllite.util.FragmentUtils
+import kotlinx.android.synthetic.main.fragment_edit_estudiante.*
 
 class EditEstudianteFragment : FragmentUtils() {
     private var model = EstudianteModel.instance
@@ -32,6 +33,10 @@ class EditEstudianteFragment : FragmentUtils() {
 
         view.findViewById<Button>(R.id.mat).setOnClickListener {
             matricula()
+        }
+
+        view.findViewById<Button>(R.id.retirar).setOnClickListener {
+            Desmatricula()
         }
 
         var editTextName = view?.findViewById<EditText>(R.id.Nombre)
@@ -78,6 +83,17 @@ class EditEstudianteFragment : FragmentUtils() {
         var estudiante=gson.toJson(model.estudiante)
         bundle.putString("estudiante", estudiante);
         val mat=MatricularFragment(model.getHelper())
+        mat.arguments=bundle
+        changeFragment(mat)
+    }
+
+    private  fun Desmatricula(){
+        setToolbarTitle("Retirar Cursos")
+        val bundle = Bundle()
+        val gson=Gson()
+        var estudiante=gson.toJson(model.estudiante)
+        bundle.putString("estudiante", estudiante);
+        val mat=DesmatricularFragment(model.getHelper())
         mat.arguments=bundle
         changeFragment(mat)
     }

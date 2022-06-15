@@ -9,7 +9,6 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface LoginService {
-    @Headers("Accept: application/json")
     @POST("login")
     suspend  fun login(@Body usuario: Usuario): Response<Usuario>
     @DELETE("login")

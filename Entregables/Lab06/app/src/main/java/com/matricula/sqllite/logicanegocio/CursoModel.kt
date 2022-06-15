@@ -75,4 +75,8 @@ class CursoModel {
         }
         return  cursos
     }
+
+    fun retirarCurso(ID: Int){
+        this.dbHelper.RetireCurso(ID.toString())
+    }
 }

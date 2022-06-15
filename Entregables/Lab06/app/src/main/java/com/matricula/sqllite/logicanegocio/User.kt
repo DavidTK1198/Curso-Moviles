@@ -2,7 +2,7 @@ package com.matricula.sqllite.logicanegocio
 import java.io.Serializable
 data class User (
 
-    var username:String = "MasterKotlin",
+    var username:String = "Admin",
     var password:String="123",
 ): Serializable {
 

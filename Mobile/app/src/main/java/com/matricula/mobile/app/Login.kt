@@ -44,12 +44,6 @@ class Login : AppCompatActivity() {
         return Usuario(username,password,"","")
     }
 
-    private fun getRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("http://$WEB_URL:$WEB_PORT/$WEB_PATH/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
     private fun initLoading(){
         val loader=findViewById<ProgressBar>(R.id.loading)
         loader.visibility=View.VISIBLE
@@ -64,17 +58,20 @@ class Login : AppCompatActivity() {
         btn_sum.isClickable = true
     }
     fun startService(view: View) {
-        initLoading()
-        CoroutineScope(Dispatchers.IO).launch {
-            val login=login()
-            val call = LoginService.Companion.getInstance().login(login)
-            val logged = call.body()
-            if(call.isSuccessful){
-                toMainActivity(logged!!)
-            }else{
-                stopLoading()
-            }
-        }
+//        initLoading()
+//        CoroutineScope(Dispatchers.IO).launch {
+//            val login=login()
+//            val call = LoginService.Companion.getInstance().login(login)
+//            val logged = call.body()
+//            if(call.isSuccessful){
+//                toMainActivity(logged!!)
+//            }else{
+//                stopLoading()
+//            }
+//        }
+        val i = Intent(this, MainActivity::class.java)
+        startActivity(i)
+        finish()
         }
     }
 
