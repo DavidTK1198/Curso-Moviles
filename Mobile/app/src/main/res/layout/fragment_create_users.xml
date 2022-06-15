@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:context=".controller.ui.CreateEstudianteFragment">
+
+    <TextView
+            android:id="@+id/textView_accionUser"
+            style="@style/Widget.AppCompat.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:text="Agregar Usuario"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:text="Nombre"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/editText_Name_User"
+            app:layout_constraintTop_toBottomOf="@+id/textView_accionUser"/>
+
+    <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Cedula"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/editText_Cedula"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Name_User"/>
+
+    <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Clave"
+            app:layout_constraintStart_toStartOf="@+id/editText_Clave"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Cedula"/>
+
+    <EditText
+            android:id="@+id/editText_Name_User"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Nombre"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <EditText
+            android:id="@+id/editText_Cedula"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Cedula"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"/>
+
+    <EditText
+            android:id="@+id/editText_Clave"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Clave"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7"/>
+
+    <Button
+            android:id="@+id/btn_guardarCurso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="144dp"
+            android:text="Guardar Curso"
+            app:layout_constraintEnd_toEndOf="@+id/editText_Clave"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Clave" android:layout_marginEnd="16dp"/>
+    <Button
+            android:id="@+id/btn_volver_curso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="144dp"
+            android:text="Volver"
+            app:layout_constraintStart_toStartOf="@+id/editText_Clave"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Clave" android:layout_marginStart="8dp"/>
+    <TextView
+            android:text="Rol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView9"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Clave"
+            app:layout_constraintBottom_toTopOf="@+id/editTextRol" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.148"
+            app:layout_constraintVertical_bias="0.6"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editTextRol"
+            android:hint="Rol" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.273"
+            app:layout_constraintBottom_toTopOf="@+id/btn_volver_curso"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Clave"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

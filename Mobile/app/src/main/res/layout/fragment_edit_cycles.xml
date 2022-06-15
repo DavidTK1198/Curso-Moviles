@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:context=".controller.ui.CreateEstudianteFragment">
+
+    <TextView
+            android:id="@+id/textView_accionCycle"
+            style="@style/Widget.AppCompat.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:text="Editar Ciclo"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Numero"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/editText_Numero"
+            app:layout_constraintTop_toBottomOf="@+id/textView_accionCycle"/>
+    <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Codigo"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/editText_Codigo"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Numero"/>
+
+    <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Año"
+            app:layout_constraintStart_toStartOf="@+id/editText_annio"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Codigo"/>
+
+    <EditText
+            android:id="@+id/editText_Numero"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Numero"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5"/>
+
+    <EditText
+            android:id="@+id/editText_Codigo"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Codigo"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"/>
+
+    <EditText
+            android:id="@+id/editText_annio"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Año"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" android:layout_marginBottom="37dp"
+            app:layout_constraintBottom_toTopOf="@+id/editTextTextFechaInicio"/>
+
+    <Button
+            android:id="@+id/btn_guardarCycle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="192dp"
+            android:text="Guardar Ciclo"
+            app:layout_constraintEnd_toEndOf="@+id/editText_annio"
+            app:layout_constraintTop_toBottomOf="@+id/editText_annio" android:layout_marginEnd="8dp"/>
+    <Button
+            android:id="@+id/btn_volver_cycle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="192dp"
+            android:text="Volver"
+            app:layout_constraintStart_toStartOf="@+id/editText_annio"
+            app:layout_constraintTop_toBottomOf="@+id/editText_annio" android:layout_marginStart="24dp"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editTextTextFechaInicio"
+            android:hint="Fecha de inicio" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.273"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView3" app:layout_constraintVertical_bias="0.0"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editTextTextPersonName2"
+            android:hint="Fecha final" app:layout_constraintEnd_toStartOf="@+id/switch1"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.777" android:layout_marginBottom="108dp"/>
+    <TextView
+            android:text="Fecha de inicio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView2" tools:layout_editor_absoluteY="461dp"
+            tools:layout_editor_absoluteX="56dp"/>
+    <TextView
+            android:text="Fecha final"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView3"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.16"
+            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName2" android:layout_marginBottom="8dp"/>
+    <Switch
+            android:text="Estado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/switch1"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="40dp"
+            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName2"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.142"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

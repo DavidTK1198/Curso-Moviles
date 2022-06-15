@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:context=".app.ui.CreateCareersFragment">
+
+    <TextView
+            android:id="@+id/textView_accionCareer"
+            style="@style/Widget.AppCompat.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:text="Editar Carrera"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:text="Nombre"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/editText_Name_Career"
+            app:layout_constraintTop_toBottomOf="@+id/textView_accionCareer"/>
+
+    <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Codigo"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/editText_Code_Career"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Name_Career"/>
+
+    <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Titulo"
+            app:layout_constraintStart_toStartOf="@+id/editText_Title_Career"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Code_Career"/>
+
+    <EditText
+            android:id="@+id/editText_Name_Career"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Nombre"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <EditText
+            android:id="@+id/editText_Code_Career"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Codigo"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"/>
+
+    <EditText
+            android:id="@+id/editText_Title_Career"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Titulo"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7"/>
+
+    <Button
+            android:id="@+id/btn_guardarCareer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:text="Guardar Carrera"
+            app:layout_constraintEnd_toEndOf="@+id/editText_Title_Career"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Title_Career"/>
+
+    <Button
+            android:id="@+id/btn_volver_career"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:text="Volver"
+            app:layout_constraintStart_toStartOf="@+id/editText_Title_Career"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Title_Career" />
+</androidx.constraintlayout.widget.ConstraintLayout>

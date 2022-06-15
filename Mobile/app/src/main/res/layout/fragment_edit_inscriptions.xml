@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:context=".controller.ui.CreateEstudianteFragment">
+
+    <TextView
+            android:id="@+id/textView_accionInscripcion"
+            style="@style/Widget.AppCompat.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:text="Editar Inscripcon"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:text="Nombre"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/editText_Name_Ins"
+            app:layout_constraintTop_toBottomOf="@+id/textView_accionInscripcion"/>
+
+    <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Nota"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/editText_Nota"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Name_Ins"/>
+
+    <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Codigo"
+            app:layout_constraintStart_toStartOf="@+id/editText_Cod"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Nota"/>
+
+    <EditText
+            android:id="@+id/editText_Name_Ins"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Nombre"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <EditText
+            android:id="@+id/editText_Nota"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Nota"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"/>
+
+    <EditText
+            android:id="@+id/editText_Cod"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Codigo"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7"/>
+
+    <Button
+            android:id="@+id/btn_guardarInscripcion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:text="Guardar Inscripcion"
+            app:layout_constraintEnd_toEndOf="@+id/editText_Cod"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Cod"/>
+
+    <Button
+            android:id="@+id/btn_volver_ins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:text="Volver"
+            app:layout_constraintStart_toStartOf="@+id/editText_Cod"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Cod" />
+</androidx.constraintlayout.widget.ConstraintLayout>
