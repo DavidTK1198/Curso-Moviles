@@ -10,8 +10,12 @@ import com.matricula.mobile.models.Carrera
 import android.view.View
 import android.view.ViewGroup
 
-class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): RecyclerView.Adapter<CarreraAdapter.CarreraViewHolder>()
+class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): RecyclerView.Adapter<CarreraAdapter.CarreraViewHolder>(), Filterable
 {
+    var itemsList: ArrayList<Carrera>? = null
+    init {
+        this.itemsList=CarreraList
+    }
     inner class CarreraViewHolder(val v:View):RecyclerView.ViewHolder(v){
         var name:TextView
         var mbNum:TextView
@@ -25,7 +29,7 @@ class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): Recycl
         }
 
         private fun popupMenus(v:View) {
-            val position = CarreraList[adapterPosition]
+            val position = itemsList!![adapterPosition]
             val popupMenus = PopupMenu(c,v)
             popupMenus.inflate(R.menu.show_menu)
             popupMenus.setOnMenuItemClickListener {
@@ -92,12 +96,42 @@ class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): Recycl
     }
 
     override fun onBindViewHolder(holder: CarreraViewHolder, position: Int) {
-        val newList = CarreraList[position]
-        holder.name.text = newList.codigo
-        holder.mbNum.text = newList.nombre
+        val newList = itemsList?.get(position)
+        holder.name.text = newList!!.codigo
+        holder.mbNum.text = newList!!.nombre
     }
 
     override fun getItemCount(): Int {
-        return  CarreraList.size
+        return  itemsList?.size!!
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charSearch = constraint.toString()
+                if (charSearch.isEmpty()) {
+                    itemsList = CarreraList
+                } else {
+                    val resultList = ArrayList<Carrera>()
+                    for (row in CarreraList) {
+                        if (row.nombre!!.toLowerCase().contains(charSearch.toLowerCase()) ||
+                            row.codigo!!.toLowerCase().contains(charSearch)) {
+                            resultList.add(row)
+                        }
+                    }
+                    itemsList = resultList
+                }
+                val filterResults = FilterResults()
+                filterResults.values = itemsList
+                return filterResults
+            }
+
+            @Suppress("UNCHECKED_CAST")
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                itemsList = results?.values as ArrayList<Carrera>
+                notifyDataSetChanged()
+            }
+
+        }
     }
 }

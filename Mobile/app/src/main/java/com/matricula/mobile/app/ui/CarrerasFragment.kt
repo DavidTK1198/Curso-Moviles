@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.matricula.mobile.R
 import com.matricula.mobile.models.Carrera
@@ -27,30 +28,31 @@ class CarrerasFragment: FragmentUtils() {
         recyclerViewElement.layoutManager = LinearLayoutManager(recyclerViewElement.context)
         recyclerViewElement.setHasFixedSize(true)
 
-//        view.findViewById<SearchView>(R.id.curso_search)
-//            .setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//                override fun onQueryTextSubmit(query: String?): Boolean {
-//                    return false
-//                }
-//
-//                override fun onQueryTextChange(newText: String?): Boolean {
-//                    adaptador.filter.filter(newText)
-//
-//                    return false
-//                }
-//            })
+       view.findViewById<SearchView>(R.id.carrera_search)
+          .setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+               override fun onQueryTextSubmit(query: String?): Boolean {
+                   return false
+               }
+
+              override fun onQueryTextChange(newText: String?): Boolean {
+                 adaptador.filter.filter(newText)
+
+                   return false
+              }
+           })
 
         getListOfCarreras()
 
         return view;
     }
     private fun  getListOfCarreras() {
-        val Ncursos = ArrayList<Carrera>()
-        Ncursos.add(Carrera("EIF","Sistemas","Bachillerato"))
+        val NCarreras = ArrayList<Carrera>()
+        NCarreras.add(Carrera("EIF","Sistemas","Bachillerato"))
+        NCarreras.add(Carrera("MAT","Matematica","Bachillerato"))
 //        for (p in model.getAllCursos()!!) {
 //            Ncursos.add(p)
 //        }
-        adaptador = CarreraAdapter(this.activity!!,Ncursos)
+        adaptador = CarreraAdapter(this.activity!!,NCarreras)
         recyclerViewElement.adapter = adaptador
     }
 
