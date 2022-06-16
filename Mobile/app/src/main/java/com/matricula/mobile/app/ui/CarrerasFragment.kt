@@ -1,27 +1,33 @@
 package com.matricula.mobile.app.ui
-
-import androidx.recyclerview.widget.RecyclerView
-import com.matricula.mobile.utils.CarreraAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.matricula.mobile.R
+import com.matricula.mobile.adapter.CarreraAdapter
+import com.matricula.mobile.apiService.CarreraService
 import com.matricula.mobile.models.Carrera
-import kotlin.collections.ArrayList
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
+
 class CarrerasFragment: FragmentUtils() {
 
     lateinit var recyclerViewElement: RecyclerView
     lateinit var adaptador: CarreraAdapter
-
+    private lateinit var addsBtn: FloatingActionButton
+    private lateinit var  listaCarrera:ArrayList<Carrera>
     var position: Int = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_carreras, container, false)
 
         recyclerViewElement = view.findViewById(R.id.mRecycler)
@@ -40,19 +46,30 @@ class CarrerasFragment: FragmentUtils() {
                    return false
               }
            })
-
-        getListOfCarreras()
-
+            addsBtn= view.findViewById(R.id.addingBtn)
+        addsBtn.setOnClickListener { view ->
+            setToolbarTitle("Crear Carrera")
+            changeFragment(CrearCarreraFragment())
+        }
+            getListOfCarreras()
         return view;
     }
     private fun  getListOfCarreras() {
-        val NCarreras = ArrayList<Carrera>()
-        NCarreras.add(Carrera("EIF","Sistemas","Bachillerato"))
-        NCarreras.add(Carrera("MAT","Matematica","Bachillerato"))
-//        for (p in model.getAllCursos()!!) {
-//            Ncursos.add(p)
-//        }
-        adaptador = CarreraAdapter(this.activity!!,NCarreras)
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = CarreraService.getInstance().obtenerCarreras()
+            val nCarreras = call.body()
+            if (call.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    listaCarrera = (nCarreras as ArrayList<Carrera>?)!!
+                    refresh()
+                }
+            } else {
+
+            }
+        }
+    }
+    private  fun refresh(){
+        adaptador = CarreraAdapter(this.activity!!, listaCarrera)
         recyclerViewElement.adapter = adaptador
     }
 

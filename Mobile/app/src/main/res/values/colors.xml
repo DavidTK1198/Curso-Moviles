@@ -16,5 +16,9 @@
     <color name="secondaryLightColor">#FF2C2C</color>
     <color name="secondaryDarkColor">#002984</color>
     <color name="secondaryTextColor">#ffffff</color>
+    <color name="colorBlack">#000</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGreen">#4BB543</color>
+
 
 </resources>

@@ -59,4 +59,8 @@ public class CarreraModel {
     public void buscarporNombre() throws GlobalException, NoDataException {
         current = carrera_DBA.buscarCarrera(current.getNombre(), "nombre");
     }
+
+    public void insertarCarrera(Carrera p) throws GlobalException, NoDataException {
+       carrera_DBA.insertarCarrera(current);
+    }
 }

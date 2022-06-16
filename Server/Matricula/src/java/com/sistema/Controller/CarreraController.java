@@ -42,4 +42,9 @@ public class CarreraController {
         model.buscarporNombre();
         return model.getCurrent();
     }
+
+    public void agregarCarrera(Carrera p) throws GlobalException, NoDataException {
+        model.setCurrent(p);
+        model.insertarCarrera(p);
+    }
 }

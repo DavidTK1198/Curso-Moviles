@@ -1,4 +1,4 @@
-package com.matricula.mobile.utils
+package com.matricula.mobile.adapter
 import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
