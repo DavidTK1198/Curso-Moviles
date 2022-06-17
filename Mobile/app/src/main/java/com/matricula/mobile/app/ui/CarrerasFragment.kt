@@ -1,12 +1,17 @@
 package com.matricula.mobile.app.ui
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.Nullable
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.matricula.mobile.CarreraViewModel
 import com.matricula.mobile.R
 import com.matricula.mobile.adapter.CarreraAdapter
 import com.matricula.mobile.apiService.CarreraService
@@ -23,7 +28,7 @@ class CarrerasFragment: FragmentUtils() {
     lateinit var adaptador: CarreraAdapter
     private lateinit var addsBtn: FloatingActionButton
     private lateinit var  listaCarrera:ArrayList<Carrera>
-    var position: Int = 0
+    private val carreraViewModel: CarreraViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,7 +38,6 @@ class CarrerasFragment: FragmentUtils() {
         recyclerViewElement = view.findViewById(R.id.mRecycler)
         recyclerViewElement.layoutManager = LinearLayoutManager(recyclerViewElement.context)
         recyclerViewElement.setHasFixedSize(true)
-
        view.findViewById<SearchView>(R.id.carrera_search)
           .setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                override fun onQueryTextSubmit(query: String?): Boolean {
@@ -51,26 +55,20 @@ class CarrerasFragment: FragmentUtils() {
             setToolbarTitle("Crear Carrera")
             changeFragment(CrearCarreraFragment())
         }
-            getListOfCarreras()
+        carreraViewModel.getCarrerasList()!!.observe(viewLifecycleOwner){carreras->
+            listaCarrera= carreras as ArrayList<Carrera>
+            refresh()
+        }
+        carreraViewModel.getListOfCarreras()
         return view;
     }
-    private fun  getListOfCarreras() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val call = CarreraService.getInstance().obtenerCarreras()
-            val nCarreras = call.body()
-            if (call.isSuccessful) {
-                withContext(Dispatchers.Main) {
-                    listaCarrera = (nCarreras as ArrayList<Carrera>?)!!
-                    refresh()
-                }
-            } else {
-
-            }
-        }
-    }
     private  fun refresh(){
-        adaptador = CarreraAdapter(this.activity!!, listaCarrera)
-        recyclerViewElement.adapter = adaptador
+        if(carreraViewModel.check_state()==true){
+            adaptador = CarreraAdapter(this.activity!!, listaCarrera)
+            recyclerViewElement.adapter = adaptador
+        }else{
+            //hacer mensaje de error
+        }
     }
 
 }
