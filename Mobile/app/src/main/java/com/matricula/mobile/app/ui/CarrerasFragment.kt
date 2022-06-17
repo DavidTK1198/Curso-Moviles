@@ -11,15 +11,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.matricula.mobile.CarreraViewModel
 import com.matricula.mobile.R
 import com.matricula.mobile.adapter.CarreraAdapter
-import com.matricula.mobile.apiService.CarreraService
 import com.matricula.mobile.models.Carrera
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlin.math.log
 
 
 class CarrerasFragment: FragmentUtils() {
@@ -34,7 +31,7 @@ class CarrerasFragment: FragmentUtils() {
         savedInstanceState: Bundle?
     ): View? {
         var view = inflater.inflate(R.layout.fragment_carreras, container, false)
-
+        listaCarrera= ArrayList()
         recyclerViewElement = view.findViewById(R.id.mRecycler)
         recyclerViewElement.layoutManager = LinearLayoutManager(recyclerViewElement.context)
         recyclerViewElement.setHasFixedSize(true)
@@ -60,15 +57,45 @@ class CarrerasFragment: FragmentUtils() {
             refresh()
         }
         carreraViewModel.getListOfCarreras()
+        adaptador = CarreraAdapter(this.activity!!, listaCarrera)
+        recyclerViewElement.adapter = adaptador
         return view;
     }
     private  fun refresh(){
         if(carreraViewModel.check_state()==true){
             adaptador = CarreraAdapter(this.activity!!, listaCarrera)
             recyclerViewElement.adapter = adaptador
+            contractEdit()
+            contractDelete()
         }else{
             //hacer mensaje de error
         }
     }
+
+    private fun contractEdit(){
+        val  carrera:Observer<Carrera> = object : Observer<Carrera> {
+            @Override
+            override fun onChanged(@Nullable carreras:Carrera?) {
+            if (adaptador.isEdit()==true){
+                carreraViewModel.getListOfCarreras()
+                }
+            }
+        }
+        adaptador.getCarreraActual()!!.observe(this,carrera)
+    }
+
+    private fun contractDelete(){
+        val  carrera:Observer<Carrera> = object : Observer<Carrera> {
+            @Override
+            override fun onChanged(@Nullable carreras:Carrera?) {
+                if (adaptador.isDelete()==true){
+                    carreraViewModel.getListOfCarreras()
+                }
+            }
+        }
+        adaptador.getCarreraActual()!!.observe(this,carrera)
+    }
+
+
 
 }

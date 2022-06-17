@@ -47,4 +47,9 @@ public class CarreraController {
         model.setCurrent(p);
         model.insertarCarrera(p);
     }
+
+    public void modificarCarrera(Carrera p)  throws GlobalException, NoDataException{
+         model.setCurrent(p);
+        model.modificarCarrera(p);
+    }
 }

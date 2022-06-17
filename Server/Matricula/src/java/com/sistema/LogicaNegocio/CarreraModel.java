@@ -63,4 +63,12 @@ public class CarreraModel {
     public void insertarCarrera(Carrera p) throws GlobalException, NoDataException {
        carrera_DBA.insertarCarrera(current);
     }
+
+    public void modificarCarrera(Carrera p) throws GlobalException, NoDataException {
+       carrera_DBA.modificarCarrera(current);
+    }
+    
+    public void eliminarCarrera() throws GlobalException, NoDataException{
+        carrera_DBA.eliminarCarreras(current.getCodigo());
+    }
 }

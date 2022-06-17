@@ -37,7 +37,7 @@ public class Carreras {
         try {
             return control.todasLasCarreras();
         } catch (Exception ex) {
-            throw new NotFoundException();
+            throw new NotFoundException(ex.getMessage());
         }
     }
 
@@ -48,7 +48,7 @@ public class Carreras {
         try {
             return control.carreraPorNombre(nombre);
         } catch (Exception ex) {
-            throw new NotFoundException();
+            throw new NotFoundException(ex.getMessage());
         }
 
     }
@@ -70,9 +70,9 @@ public class Carreras {
     @Consumes(MediaType.APPLICATION_JSON)
     public void modificarCarrera(Carrera p) {
         try {
-            //control.agregarCarrera(p);//crear metodo en capas(solo está creado en el servicio con el backend)
+            control.modificarCarrera(p);//crear metodo en capas(solo está creado en el servicio con el backend)
         } catch (Exception ex) {
-            throw new NotAcceptableException();
+            throw new NotAcceptableException(ex.getMessage());
         }
     }
 
@@ -83,7 +83,7 @@ public class Carreras {
         try {
             return control.carreraPorCodigo(codigo);
         } catch (Exception e) {
-            throw new NotFoundException();
+            throw new NotFoundException(ex.getMessage());
         }
     }
 }

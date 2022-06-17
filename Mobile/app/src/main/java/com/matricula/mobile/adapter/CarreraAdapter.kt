@@ -9,12 +9,23 @@ import com.matricula.mobile.R
 import com.matricula.mobile.models.Carrera
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.matricula.mobile.app.MainActivity
+import com.matricula.mobile.app.ui.CarrerasFragment
+import com.matricula.mobile.app.ui.EditarCarreraFragment
 
 class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): RecyclerView.Adapter<CarreraAdapter.CarreraViewHolder>(), Filterable
 {
-    var itemsList: ArrayList<Carrera>? = null
+    private var itemsList: ArrayList<Carrera>? = null
+     var carreraLiveData:MutableLiveData<Carrera>? = null
+    private var delete_state:MutableLiveData<Boolean>?=null
+    private var edit_state:MutableLiveData<Boolean>?=null
+
+
     init {
         this.itemsList=CarreraList
+        carreraLiveData = MutableLiveData<Carrera>()
     }
     inner class CarreraViewHolder(val v:View):RecyclerView.ViewHolder(v){
         var name:TextView
@@ -25,6 +36,8 @@ class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): Recycl
             name = v.findViewById(R.id.mTitle)
             mbNum = v.findViewById(R.id.mSubTitle)
             mMenus = v.findViewById(R.id.mMenus)
+            delete_state=MutableLiveData<Boolean>()
+            edit_state=MutableLiveData<Boolean>()
             mMenus.setOnClickListener { popupMenus(it) }
         }
 
@@ -35,20 +48,18 @@ class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): Recycl
             popupMenus.setOnMenuItemClickListener {
                 when(it.itemId){
                     R.id.editText->{
-
                         AlertDialog.Builder(c)
                             .setView(v)
                             .setPositiveButton("Ok"){
                                     dialog,_->
                                 notifyDataSetChanged()
-                                Toast.makeText(c,"User Information is Edited",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(c,"",Toast.LENGTH_SHORT).show()
                                 dialog.dismiss()
 
                             }
-                            .setNegativeButton("Cancel"){
+                            .setNegativeButton("Cancelar"){
                                     dialog,_->
                                 dialog.dismiss()
-
                             }
                             .create()
                             .show()
@@ -57,14 +68,14 @@ class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): Recycl
                     }
                     R.id.delete->{
                         AlertDialog.Builder(c)
-                            .setTitle("Delete")
+                            .setTitle("Eliminar")
                             .setIcon(R.drawable.ic_warning)
-                            .setMessage("Are you sure delete this Information")
-                            .setPositiveButton("Yes"){
+                            .setMessage("¿Está seguro que desea Eliminarlo?")
+                            .setPositiveButton("Sí"){
                                     dialog,_->
-                                //userList.removeAt(adapterPosition)
-                                notifyDataSetChanged()
-                                Toast.makeText(c,"Deleted this Information",Toast.LENGTH_SHORT).show()
+                                delete_state!!.value=true
+                                carreraLiveData!!.value = itemsList!!.get(adapterPosition)
+                                delete_state!!.value=false
                                 dialog.dismiss()
                             }
                             .setNegativeButton("No"){
@@ -134,4 +145,19 @@ class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): Recycl
 
         }
     }
+
+    fun getCarreraActual(): LiveData<Carrera>?{
+            if (carreraLiveData== null) {
+                carreraLiveData = MutableLiveData<Carrera>()
+            }
+            return carreraLiveData
+        }
+    fun isEdit(): Boolean? {
+        return edit_state!!.value
+    }
+
+    fun isDelete(): Boolean? {
+        return delete_state!!.value
+    }
+
 }
