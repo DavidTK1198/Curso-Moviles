@@ -52,4 +52,9 @@ public class CarreraController {
          model.setCurrent(p);
         model.modificarCarrera(p);
     }
+
+    public void eliminarCarrera(String p) throws GlobalException, NoDataException {
+       model.setCurrent(new Carrera(p,"",""));
+       model.eliminarCarrera();
+    }
 }

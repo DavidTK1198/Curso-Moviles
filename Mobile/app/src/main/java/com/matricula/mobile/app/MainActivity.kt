@@ -1,6 +1,7 @@
 package com.matricula.mobile.app
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.Nullable
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -26,10 +27,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.isDrawerIndicatorEnabled = true
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
         nav_menu.setNavigationItemSelectedListener(this)
         //changeFragment(HomeFragment())
-
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -55,13 +54,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
      fun setToolbarTitle(title: String) {
         supportActionBar?.title = title
-
-
     }
 
      fun changeFragment(fragment: Fragment) {
 
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        return true
     }
 
 

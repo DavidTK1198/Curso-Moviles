@@ -19,8 +19,8 @@ class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): Recycl
 {
     private var itemsList: ArrayList<Carrera>? = null
      var carreraLiveData:MutableLiveData<Carrera>? = null
-    private var delete_state:MutableLiveData<Boolean>?=null
-    private var edit_state:MutableLiveData<Boolean>?=null
+    private var state:MutableLiveData<Boolean>?=null
+
 
 
     init {
@@ -36,25 +36,26 @@ class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): Recycl
             name = v.findViewById(R.id.mTitle)
             mbNum = v.findViewById(R.id.mSubTitle)
             mMenus = v.findViewById(R.id.mMenus)
-            delete_state=MutableLiveData<Boolean>()
-            edit_state=MutableLiveData<Boolean>()
+            state=MutableLiveData<Boolean>()
             mMenus.setOnClickListener { popupMenus(it) }
         }
 
         private fun popupMenus(v:View) {
-            val position = itemsList!![adapterPosition]
             val popupMenus = PopupMenu(c,v)
             popupMenus.inflate(R.menu.show_menu)
             popupMenus.setOnMenuItemClickListener {
                 when(it.itemId){
                     R.id.editText->{
                         AlertDialog.Builder(c)
-                            .setView(v)
-                            .setPositiveButton("Ok"){
+                            .setTitle("Editar")
+                            .setIcon(R.drawable.ic_warning)
+                            .setMessage("¿Está seguro que desea Editar?")
+                            .setPositiveButton("Sí"){
                                     dialog,_->
-                                notifyDataSetChanged()
-                                Toast.makeText(c,"",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(c,"Se editara la carrera",Toast.LENGTH_SHORT).show()
                                 dialog.dismiss()
+                                state!!.value=false
+                                carreraLiveData!!.value = itemsList!!.get(adapterPosition)
 
                             }
                             .setNegativeButton("Cancelar"){
@@ -69,14 +70,14 @@ class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): Recycl
                     R.id.delete->{
                         AlertDialog.Builder(c)
                             .setTitle("Eliminar")
-                            .setIcon(R.drawable.ic_warning)
-                            .setMessage("¿Está seguro que desea Eliminarlo?")
+                                .setIcon(R.drawable.ic_warning)
+                                .setMessage("¿Está seguro que desea Eliminarla?")
                             .setPositiveButton("Sí"){
                                     dialog,_->
-                                delete_state!!.value=true
-                                carreraLiveData!!.value = itemsList!!.get(adapterPosition)
-                                delete_state!!.value=false
                                 dialog.dismiss()
+                                state!!.value=true
+                                carreraLiveData!!.value = itemsList!!.get(adapterPosition)
+                                state!!.value=false
                             }
                             .setNegativeButton("No"){
                                     dialog,_->
@@ -152,12 +153,9 @@ class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): Recycl
             }
             return carreraLiveData
         }
-    fun isEdit(): Boolean? {
-        return edit_state!!.value
+    fun check_state(): Boolean? {
+        return state!!.value
     }
 
-    fun isDelete(): Boolean? {
-        return delete_state!!.value
-    }
 
 }

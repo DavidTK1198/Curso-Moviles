@@ -21,31 +21,22 @@ class CarreraViewModel: ViewModel() {
         if (carreraListLiveData == null) {
             carreraListLiveData = MutableLiveData<List<Carrera>>()
             state=MutableLiveData<Boolean>()
+            message=MutableLiveData<String>()
         }
         return carreraListLiveData
-    }
-
-     fun  getListOfCarreras() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val call = CarreraService.getInstance().obtenerCarreras()
-            val nCarreras = call.body()
-            if (call.isSuccessful) {
-                withContext(Dispatchers.Main) {
-                    state!!.value=true
-                    updateModel(nCarreras!!)
-                }
-            } else {
-                state!!.value=false
-                message!!.value=call.message()//mensaje de error del servidor...
-            }
-        }
     }
 
     fun check_state(): Boolean? {
         return state!!.value
     }
-
-   private fun updateModel(NCarreras:List<Carrera>) {
+    fun setState(estado:Boolean){
+        state!!.value=estado
+    }
+  fun updateModel(NCarreras:List<Carrera>) {
         carreraListLiveData!!.value = NCarreras
+    }
+
+    fun setMensaje(mensaje:String){
+        message!!.value=mensaje
     }
 }

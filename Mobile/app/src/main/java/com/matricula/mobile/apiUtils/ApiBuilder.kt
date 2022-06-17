@@ -9,7 +9,7 @@ object  ApiBuilder {
 
     private val client =
         OkHttpClient.Builder()
-            .addInterceptor(HeaderInterceptor())
+            .addInterceptor(CustomInterceptor())
             .build()
     private val retrofit = Retrofit.Builder()
         .baseUrl("http://$WEB_URL:$WEB_PORT/$WEB_PATH/")

@@ -9,6 +9,7 @@
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_add.xml" value="0.1" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_check.xml" value="0.1" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_delete.xml" value="0.1" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_more.xml" value="0.1" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/nav_item_background.xml" value="0.1" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/nav_item_text.xml" value="0.1" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/shape_background.xml" value="0.1" />
@@ -18,9 +19,10 @@
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/content_main.xml" value="0.125" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/dialog_success.xml" value="0.25" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/dialog_view.xml" value="0.25" />
-        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_carreras.xml" value="0.15989583333333332" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_carreras.xml" value="0.25" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_crear_carrera.xml" value="0.1897644927536232" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_create_courses.xml" value="0.1956521739130435" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_editar_carreras.xml" value="0.19746376811594202" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/item_carrera.xml" value="0.1956521739130435" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/list_item.xml" value="0.2" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/navigation_header.xml" value="0.25" />

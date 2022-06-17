@@ -8,6 +8,7 @@ import com.sistema.LogicaNegocio.Grupo;
 import java.util.List;
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotAcceptableException;
@@ -61,7 +62,18 @@ public class Carreras {
         try {
             control.agregarCarrera(p);
         } catch (Exception ex) {
-            throw new NotAcceptableException();
+            throw new NotAcceptableException(ex.getMessage());
+        }
+    }
+    
+     @PermitAll
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void eliminarCarrera(@DefaultValue("") @QueryParam("cod") String p) {
+        try {
+            control.eliminarCarrera(p);
+        } catch (Exception ex) {
+            throw new NotAcceptableException(ex.getMessage());
         }
     }
     
@@ -83,7 +95,7 @@ public class Carreras {
         try {
             return control.carreraPorCodigo(codigo);
         } catch (Exception e) {
-            throw new NotFoundException(ex.getMessage());
+            throw new NotFoundException(e.getMessage());
         }
     }
 }

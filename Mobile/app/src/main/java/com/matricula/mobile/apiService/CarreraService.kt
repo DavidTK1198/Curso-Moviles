@@ -3,10 +3,7 @@ import com.matricula.mobile.apiUtils.ApiBuilder
 import com.matricula.mobile.models.Carrera
 import com.matricula.mobile.models.Usuario
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
+import retrofit2.http.*
 
 interface CarreraService {
     @GET("carreras/listar")
@@ -15,8 +12,11 @@ interface CarreraService {
     suspend  fun obtenerCarreraPorCodigo(): Response<Carrera>
     @POST("carreras")
     suspend fun ingresarCarrera(@Body carrera: Carrera): Response<Void>
-    @PUT
-    suspend fun modificarCarrera(carrera: Carrera): Response<Void>
+    @PUT("carreras")
+    suspend fun modificarCarrera(@Body carrera: Carrera): Response<Void>
+
+    @DELETE("carreras")
+    suspend fun eliminarCarrera(@Query("cod") codigo:String): Response<Void>
 
     companion object {
         private var carreraService : CarreraService? = null

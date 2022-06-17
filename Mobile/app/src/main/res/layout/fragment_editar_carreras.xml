@@ -27,7 +27,7 @@
             android:layout_marginTop="60dp"
             android:text="Nombre"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/editText_Name_Career"
+            app:layout_constraintStart_toStartOf="@+id/edit_Name_Career"
             app:layout_constraintTop_toBottomOf="@+id/textView_accionCareer"/>
 
     <TextView
@@ -37,8 +37,8 @@
             android:layout_marginTop="36dp"
             android:text="Codigo"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/editText_Code_Career"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Name_Career"/>
+            app:layout_constraintStart_toStartOf="@+id/edit_Code_Career"
+            app:layout_constraintTop_toBottomOf="@+id/edit_Name_Career"/>
 
     <TextView
             android:id="@+id/textView7"
@@ -46,11 +46,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:text="Titulo"
-            app:layout_constraintStart_toStartOf="@+id/editText_Title_Career"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Code_Career"/>
+            app:layout_constraintStart_toStartOf="@+id/edit_Title_Career"
+            app:layout_constraintTop_toBottomOf="@+id/edit_Code_Career"/>
 
     <EditText
-            android:id="@+id/editText_Name_Career"
+            android:id="@+id/edit_Name_Career"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -63,7 +63,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <EditText
-            android:id="@+id/editText_Code_Career"
+            android:id="@+id/edit_Code_Career"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -77,34 +77,35 @@
             app:layout_constraintTop_toBottomOf="@+id/textView6"/>
 
     <EditText
-            android:id="@+id/editText_Title_Career"
+            android:id="@+id/edit_Title_Career"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
             android:hint="Titulo"
-            android:inputType="textPassword"
+            android:inputType="textPersonName"
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView7"
+    />
 
     <Button
-            android:id="@+id/btn_guardarCareer"
+            android:id="@+id/editar_guardarCareer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"
             android:text="Guardar Carrera"
-            app:layout_constraintEnd_toEndOf="@+id/editText_Title_Career"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Title_Career"/>
+            app:layout_constraintEnd_toEndOf="@+id/edit_Title_Career"
+            app:layout_constraintTop_toBottomOf="@+id/edit_Title_Career"/>
 
     <Button
-            android:id="@+id/btn_volver_career"
+            android:id="@+id/editar_volver_career"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"
             android:text="Volver"
-            app:layout_constraintStart_toStartOf="@+id/editText_Title_Career"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Title_Career" />
+            app:layout_constraintStart_toStartOf="@+id/edit_Title_Career"
+            app:layout_constraintTop_toBottomOf="@+id/edit_Title_Career" />
 </androidx.constraintlayout.widget.ConstraintLayout>

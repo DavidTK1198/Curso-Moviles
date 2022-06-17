@@ -71,8 +71,6 @@ class CrearCarreraFragment: FragmentUtils() {
     private fun stopLoadingError(){
         val loader=view?.findViewById<ProgressBar>(R.id.loading)
         loader?.visibility=View.GONE
-        val dialog=SuccessDiaglogFragment()//uno de estos pero que diga error Dialog con rojo y una X
-        dialog.show(childFragmentManager,"agregar")
     }
 
     private fun stopLoadingSuccess(){
@@ -101,7 +99,9 @@ class CrearCarreraFragment: FragmentUtils() {
                     stopLoadingSuccess()
                 }
             } else {
-            stopLoadingError()
+                withContext(Dispatchers.Main) {
+                    stopLoadingError()
+                }
             }
         }
     }
