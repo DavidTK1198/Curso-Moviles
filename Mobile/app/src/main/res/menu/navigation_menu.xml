@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_item_home"
-        android:title="Inicio"/>
+            android:id="@+id/nav_item_home"
+            android:title="Inicio" android:icon="@drawable/ic_home_svgrepo_com"/>
     <item
             android:id="@+id/nav_item_carreras"
-        android:title="Carreras" />
+            android:title="Carreras" android:icon="@drawable/ic_school_svgrepo_com__1_"/>
     <item
-        android:id="@+id/nav_item_profesores"
-        android:title="Profesores" />
+            android:id="@+id/nav_item_profesores"
+            android:title="Profesores" android:icon="@drawable/ic_teachers_svgrepo_com"/>
     <item
             android:id="@+id/nav_item_alumnos"
-            android:title="Alumnos" />
+            android:title="Alumnos" android:icon="@drawable/ic_student_svgrepo_com"/>
     <item
             android:id="@+id/nav_item_cursos"
-            android:title="Cursos" />
+            android:title="Cursos" android:icon="@drawable/ic_educative_books_svgrepo_com"/>
     <item
             android:id="@+id/nav_item_ciclos"
-            android:title="Ciclos" />
+            android:title="Ciclos" android:icon="@drawable/ic_day_svgrepo_com"/>
     <item
             android:id="@+id/nav_item_oferta"
-            android:title="Oferta Académica" />
+            android:title="Oferta Académica" android:icon="@drawable/ic_square_academic_cap_svgrepo_com"/>
     <item
             android:id="@+id/nav_item_usuarios"
-            android:title="Usuarios" />
+            android:title="Seguridad" android:icon="@drawable/ic_security_svgrepo_com"/>
     <item
-        android:id="@+id/nav_item_logout"
-        android:title="Logout" />
+            android:id="@+id/nav_item_historial"
+            android:title="Consultar Historial" android:icon="@drawable/ic_clinic_history_clipboard_svgrepo_com"/>
+
+    <item
+            android:id="@+id/nav_item_notas"
+            android:title="Registro de Notas" android:icon="@drawable/ic_grades_svgrepo_com"/>
+    <item
+            android:id="@+id/nav_item_logout"
+            android:title="Salir" android:icon="@drawable/ic_logout_svgrepo_com"/>
+
+
 
 </menu>

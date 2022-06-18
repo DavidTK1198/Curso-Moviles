@@ -19,6 +19,7 @@
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/content_main.xml" value="0.125" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/dialog_success.xml" value="0.25" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/dialog_view.xml" value="0.25" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_alumnos.xml" value="0.19746376811594202" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_carreras.xml" value="0.25" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_crear_carrera.xml" value="0.1897644927536232" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_create_courses.xml" value="0.1956521739130435" />
@@ -26,8 +27,9 @@
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/item_carrera.xml" value="0.1956521739130435" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/list_item.xml" value="0.2" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/navigation_header.xml" value="0.25" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/menu/alumno_menu.xml" value="0.134375" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/menu/navigation_menu.xml" value="0.25" />
-        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/menu/show_menu.xml" value="0.13958333333333334" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/menu/show_menu.xml" value="0.21" />
         <entry key="..\:/Users/USER/Desktop/Curso-Moviles/Mobile/app/src/main/res/drawable/backes.xml" value="0.2520833333333333" />
         <entry key="..\:/Users/USER/Desktop/Curso-Moviles/Mobile/app/src/main/res/layout/fragment_careers.xml" value="0.6056149732620321" />
         <entry key="..\:/Users/USER/Desktop/Curso-Moviles/Mobile/app/src/main/res/layout/fragment_courses.xml" value="0.22826086956521738" />

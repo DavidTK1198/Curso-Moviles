@@ -1,5 +1,7 @@
 package com.sistema.logicaDeNegocio
 
+import com.matricula.mobile.models.Alumno
+
 class Inscripcion {
     var estudiante: Alumno
     var nota: Int

@@ -6,25 +6,23 @@ import android.widget.Toast
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.matricula.mobile.R
-import com.matricula.mobile.models.Carrera
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.matricula.mobile.models.Alumno
 
-class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): RecyclerView.Adapter<CarreraAdapter.CarreraViewHolder>(), Filterable
+class AlumnoAdapter(val c: Context, val AlumnoList:ArrayList<Alumno>): RecyclerView.Adapter<AlumnoAdapter.AlumnoViewHolder>(), Filterable
 {
-    private var itemsList: ArrayList<Carrera>? = null
-     var carreraLiveData:MutableLiveData<Carrera>? = null
+    private var itemsList: ArrayList<Alumno>? = null
+    var AlumnoLiveData:MutableLiveData<Alumno>? = null
     private var state:MutableLiveData<Boolean>?=null
 
-
-
     init {
-        this.itemsList=CarreraList
-        carreraLiveData = MutableLiveData<Carrera>()
+        this.itemsList=AlumnoList
+        AlumnoLiveData = MutableLiveData<Alumno>()
     }
-    inner class CarreraViewHolder(val v:View):RecyclerView.ViewHolder(v){
+    inner class AlumnoViewHolder(val v:View):RecyclerView.ViewHolder(v){
         var name:TextView
         var mbNum:TextView
         var mMenus:ImageView
@@ -39,7 +37,7 @@ class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): Recycl
 
         private fun popupMenus(v:View) {
             val popupMenus = PopupMenu(c,v)
-            popupMenus.inflate(R.menu.show_menu)
+            popupMenus.inflate(R.menu.alumno_menu)
             popupMenus.setOnMenuItemClickListener {
                 when(it.itemId){
                     R.id.editText->{
@@ -49,10 +47,10 @@ class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): Recycl
                             .setMessage("¿Está seguro que desea Editar?")
                             .setPositiveButton("Sí"){
                                     dialog,_->
-                                Toast.makeText(c,"Se editara la carrera",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(c,"Se editara la Alumno",Toast.LENGTH_SHORT).show()
                                 dialog.dismiss()
                                 state!!.value=false
-                                carreraLiveData!!.value = itemsList!!.get(adapterPosition)
+                                AlumnoLiveData!!.value = itemsList!!.get(adapterPosition)
 
                             }
                             .setNegativeButton("Cancelar"){
@@ -67,13 +65,13 @@ class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): Recycl
                     R.id.delete->{
                         AlertDialog.Builder(c)
                             .setTitle("Eliminar")
-                                .setIcon(R.drawable.ic_warning)
-                                .setMessage("¿Está seguro que desea Eliminarla?")
+                            .setIcon(R.drawable.ic_warning)
+                            .setMessage("¿Está seguro que desea Eliminarla?")
                             .setPositiveButton("Sí"){
                                     dialog,_->
                                 dialog.dismiss()
                                 state!!.value=true
-                                carreraLiveData!!.value = itemsList!!.get(adapterPosition)
+                                AlumnoLiveData!!.value = itemsList!!.get(adapterPosition)
                                 state!!.value=false
                             }
                             .setNegativeButton("No"){
@@ -98,15 +96,15 @@ class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): Recycl
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarreraViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlumnoViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val v  = inflater.inflate(R.layout.list_item,parent,false)
-        return CarreraViewHolder(v)
+        return AlumnoViewHolder(v)
     }
 
-    override fun onBindViewHolder(holder: CarreraViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AlumnoViewHolder, position: Int) {
         val newList = itemsList?.get(position)
-        holder.name.text = newList!!.codigo
+        holder.name.text = newList!!.cedula
         holder.mbNum.text = newList!!.nombre
     }
 
@@ -119,12 +117,12 @@ class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): Recycl
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val charSearch = constraint.toString()
                 if (charSearch.isEmpty()) {
-                    itemsList = CarreraList
+                    itemsList = AlumnoList
                 } else {
-                    val resultList = ArrayList<Carrera>()
-                    for (row in CarreraList) {
+                    val resultList = ArrayList<Alumno>()
+                    for (row in AlumnoList) {
                         if (row.nombre!!.toLowerCase().contains(charSearch.toLowerCase()) ||
-                            row.codigo!!.toLowerCase().contains(charSearch)) {
+                            row.cedula!!.toLowerCase().contains(charSearch)) {
                             resultList.add(row)
                         }
                     }
@@ -137,19 +135,19 @@ class CarreraAdapter(val c: Context, val CarreraList:ArrayList<Carrera>): Recycl
 
             @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                itemsList = results?.values as ArrayList<Carrera>
+                itemsList = results?.values as ArrayList<Alumno>
                 notifyDataSetChanged()
             }
 
         }
     }
 
-    fun getCarreraActual(): LiveData<Carrera>?{
-            if (carreraLiveData== null) {
-                carreraLiveData = MutableLiveData<Carrera>()
-            }
-            return carreraLiveData
+    fun getAlumnoActual(): LiveData<Alumno>?{
+        if (AlumnoLiveData== null) {
+            AlumnoLiveData = MutableLiveData<Alumno>()
         }
+        return AlumnoLiveData
+    }
     fun check_state(): Boolean? {
         return state!!.value
     }

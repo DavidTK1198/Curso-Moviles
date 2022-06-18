@@ -1,4 +1,4 @@
-package com.sistema.logicaDeNegocio
+package com.matricula.mobile.models
 
 import com.matricula.mobile.models.Carrera
 

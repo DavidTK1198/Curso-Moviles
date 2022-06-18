@@ -4,11 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/AccesoDatos/ServicioCarrera.java</file>
-            <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/LogicaNegocio/CarreraModel.java</file>
             <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/Endpoint/Inscripciones.java</file>
+            <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/LogicaNegocio/CarreraModel.java</file>
             <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/Endpoint/Carreras.java</file>
             <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/LogicaNegocio/Carrera.java</file>
             <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/Controller/CarreraController.java</file>
+            <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/Endpoint/Alumnos.java</file>
+            <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/Endpoint/Profesores.java</file>
             <file>file:/C:/Users/DavidTK1198/Videos/moviles/Server/Matricula/src/java/com/sistema/Endpoint/Grupos.java</file>
         </group>
     </open-files>

@@ -9,8 +9,8 @@
 
     <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
-            android:layout_width="89dp"
-            android:layout_height="74dp"
+            android:layout_width="98dp"
+            android:layout_height="96dp"
             app:cardCornerRadius="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -21,9 +21,9 @@
 
         <ImageView
                 android:id="@+id/nav_header_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_account"/>
+                android:layout_width="match_parent"
+                android:layout_height="88dp"
+                app:srcCompat="@drawable/ic_profle_svgrepo_com"/>
 
     </androidx.cardview.widget.CardView>
 

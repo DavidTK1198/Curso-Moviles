@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.google.android.material.navigation.NavigationView
 import com.matricula.mobile.*
+import com.matricula.mobile.app.ui.AlumnosFragment
 import com.matricula.mobile.app.ui.CarrerasFragment
+import com.matricula.mobile.models.Alumno
 import com.matricula.mobile.models.Carrera
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -42,6 +44,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 setToolbarTitle("Carreras")
                 changeFragment(CarrerasFragment())
             }
+            R.id.nav_item_alumnos -> {
+                setToolbarTitle("Alumnos")
+                changeFragment(AlumnosFragment())
+            }
 
             R.id.nav_item_logout -> {
                 val intent = Intent(this, Login::class.java)
@@ -52,19 +58,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-     fun setToolbarTitle(title: String) {
+    fun setToolbarTitle(title: String) {
         supportActionBar?.title = title
     }
 
-     fun changeFragment(fragment: Fragment) {
+    fun changeFragment(fragment: Fragment) {
 
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        var navigationView = findViewById<NavigationView>(R.id.nav_menu)
+        var nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.nav_item_carreras).setVisible(false)
         return true
     }
 
+    private fun Administrador(){
+
+    }
+
+    private fun Matriculador(){
+
+    }
+
+    private fun Alumno(){
+
+    }
+    private fun Profesor(){
+
+    }
 
 }
 

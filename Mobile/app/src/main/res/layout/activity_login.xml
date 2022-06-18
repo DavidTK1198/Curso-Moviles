@@ -35,7 +35,8 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView"
             android:textColor="@color/primaryTextColor"
             android:textColorHint="@color/primaryTextColor" android:backgroundTint="@color/primaryTextColor"
-            android:layout_marginBottom="50dp" app:layout_constraintBottom_toTopOf="@+id/et_password"/>
+            android:layout_marginBottom="50dp" app:layout_constraintBottom_toTopOf="@+id/et_password"
+            android:inputType="textPersonName"/>
 
     <EditText
             android:id="@+id/et_password"
@@ -44,7 +45,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:hint="Contraseña"
-            android:inputType="textPassword"
+            android:inputType="textPersonName|textPassword"
             android:minHeight="48dp"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"

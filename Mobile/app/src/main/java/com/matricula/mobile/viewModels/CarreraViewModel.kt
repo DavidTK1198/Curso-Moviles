@@ -1,4 +1,4 @@
-package com.matricula.mobile
+package com.matricula.mobile.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
