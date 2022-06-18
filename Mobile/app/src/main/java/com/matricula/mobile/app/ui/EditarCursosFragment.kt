@@ -8,8 +8,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.matricula.mobile.R
-import com.matricula.mobile.apiService.CarreraService
 import com.matricula.mobile.apiService.CursoService
 import com.matricula.mobile.models.Carrera
 import com.sistema.logicaDeNegocio.Curso
@@ -18,7 +18,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CrearCursoFragment: FragmentUtils() {
+class EditarCursoFragment: FragmentUtils() {
+
     private lateinit  var editTextName: EditText
     private lateinit var editTextCodigo : EditText
     private lateinit var editTextCreditos : EditText
@@ -27,7 +28,7 @@ class CrearCursoFragment: FragmentUtils() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view = inflater.inflate(R.layout.fragment_crear_cursos, container, false)
+        var view = inflater.inflate(R.layout.fragment_editar_cursos, container, false)
 
         view.findViewById<Button>(R.id.btn_guardarCurso).setOnClickListener{
             this.crearCurso()
@@ -40,6 +41,16 @@ class CrearCursoFragment: FragmentUtils() {
         editTextCodigo= view.findViewById(R.id.editText_Codigo)
         editTextCreditos= view.findViewById(R.id.editText_Creditos)
         editTextHorasSemanales= view.findViewById(R.id.editTextTextHorasSemanales)
+        val bundle = this.arguments
+        if (bundle != null) {
+            val json = bundle.get("curso").toString() // Key
+            val gson = Gson()
+            val curso = gson.fromJson(json, Curso::class.java)
+            rellenar(curso)
+        }else{
+            setToolbarTitle("Cursos")
+            changeFragment(CarrerasFragment())
+        }
         return view
     }
     private fun crearCurso() {
@@ -49,7 +60,7 @@ class CrearCursoFragment: FragmentUtils() {
         var hsemanles = editTextHorasSemanales?.text.toString()
         var curso = Curso(codigo, name, creditos.toInt(), hsemanles.toInt(), Carrera())
         if (validarDatos()) {
-            insertarCurso(curso)
+            modificarCurso(curso)
         }else{
             val  message = "Debe Completar todos los datos!!"
             Snackbar
@@ -64,6 +75,13 @@ class CrearCursoFragment: FragmentUtils() {
         editTextCreditos?.setText("")
         editTextHorasSemanales?.setText("")
     }
+
+    private  fun rellenar(curso: Curso){
+        editTextName?.setText(curso.nombre)
+        editTextCodigo?.setText(curso.codigo)
+        editTextCreditos?.setText(curso.creditos)
+        editTextHorasSemanales?.setText(curso.hsemanales)
+    }
     private fun volver(){
         setToolbarTitle("Cursos")
         changeFragment(CursosFragment())
@@ -71,43 +89,32 @@ class CrearCursoFragment: FragmentUtils() {
 
     private fun initLoading(){
         val loader = view?.findViewById<ProgressBar>(R.id.loading)
-        loader?.visibility=View.VISIBLE
+        loader?.visibility= View.VISIBLE
     }
 
-    private fun stopLoadingError(){
+    private fun stopLoading(){
         val loader=view?.findViewById<ProgressBar>(R.id.loading)
-        loader?.visibility=View.GONE
+        loader?.visibility= View.GONE
     }
 
-    private fun stopLoadingSuccess(){
-        val loader=view?.findViewById<ProgressBar>(R.id.loading)
-        loader?.visibility=View.GONE
-        val dialog=SuccessDiaglogFragment()
-        val bundle = Bundle()
-        bundle.putString("La carrera ${editTextName.text.toString()} con el código ${editTextCodigo.text.toString()} fue creada " +
-                "correctamente", "mensaje")
-        dialog.arguments=bundle
-        dialog.show(childFragmentManager,"agregar")
-        limpiar()
-    }
+
 
     private fun validarDatos():Boolean{//Manejo de errores
         return(editTextName?.text.toString()!="" &&
                 editTextCodigo?.text.toString()!=""&& editTextCodigo?.text.toString()!="")
     }
 
-    private fun insertarCurso(curso: Curso){
+    private fun modificarCurso(curso: Curso){
         initLoading()
         CoroutineScope(Dispatchers.IO).launch {
-            val call = CursoService.getInstance().ingresarCurso(curso)
+            val call = CursoService.getInstance().modificarCurso(curso)
             if (call.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    stopLoadingSuccess()
+                    stopLoading()
+                    limpiar()
                 }
             } else {
-                withContext(Dispatchers.Main) {
-                    stopLoadingError()
-                }
+                stopLoading()
             }
         }
     }

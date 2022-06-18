@@ -109,7 +109,8 @@ public class Cursos {
         }
     }*/
 
-    @PUT
+    @PermitAll
+    @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     public void EliminarCurso(@DefaultValue("") @QueryParam("id") String id ) {
         try {
