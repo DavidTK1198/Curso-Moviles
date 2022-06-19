@@ -11,23 +11,24 @@
             style="@style/Widget.AppCompat.TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="72dp"
-            android:text="Agregar Profesor"
+            android:layout_marginTop="32dp"
+            android:text="Editar Profesor"
             android:textSize="34sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView5"/>
 
     <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="24dp"
             android:text="Nombre"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/editText_Name_Professor"
+            app:layout_constraintStart_toStartOf="@+id/editText_Name_Professor_edit"
             app:layout_constraintTop_toBottomOf="@+id/textView_accionProfessor"/>
 
     <TextView
@@ -37,8 +38,8 @@
             android:layout_marginTop="36dp"
             android:text="Cedula"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/editText_Cedula"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Name_Professor"/>
+            app:layout_constraintStart_toStartOf="@+id/editText_Cedula_pE"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Name_Professor_edit"/>
 
     <TextView
             android:id="@+id/textView7"
@@ -46,11 +47,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:text="Telefono"
-            app:layout_constraintStart_toStartOf="@+id/editText_Tel"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Cedula"/>
+            app:layout_constraintStart_toStartOf="@+id/editText_Tel_pe"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Cedula_pE"/>
 
     <EditText
-            android:id="@+id/editText_Name_Professor"
+            android:id="@+id/editText_Name_Professor_edit"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -63,7 +64,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <EditText
-            android:id="@+id/editText_Cedula"
+            android:id="@+id/editText_Cedula_pE"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -77,13 +78,13 @@
             app:layout_constraintTop_toBottomOf="@+id/textView6"/>
 
     <EditText
-            android:id="@+id/editText_Tel"
+            android:id="@+id/editText_Tel_pe"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
             android:hint="Telofono"
-            android:inputType="textPassword"
+            android:inputType="textPersonName"
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
@@ -91,27 +92,28 @@
             app:layout_constraintTop_toBottomOf="@+id/textView7"/>
 
     <Button
-            android:id="@+id/btn_guardarCurso"
+            android:id="@+id/btn_guardarPE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="144dp"
-            android:text="Guardar Curso"
-            app:layout_constraintEnd_toEndOf="@+id/editText_Tel"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Tel" android:layout_marginEnd="16dp"/>
+            android:text="Guardar Profesor"
+            app:layout_constraintEnd_toEndOf="@+id/editText_Tel_pe"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Tel_pe" android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toEndOf="@+id/btn_volver_pe" android:layout_marginStart="32dp"/>
     <Button
-            android:id="@+id/btn_volver_curso"
+            android:id="@+id/btn_volver_pe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="144dp"
             android:text="Volver"
-            app:layout_constraintStart_toStartOf="@+id/editText_Tel"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Tel" android:layout_marginStart="8dp"/>
+            app:layout_constraintStart_toStartOf="@+id/editText_Tel_pe"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Tel_pe" android:layout_marginStart="8dp"/>
     <TextView
             android:text="Email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/textView9"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Tel"
-            app:layout_constraintBottom_toTopOf="@+id/editTextRol" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Tel_pe"
+            app:layout_constraintBottom_toTopOf="@+id/editText_telP" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.148"
             app:layout_constraintVertical_bias="0.6"/>
     <EditText
@@ -119,9 +121,9 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editTextRol"
+            android:id="@+id/editText_telP"
             android:hint="Email" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.273"
-            app:layout_constraintBottom_toTopOf="@+id/btn_volver_curso"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Tel"/>
+            app:layout_constraintBottom_toTopOf="@+id/btn_volver_pe"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Tel_pe"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

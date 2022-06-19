@@ -81,24 +81,40 @@ class CarrerasFragment : FragmentUtils() {
         val carrera: Observer<Carrera> = object : Observer<Carrera> {
             @Override
             override fun onChanged(@Nullable carreras: Carrera?) {
-                if (adaptador.check_state() == true) {
-                    eliminarCarrera()
-                } else {
-                    val editar = EditarCarreraFragment()
-                    setToolbarTitle("Editar Carrera")
-                    var bundle =  Bundle();
-                    var carrera=adaptador.getCarreraActual()!!.value
-                    val gson = Gson()
-                    var json=gson.toJson(carrera)
-                    bundle.putString("carrera", json)
-                    editar.arguments=bundle
-                    changeFragment(editar)
+                when(adaptador.check_state()){
+                    0->{editar()}
+                    1->{eliminarCarrera()}
+                    2->{cursos()}
                 }
             }
         }
         adaptador.getCarreraActual()!!.observe(this, carrera)
     }
 
+
+    private fun editar(){
+        val editar = EditarCarreraFragment()
+        setToolbarTitle("Editar Carrera")
+        var bundle =  Bundle();
+        var carrera=adaptador.getCarreraActual()!!.value
+        val gson = Gson()
+        var json=gson.toJson(carrera)
+        bundle.putString("carrera", json)
+        editar.arguments=bundle
+        changeFragment(editar)
+    }
+
+    private fun cursos(){
+        val cursos = CursosFragment()
+        setToolbarTitle("Cursos")
+        var bundle =  Bundle();
+        var carrera=adaptador.getCarreraActual()!!.value
+        val gson = Gson()
+        var json=gson.toJson(carrera)
+        bundle.putString("carrera", json)
+        cursos.arguments=bundle
+        changeFragment(cursos)
+    }
    private fun  getListOfCarreras() {
         initLoading()
         CoroutineScope(Dispatchers.IO).launch {

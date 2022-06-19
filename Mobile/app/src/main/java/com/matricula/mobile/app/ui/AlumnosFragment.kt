@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
-import com.matricula.mobile.AlumnoViewModel
+import com.matricula.mobile.viewModels.AlumnoViewModel
 import com.matricula.mobile.R
 import com.matricula.mobile.adapter.AlumnoAdapter
 import com.matricula.mobile.apiService.AlumnoService

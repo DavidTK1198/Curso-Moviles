@@ -13,9 +13,6 @@
             android:id="@+id/nav_item_alumnos"
             android:title="Alumnos" android:icon="@drawable/ic_student_svgrepo_com"/>
     <item
-            android:id="@+id/nav_item_cursos"
-            android:title="Cursos" android:icon="@drawable/ic_educative_books_svgrepo_com"/>
-    <item
             android:id="@+id/nav_item_ciclos"
             android:title="Ciclos" android:icon="@drawable/ic_day_svgrepo_com"/>
     <item

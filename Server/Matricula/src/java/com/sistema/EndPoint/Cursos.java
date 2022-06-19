@@ -5,11 +5,8 @@
  */
 package com.sistema.Endpoint;
 
-import com.sistema.AccesoDatos.ServicioCarrera;
 import com.sistema.Controller.CursoController;
-import com.sistema.LogicaNegocio.Carrera;
 import com.sistema.LogicaNegocio.Curso;
-import com.sistema.LogicaNegocio.Inscripcion;
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
@@ -22,7 +19,6 @@ import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotAcceptableException;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
 
 @Path("/cursos")

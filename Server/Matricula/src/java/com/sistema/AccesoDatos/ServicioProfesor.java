@@ -143,7 +143,7 @@ public class ServicioProfesor extends Servicio {
             int resultado = pstmt.executeUpdate();
 
             //si es diferente de 0 es porq si afecto un registro o mas
-            if (resultado != 0) {
+            if (resultado == 0) {
                 throw new NoDataException("No se realizo la actualización");
             } else {
                 System.out.println("\nModificación Satisfactoria!");
@@ -177,7 +177,7 @@ public class ServicioProfesor extends Servicio {
 
             int resultado = pstmt.executeUpdate();
 
-            if (resultado != 0) {
+            if (resultado == 0) {
                 throw new NoDataException("No se realizo el borrado");
             } else {
                 System.out.println("\nEliminación Satisfactoria!");

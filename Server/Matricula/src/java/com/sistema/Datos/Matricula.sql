@@ -711,7 +711,7 @@ as
 begin 
   open usuario_cursor for 
        select cedula,rol,nombreUsuario,contrasea
-       FROM usuario ;
+       FROM usuario Where rol='ADM' OR rol='MAT';
 return usuario_cursor;
 end;
 /

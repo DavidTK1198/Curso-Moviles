@@ -30,11 +30,18 @@ public class ServicioUsuario extends Servicio{
     private static final String ACTUALIZARUSUARIO ="{call actualizaUsuario(?,?,?,?)}";
     private static final String ELIMINARUSUARIO  = "{call eliminarUsuario(?)}";
     private static final String CONSULTARUSUARIO  = "{?=call consultarUsuario(?)}";
-    
+     private static ServicioUsuario instance = null;
     
     /** Creates a new instance of servicioUsuario */
     public ServicioUsuario() {
         super();
+    }
+    
+     public static ServicioUsuario getInstance() {
+        if (instance == null) {
+            instance = new ServicioUsuario();
+        }
+        return instance;
     }
     public void insertarUsuario(Usuario elUsuario) throws GlobalException, NoDataException  	{
         try {
@@ -94,10 +101,8 @@ public class ServicioUsuario extends Servicio{
             pstmt.execute();
             rs = (ResultSet)pstmt.getObject(1); 
              while (rs.next()) {
-                elUsuario = new Usuario(rs.getString("cedula"),
-                                        rs.getString("rol"),
-                                        rs.getString("nombreUsuario"),
-                                        rs.getString("contrasea"));
+                elUsuario =  new Usuario(rs.getString("cedula"), "", 
+                        rs.getString("nombreUsuario"), rs.getString("rol"));
                 coleccion.add(elUsuario);
             }
         } catch (SQLException e) {

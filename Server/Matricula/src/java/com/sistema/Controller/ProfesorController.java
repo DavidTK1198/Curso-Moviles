@@ -41,4 +41,19 @@ public class ProfesorController {
         model.buscarporNombre();
         return model.getCurrent();
     }
+    
+        public void agregarProfesor(Profesor p) throws GlobalException, NoDataException {
+        model.setCurrent(p);
+        model.insertarProfesor(p);
+    }
+
+    public void modificarProfesor(Profesor p)  throws GlobalException, NoDataException{
+         model.setCurrent(p);
+        model.modificarProfesor(p);
+    }
+
+    public void eliminarProfesor(String p) throws GlobalException, NoDataException {
+       model.setCurrent(new Profesor(p,"","",""));
+       model.eliminarProfesor();
+    }
 }

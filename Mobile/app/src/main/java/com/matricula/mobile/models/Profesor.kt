@@ -1,4 +1,4 @@
-package com.sistema.logicaDeNegocio
+package com.matricula.mobile.models
 
 class Profesor @JvmOverloads constructor(
     var cedula: String = "",

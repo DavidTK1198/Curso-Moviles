@@ -1,10 +1,7 @@
 package com.sistema.Endpoint;
 
 import com.sistema.Controller.CarreraController;
-import com.sistema.Controller.CursoController;
 import com.sistema.LogicaNegocio.Carrera;
-import com.sistema.LogicaNegocio.Carrera;
-import com.sistema.LogicaNegocio.Grupo;
 import java.util.List;
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;

@@ -4,6 +4,7 @@ import com.sistema.AccesoDatos.GlobalException;
 import com.sistema.AccesoDatos.NoDataException;
 import com.sistema.LogicaNegocio.Usuario;
 import com.sistema.LogicaNegocio.UsuarioModel;
+import java.util.List;
 
 /**
  *
@@ -30,5 +31,9 @@ public class UsuarioController {
         model.getUs().setNombre(user);
         model.getAuthorization(model.getUs());
         return model.getUs();
+    }
+
+    public List<Usuario> obtenerUsuarios() throws GlobalException, NoDataException {
+       return model.listarUsuarios();
     }
 }

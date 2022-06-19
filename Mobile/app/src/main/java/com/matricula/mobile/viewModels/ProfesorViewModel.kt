@@ -3,21 +3,23 @@ package com.matricula.mobile.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.matricula.mobile.models.Alumno
+import com.matricula.mobile.models.Profesor
 
-class AlumnoViewModel: ViewModel() {
 
-    private var AlumnoListLiveData: MutableLiveData<List<Alumno>>? = null
+
+class ProfesorViewModel: ViewModel() {
+
+    private var ProfesorListLiveData: MutableLiveData<List<Profesor>>? = null
     private var state:MutableLiveData<Boolean>?=null
     private var message:MutableLiveData<String>?=null
 
-    fun getAlumnosList(): LiveData<List<Alumno>>? {
-        if (AlumnoListLiveData == null) {
-            AlumnoListLiveData = MutableLiveData<List<Alumno>>()
+    fun getProfesorsList(): LiveData<List<Profesor>>? {
+        if (ProfesorListLiveData == null) {
+            ProfesorListLiveData = MutableLiveData<List<Profesor>>()
             state=MutableLiveData<Boolean>()
             message=MutableLiveData<String>()
         }
-        return AlumnoListLiveData
+        return ProfesorListLiveData
     }
 
     fun check_state(): Boolean? {
@@ -26,8 +28,8 @@ class AlumnoViewModel: ViewModel() {
     fun setState(estado:Boolean){
         state!!.value=estado
     }
-    fun updateModel(NAlumnos:List<Alumno>) {
-        AlumnoListLiveData!!.value = NAlumnos
+    fun updateModel(NProfesors:List<Profesor>) {
+        ProfesorListLiveData!!.value = NProfesors
     }
 
     fun setMensaje(mensaje:String){

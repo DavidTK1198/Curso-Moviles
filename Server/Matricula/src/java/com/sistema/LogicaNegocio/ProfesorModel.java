@@ -58,5 +58,15 @@ public class ProfesorModel {
     public void buscarporNombre() throws GlobalException, NoDataException {
         current = profesor_DBA.buscarProfesor(current.getNombre(), "nombre");
     }
+   public void insertarProfesor(Profesor p) throws GlobalException, NoDataException {
+       profesor_DBA.insertarProfesor(current);
+    }
 
+    public void modificarProfesor(Profesor p) throws GlobalException, NoDataException {
+       profesor_DBA.modificarProfesor(current);
+    }
+    
+    public void eliminarProfesor() throws GlobalException, NoDataException{
+        profesor_DBA.eliminarProfesors(current.getCedula());
+    }
 }

@@ -1,6 +1,7 @@
 package com.sistema.logicaDeNegocio
 
 import com.matricula.mobile.models.Alumno
+import com.matricula.mobile.models.Profesor
 
 
 /**
