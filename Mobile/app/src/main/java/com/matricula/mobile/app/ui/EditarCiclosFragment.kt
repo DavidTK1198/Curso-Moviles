@@ -8,8 +8,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.matricula.mobile.R
-import com.matricula.mobile.apiService.CarreraService
 import com.matricula.mobile.apiService.CicloService
 import com.matricula.mobile.apiService.CursoService
 import com.matricula.mobile.models.Carrera
@@ -20,17 +20,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CrearCicloFragment: FragmentUtils() {
-        private lateinit  var editTextNumero: EditText
-        private lateinit var editTextCodigo : EditText
-        private lateinit var editTextAnnio : EditText
-        private lateinit var editTextFechaInicio : EditText
-        private lateinit var editTextFechaFinal : EditText
+class EditarCiclosFragment: FragmentUtils() {
+
+    private lateinit  var editTextNumero: EditText
+    private lateinit var editTextCodigo : EditText
+    private lateinit var editTextAnnio : EditText
+    private lateinit var editTextFechaInicio : EditText
+    private lateinit var editTextFechaFinal : EditText
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view = inflater.inflate(R.layout.fragment_crear_ciclos, container, false)
+        var view = inflater.inflate(R.layout.fragment_editar_cursos, container, false)
 
         view.findViewById<Button>(R.id.btn_guardarCycle).setOnClickListener{
             this.crearCurso()
@@ -44,6 +45,16 @@ class CrearCicloFragment: FragmentUtils() {
         editTextAnnio= view.findViewById(R.id.editText_annio)
         editTextFechaInicio= view.findViewById(R.id.editTextTextFechaInicio)
         editTextFechaFinal= view.findViewById(R.id.editTextTextPersonName2)
+        val bundle = this.arguments
+        if (bundle != null) {
+            val json = bundle.get("ciclo").toString() // Key
+            val gson = Gson()
+            val ciclo = gson.fromJson(json, Ciclo::class.java)
+            rellenar(ciclo)
+        }else{
+            setToolbarTitle("Cursos")
+            changeFragment(CarrerasFragment())
+        }
         return view
     }
     private fun crearCurso() {
@@ -54,7 +65,7 @@ class CrearCicloFragment: FragmentUtils() {
         var fechaFin = editTextFechaFinal?.text.toString()
         var ciclo = Ciclo(num.toInt(), codigo.toInt(), annio.toInt(), 1, fechaIni, fechaFin)
         if (validarDatos()) {
-            insertarCiclo(ciclo)
+            modificarCiclos(ciclo)
         }else{
             val  message = "Debe Completar todos los datos!!"
             Snackbar
@@ -70,50 +81,47 @@ class CrearCicloFragment: FragmentUtils() {
         editTextFechaInicio?.setText("")
         editTextFechaFinal?.setText("")
     }
+
+    private  fun rellenar(ciclo: Ciclo){
+        editTextNumero?.setText(ciclo.numero)
+        editTextCodigo?.setText(ciclo.id)
+        editTextAnnio?.setText(ciclo.annio)
+        editTextFechaInicio?.setText(ciclo.fec_inicio)
+        editTextFechaFinal?.setText(ciclo.fec_final)
+    }
     private fun volver(){
         setToolbarTitle("Ciclos")
-        changeFragment(CursosFragment())
+        changeFragment(CiclosFragment())
     }
 
     private fun initLoading(){
         val loader = view?.findViewById<ProgressBar>(R.id.loading)
-        loader?.visibility=View.VISIBLE
+        loader?.visibility= View.VISIBLE
     }
 
-    private fun stopLoadingError(){
+    private fun stopLoading(){
         val loader=view?.findViewById<ProgressBar>(R.id.loading)
-        loader?.visibility=View.GONE
+        loader?.visibility= View.GONE
     }
 
-    private fun stopLoadingSuccess(){
-        val loader=view?.findViewById<ProgressBar>(R.id.loading)
-        loader?.visibility=View.GONE
-        val dialog=SuccessDiaglogFragment()
-        val bundle = Bundle()
-        bundle.putString("La carrera ${editTextNumero.text.toString()} con el código ${editTextCodigo.text.toString()} fue creada " +
-                "correctamente", "mensaje")
-        dialog.arguments=bundle
-        dialog.show(childFragmentManager,"agregar")
-        limpiar()
-    }
+
 
     private fun validarDatos():Boolean{//Manejo de errores
         return(editTextNumero?.text.toString()!="" &&
                 editTextCodigo?.text.toString()!=""&& editTextCodigo?.text.toString()!="")
     }
 
-    private fun insertarCiclo(ciclo: Ciclo){
+    private fun modificarCiclos(ciclo: Ciclo){
         initLoading()
         CoroutineScope(Dispatchers.IO).launch {
-            val call = CicloService.getInstance().ingresarCiclo(ciclo)
+            val call = CicloService.getInstance().modificarCiclo(ciclo)
             if (call.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    stopLoadingSuccess()
+                    stopLoading()
+                    limpiar()
                 }
             } else {
-                withContext(Dispatchers.Main) {
-                    stopLoadingError()
-                }
+                stopLoading()
             }
         }
     }
