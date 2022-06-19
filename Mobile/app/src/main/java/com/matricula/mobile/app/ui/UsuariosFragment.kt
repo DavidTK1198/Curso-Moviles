@@ -79,7 +79,7 @@ class UsuariosFragment : FragmentUtils() {
                 var Usuario = adaptador.getUsuarioActual()!!.value
                 val gson = Gson()
                 var json = gson.toJson(Usuario)
-                bundle.putString("Usuario", json)
+                bundle.putString("usuario", json)
                 editar.arguments = bundle
                 changeFragment(editar)
             }

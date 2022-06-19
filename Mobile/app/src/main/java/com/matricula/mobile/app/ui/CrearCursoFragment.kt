@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import com.matricula.mobile.R
-import com.matricula.mobile.apiService.CarreraService
 import com.matricula.mobile.apiService.CursoService
-import com.matricula.mobile.models.Carrera
-import com.sistema.logicaDeNegocio.Curso
+import com.matricula.mobile.models.Curso
+import com.matricula.mobile.viewModels.CursoViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +23,7 @@ class CrearCursoFragment: FragmentUtils() {
     private lateinit var editTextCodigo : EditText
     private lateinit var editTextCreditos : EditText
     private lateinit var editTextHorasSemanales : EditText
+    private val cursoViewModel: CursoViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,7 +40,7 @@ class CrearCursoFragment: FragmentUtils() {
         editTextName=view.findViewById(R.id.editText_Name_Curso)
         editTextCodigo= view.findViewById(R.id.editText_Codigo)
         editTextCreditos= view.findViewById(R.id.editText_Creditos)
-        editTextHorasSemanales= view.findViewById(R.id.editTextTextHorasSemanales)
+        editTextHorasSemanales= view.findViewById(R.id.editTextTextHorasSemanales_E)
         return view
     }
     private fun crearCurso() {
@@ -47,7 +48,8 @@ class CrearCursoFragment: FragmentUtils() {
         var codigo = editTextCodigo?.text.toString()
         var creditos = editTextCreditos?.text.toString()
         var hsemanles = editTextHorasSemanales?.text.toString()
-        var curso = Curso(codigo, name, creditos.toInt(), hsemanles.toInt(), Carrera())
+        var carrera=cursoViewModel.getCarrera()
+        var curso = Curso(codigo, name, creditos.toInt(), hsemanles.toInt(), carrera)
         if (validarDatos()) {
             insertarCurso(curso)
         }else{
@@ -66,7 +68,7 @@ class CrearCursoFragment: FragmentUtils() {
     }
     private fun volver(){
         setToolbarTitle("Cursos")
-        changeFragment(CursosFragment())
+        changeFragment(CarrerasFragment())
     }
 
     private fun initLoading(){

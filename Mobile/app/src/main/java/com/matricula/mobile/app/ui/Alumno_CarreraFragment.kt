@@ -14,25 +14,23 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.gson.Gson
-import com.matricula.mobile.viewModels.CarreraViewModel
+import com.matricula.mobile.viewModels.AlumnoViewModel
 import com.matricula.mobile.R
-import com.matricula.mobile.adapter.CarreraAdapter
+import com.matricula.mobile.adapter.Alumno_CarreraAdapter
 import com.matricula.mobile.apiService.CarreraService
 import com.matricula.mobile.models.Carrera
-import com.matricula.mobile.viewModels.CursoViewModel
+import com.matricula.mobile.viewModels.CarreraViewModel
 import kotlinx.coroutines.*
 import java.net.SocketTimeoutException
 
 
-class CarrerasFragment : FragmentUtils() {
-
+class Alumno_CarreraFragment : FragmentUtils() {
     lateinit var recyclerViewElement: RecyclerView
-    lateinit var adaptador: CarreraAdapter
+    lateinit var adaptador: Alumno_CarreraAdapter
     private lateinit var addsBtn: FloatingActionButton
     private lateinit var listaCarrera: ArrayList<Carrera>
     private val carreraViewModel: CarreraViewModel by activityViewModels()
-    private val cursoViewModel: CursoViewModel by activityViewModels()
+    private val alumnoViewModel: AlumnoViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -64,14 +62,14 @@ class CarrerasFragment : FragmentUtils() {
             refresh()
         }
         getListOfCarreras()
-        adaptador = CarreraAdapter(this.activity!!, listaCarrera)
+        adaptador = Alumno_CarreraAdapter(this.activity!!, listaCarrera)
         recyclerViewElement.adapter = adaptador
         return view;
     }
 
     private fun refresh() {
         if (carreraViewModel.check_state() == true) {
-            adaptador = CarreraAdapter(this.activity!!, listaCarrera)
+            adaptador = Alumno_CarreraAdapter(this.activity!!, listaCarrera)
             recyclerViewElement.adapter = adaptador
             contract()
         } else {
@@ -83,36 +81,21 @@ class CarrerasFragment : FragmentUtils() {
         val carrera: Observer<Carrera> = object : Observer<Carrera> {
             @Override
             override fun onChanged(@Nullable carreras: Carrera?) {
-                when(adaptador.check_state()){
-                    0->{editar()}
-                    1->{eliminarCarrera()}
-                    2->{cursos()}
-                }
+                volverAlumno()
             }
         }
         adaptador.getCarreraActual()!!.observe(this, carrera)
     }
 
-    private fun editar(){
-        val editar = EditarCarreraFragment()
-        setToolbarTitle("Editar Carrera")
-        var bundle =  Bundle();
-        var carrera=adaptador.getCarreraActual()!!.value
-        val gson = Gson()
-        var json=gson.toJson(carrera)
-        bundle.putString("carrera", json)
-        editar.arguments=bundle
-        changeFragment(editar)
+    private fun volverAlumno(){
+        var carrera= adaptador.getCarreraActual()!!.value
+        alumnoViewModel.updateCarrera(carrera!!)
+        val a = CrearAlumnoFragment()
+        setToolbarTitle("Crear Alumno")
+        changeFragment(a)
     }
 
-    private fun cursos(){
-        val cursos = CursosFragment()
-        setToolbarTitle("Cursos")
-        var carrera=adaptador.getCarreraActual()!!.value
-        cursoViewModel.setCarrera(carrera!!)
-        changeFragment(cursos)
-    }
-   private fun  getListOfCarreras() {
+    private fun  getListOfCarreras() {
         initLoading()
         CoroutineScope(Dispatchers.IO).launch {
             val call = CarreraService.getInstance().obtenerCarreras()
@@ -133,31 +116,7 @@ class CarrerasFragment : FragmentUtils() {
         }
     }
 
-    private fun eliminarCarrera() {
-        initLoading()
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                var codigo = adaptador.getCarreraActual()!!.value!!.codigo
-                val call = CarreraService.getInstance().eliminarCarrera(codigo!!)
-                if (call.isSuccessful) {
-                    withContext(Dispatchers.Main) {
-                        stopLoading()
-                        dialogDeleteSuccess()
-                        getListOfCarreras()
-                    }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        carreraViewModel.setState(false)
-                        carreraViewModel.setMensaje(call.message())
-                        stopLoading()
-                        dialogDeleteError()
-                    }//mensaje de error del servidor...
-                }
-            } catch (e: SocketTimeoutException) {
-                Log.d("xd","mamado")
-            }
-        }
-    }
+
     private fun initLoading(){
         val loader = view?.findViewById<ProgressBar>(R.id.loading)
         loader?.visibility=View.VISIBLE

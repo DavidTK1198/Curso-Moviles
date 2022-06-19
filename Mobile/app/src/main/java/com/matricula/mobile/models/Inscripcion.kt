@@ -1,6 +1,7 @@
-package com.sistema.logicaDeNegocio
+package com.matricula.mobile.models
 
 import com.matricula.mobile.models.Alumno
+import com.matricula.mobile.models.Grupo
 
 class Inscripcion {
     var estudiante: Alumno

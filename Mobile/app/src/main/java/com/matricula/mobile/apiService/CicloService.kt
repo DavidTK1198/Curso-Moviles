@@ -1,8 +1,7 @@
 package com.matricula.mobile.apiService
 
 import com.matricula.mobile.apiUtils.ApiBuilder
-import com.sistema.logicaDeNegocio.Ciclo
-import com.sistema.logicaDeNegocio.Curso
+import com.matricula.mobile.models.Ciclo
 import retrofit2.Response
 import retrofit2.http.*
 interface CicloService {

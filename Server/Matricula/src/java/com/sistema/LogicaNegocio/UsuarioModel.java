@@ -3,7 +3,6 @@ import com.sistema.AccesoDatos.GlobalException;
 import com.sistema.AccesoDatos.NoDataException;
 import com.sistema.AccesoDatos.ServicioLogueo;
 import com.sistema.AccesoDatos.ServicioUsuario;
-import java.sql.SQLException;
 import java.util.List;
 
 
@@ -44,6 +43,10 @@ public class UsuarioModel {
     public List<Usuario> listarUsuarios() throws GlobalException, NoDataException{
         usuarios=(List<Usuario>) usuario_dba.listarUsuarios();
         return this.usuarios;
+    }
+
+    public void actualizarUsuario() throws GlobalException, NoDataException {
+        this.usuario_dba.actualizarUsuario(usuario);
     }
     
     

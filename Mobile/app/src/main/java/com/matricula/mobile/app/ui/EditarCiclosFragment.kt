@@ -10,15 +10,7 @@ import android.widget.ProgressBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.matricula.mobile.R
-import com.matricula.mobile.apiService.CicloService
-import com.matricula.mobile.apiService.CursoService
-import com.matricula.mobile.models.Carrera
-import com.sistema.logicaDeNegocio.Ciclo
-import com.sistema.logicaDeNegocio.Curso
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.matricula.mobile.models.Ciclo
 
 class EditarCiclosFragment: FragmentUtils() {
 
@@ -65,7 +57,7 @@ class EditarCiclosFragment: FragmentUtils() {
         var fechaFin = editTextFechaFinal?.text.toString()
         var ciclo = Ciclo(num.toInt(), codigo.toInt(), annio.toInt(), 1, fechaIni, fechaFin)
         if (validarDatos()) {
-            modificarCiclos(ciclo)
+            //modificarCiclos(ciclo)
         }else{
             val  message = "Debe Completar todos los datos!!"
             Snackbar
@@ -111,18 +103,18 @@ class EditarCiclosFragment: FragmentUtils() {
                 editTextCodigo?.text.toString()!=""&& editTextCodigo?.text.toString()!="")
     }
 
-    private fun modificarCiclos(ciclo: Ciclo){
-        initLoading()
-        CoroutineScope(Dispatchers.IO).launch {
-            val call = CicloService.getInstance().modificarCiclo(ciclo)
-            if (call.isSuccessful) {
-                withContext(Dispatchers.Main) {
-                    stopLoading()
-                    limpiar()
-                }
-            } else {
-                stopLoading()
-            }
-        }
-    }
+//    private fun modificarCiclos(ciclo: Ciclo){
+//        initLoading()
+//        CoroutineScope(Dispatchers.IO).launch {
+//            val call = CicloService.getInstance().modificarCiclo(ciclo)
+//            if (call.isSuccessful) {
+//                withContext(Dispatchers.Main) {
+//                    stopLoading()
+//                    limpiar()
+//                }
+//            } else {
+//                stopLoading()
+//            }
+//        }
+//    }
 }

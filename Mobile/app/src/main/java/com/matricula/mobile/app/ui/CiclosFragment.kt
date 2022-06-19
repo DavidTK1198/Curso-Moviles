@@ -17,13 +17,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.matricula.mobile.R
 import com.matricula.mobile.adapter.CicloAdapter
-import com.matricula.mobile.adapter.CursoAdapter
 import com.matricula.mobile.apiService.CicloService
 import com.matricula.mobile.apiService.CursoService
+import com.matricula.mobile.models.Ciclo
 import com.matricula.mobile.viewModels.CicloViewModel
-import com.matricula.mobile.viewModels.CursoViewModel
-import com.sistema.logicaDeNegocio.Ciclo
-import com.sistema.logicaDeNegocio.Curso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

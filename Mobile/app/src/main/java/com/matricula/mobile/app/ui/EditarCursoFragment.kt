@@ -12,7 +12,7 @@ import com.google.gson.Gson
 import com.matricula.mobile.R
 import com.matricula.mobile.apiService.CursoService
 import com.matricula.mobile.models.Carrera
-import com.sistema.logicaDeNegocio.Curso
+import com.matricula.mobile.models.Curso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,10 +37,10 @@ class EditarCursoFragment: FragmentUtils() {
         view.findViewById<Button>(R.id.btn_volver_curso).setOnClickListener {
             volver()
         }
-        editTextName=view.findViewById(R.id.editText_Name_Curso)
-        editTextCodigo= view.findViewById(R.id.editText_Codigo)
-        editTextCreditos= view.findViewById(R.id.editText_Creditos)
-        editTextHorasSemanales= view.findViewById(R.id.editTextTextHorasSemanales)
+        editTextName=view.findViewById(R.id.editText_Name_Curso_E)
+        editTextCodigo= view.findViewById(R.id.editText_Codigo_E)
+        editTextCreditos= view.findViewById(R.id.editText_Creditos_E)
+        editTextHorasSemanales= view.findViewById(R.id.editTextTextHorasSemanales_E)
         val bundle = this.arguments
         if (bundle != null) {
             val json = bundle.get("curso").toString() // Key
@@ -84,7 +84,7 @@ class EditarCursoFragment: FragmentUtils() {
     }
     private fun volver(){
         setToolbarTitle("Cursos")
-        changeFragment(CursosFragment())
+        changeFragment(CarrerasFragment())
     }
 
     private fun initLoading(){

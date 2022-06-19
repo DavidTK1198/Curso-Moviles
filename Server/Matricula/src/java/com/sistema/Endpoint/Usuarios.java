@@ -9,7 +9,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.sistema.Controller.UsuarioController;
 import java.util.List;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 
 @Path("/usuarios")
 @PermitAll
@@ -26,5 +28,13 @@ public class Usuarios {
             }  
     }
     
-    
+     @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void actualizarUsuario(Usuario p) {
+        try {
+            control.actualizarUsuario(p);
+        } catch (Exception ex) {
+            throw new NotFoundException("No se ha encontrado el curso");
+        }
+    }
 }

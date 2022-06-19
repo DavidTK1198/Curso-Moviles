@@ -16,7 +16,6 @@ class UsuarioAdapter(val c: Context, val UsuarioList:ArrayList<Usuario>): Recycl
 {
     private var itemsList: ArrayList<Usuario>? = null
     var UsuarioLiveData:MutableLiveData<Usuario>? = null
-    private var state:MutableLiveData<Boolean>?=null
 
 
 
@@ -33,7 +32,6 @@ class UsuarioAdapter(val c: Context, val UsuarioList:ArrayList<Usuario>): Recycl
             name = v.findViewById(R.id.mTitle)
             mbNum = v.findViewById(R.id.mSubTitle)
             mMenus = v.findViewById(R.id.mMenus)
-            state=MutableLiveData<Boolean>()
             mMenus.setOnClickListener { popupMenus(it) }
         }
 
@@ -51,7 +49,6 @@ class UsuarioAdapter(val c: Context, val UsuarioList:ArrayList<Usuario>): Recycl
                                     dialog,_->
                                 Toast.makeText(c,"Se editara el Usuario",Toast.LENGTH_SHORT).show()
                                 dialog.dismiss()
-                                state!!.value=false
                                 UsuarioLiveData!!.value = itemsList!!.get(adapterPosition)
 
                             }
@@ -129,9 +126,4 @@ class UsuarioAdapter(val c: Context, val UsuarioList:ArrayList<Usuario>): Recycl
         }
         return UsuarioLiveData
     }
-    fun check_state(): Boolean? {
-        return state!!.value
-    }
-
-
 }

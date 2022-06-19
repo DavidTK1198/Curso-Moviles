@@ -10,8 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.sistema.logicaDeNegocio.Ciclo
-import com.sistema.logicaDeNegocio.Curso
+import com.matricula.mobile.models.Ciclo
+
 
 class CicloAdapter(val c: Context, val CicloList:ArrayList<Ciclo>): RecyclerView.Adapter<CicloAdapter.CursoViewHolder>(), Filterable
 {

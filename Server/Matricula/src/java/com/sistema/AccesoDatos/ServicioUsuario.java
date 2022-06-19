@@ -195,7 +195,7 @@ public class ServicioUsuario extends Servicio{
             int resultado = pstmt.executeUpdate();
             
             //si es diferente de 0 es porq si afecto un registro o mas
-            if (resultado != 0) {
+            if (resultado == 0) {
                 throw new NoDataException ("No se realizo la actualizaci�n");
             }
             else{

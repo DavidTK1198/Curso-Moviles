@@ -1,5 +1,4 @@
 package com.matricula.mobile.models
-import com.sistema.logicaDeNegocio.Curso
 import java.io.Serializable
 
 class Carrera:Serializable {

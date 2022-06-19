@@ -27,30 +27,22 @@
             android:layout_marginTop="60dp"
             android:text="Nombre"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/editText_Name_User"
-            app:layout_constraintTop_toBottomOf="@+id/textView_accionUser"/>
-
-    <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:text="Cedula"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/editText_Cedula"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Name_User"/>
+            app:layout_constraintStart_toStartOf="@+id/editText_Name_User_edit"
+            app:layout_constraintTop_toBottomOf="@+id/textView_accionUser" android:layout_marginEnd="297dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="7dp"
+            app:layout_constraintBottom_toTopOf="@+id/editText_Name_User_edit"/>
 
     <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
             android:text="Clave"
-            app:layout_constraintStart_toStartOf="@+id/editText_Clave"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Cedula"/>
-
+            app:layout_constraintStart_toStartOf="@+id/editText_Clave_us"
+            android:layout_marginStart="4dp" app:layout_constraintTop_toBottomOf="@+id/editText_Name_User_edit"
+            android:layout_marginTop="24dp" android:layout_marginEnd="317dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="9dp" app:layout_constraintBottom_toTopOf="@+id/editText_Clave_us"/>
     <EditText
-            android:id="@+id/editText_Name_User"
+            android:id="@+id/editText_Name_User_edit"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -60,24 +52,11 @@
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            app:layout_constraintTop_toBottomOf="@+id/textView5" android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView7"/>
 
     <EditText
-            android:id="@+id/editText_Cedula"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:hint="Cedula"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6"/>
-
-    <EditText
-            android:id="@+id/editText_Clave"
+            android:id="@+id/editText_Clave_us"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -91,37 +70,23 @@
             app:layout_constraintTop_toBottomOf="@+id/textView7"/>
 
     <Button
-            android:id="@+id/btn_guardarCurso"
+            android:id="@+id/btn_guardar_Us"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="144dp"
-            android:text="Guardar Curso"
-            app:layout_constraintEnd_toEndOf="@+id/editText_Clave"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Clave" android:layout_marginEnd="16dp"/>
+            android:layout_marginTop="60dp"
+            android:text="Guardar Usuario"
+            app:layout_constraintEnd_toEndOf="@+id/editText_Clave_us"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Clave_us" android:layout_marginEnd="8dp"
+            android:layout_marginStart="12dp" app:layout_constraintStart_toEndOf="@+id/btn_volver_us"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="268dp"/>
     <Button
-            android:id="@+id/btn_volver_curso"
+            android:id="@+id/btn_volver_us"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="144dp"
+            android:layout_marginTop="60dp"
             android:text="Volver"
-            app:layout_constraintStart_toStartOf="@+id/editText_Clave"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Clave" android:layout_marginStart="8dp"/>
-    <TextView
-            android:text="Rol"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textView9"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Clave"
-            app:layout_constraintBottom_toTopOf="@+id/editTextRol" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.148"
-            app:layout_constraintVertical_bias="0.6"/>
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editTextRol"
-            android:hint="Rol" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.273"
-            app:layout_constraintBottom_toTopOf="@+id/btn_volver_curso"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Clave"/>
+            app:layout_constraintStart_toStartOf="@+id/editText_Clave_us"
+            app:layout_constraintTop_toBottomOf="@+id/editText_Clave_us" android:layout_marginStart="12dp"
+            app:layout_constraintEnd_toStartOf="@+id/btn_guardar_Us" android:layout_marginEnd="12dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="268dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

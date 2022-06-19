@@ -121,10 +121,10 @@ END;
 --ACTUALIZAR
 ------------------------------------------------------
 CREATE OR REPLACE PROCEDURE modificarcurso (codigoin IN curso.codigo%TYPE,nombrein IN curso.nombre%TYPE,creditosin in curso.creditos%type,
-hsemanalesin in curso.hsemanales%type,carrerain in curso.fkcarrera%TYPE)
+hsemanalesin in curso.hsemanales%type)
 AS
 BEGIN
-UPDATE curso SET nombre=nombrein,codigo=codigoin,creditos=creditosin,hsemanales=hsemanalesin,fkcarrera=carrerain
+UPDATE curso SET nombre=nombrein,codigo=codigoin,creditos=creditosin,hsemanales=hsemanalesin
  WHERE codigo=codigoin;
 END;
 /

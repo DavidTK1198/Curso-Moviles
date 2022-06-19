@@ -3,17 +3,14 @@ package com.matricula.mobile.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.matricula.mobile.apiService.CarreraService
-import com.sistema.logicaDeNegocio.Curso
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.matricula.mobile.models.Carrera
+import com.matricula.mobile.models.Curso
 
 
 class CursoViewModel: ViewModel() {
 
     private var cursoListLiveData: MutableLiveData<List<Curso>>? = null
+    private var carrera:MutableLiveData<Carrera>?= MutableLiveData<Carrera>()
     private var state:MutableLiveData<Boolean>?=null
     private var message:MutableLiveData<String>?=null
 
@@ -36,7 +33,14 @@ class CursoViewModel: ViewModel() {
         cursoListLiveData!!.value = NCursos
     }
 
+    fun setCarrera(c: Carrera){
+       carrera!!.value=c
+    }
     fun setMensaje(mensaje:String){
         message!!.value=mensaje
+    }
+
+    fun getCarrera(): Carrera {
+        return this.carrera!!.value!!
     }
 }

@@ -19,12 +19,15 @@ import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotAcceptableException;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
 
 @Path("/cursos")
 @PermitAll
 public class Cursos {
+
     CursoController control = CursoController.getInstance();
+
     @GET
     @Path("listar")
     @PermitAll
@@ -72,43 +75,34 @@ public class Cursos {
             throw new NotFoundException();
         }
     }
-    
-//    @PUT
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public void actualizarCurso(Curso p) {
-//        try {
-//          control.actualizarCurso(p);
-//        } catch (Exception ex) {
-//            throw new NotFoundException("No se ha encontrado el curso");
-//        }
-//    }
-    
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void actualizarCurso(Curso p) {
+        try {
+            control.actualizarCurso(p);
+        } catch (Exception ex) {
+            throw new NotFoundException("No se ha encontrado el curso");
+        }
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void agregarCurso(Curso p) {
+    public void agregarCurso(Curso p
+    ) {
         try {
             control.agregarCurso(p);
         } catch (Exception ex) {
             throw new NotAcceptableException();
         }
     }
-    /*
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void agregarCurso(@DefaultValue("") @QueryParam("codigo") String codigo, @DefaultValue("") @QueryParam("nombre") String nombre, @DefaultValue("") @QueryParam("hsemanales") int hsemanales, @DefaultValue("") @QueryParam("creditos") int creditos, @DefaultValue("") @QueryParam("idCarrera") String idCarrera) {
-        try {
-            Carrera carrera = ServicioCarrera.getInstance().buscarCarrera(idCarrera, "codigo");
-            Curso c = new Curso(codigo, nombre, creditos, hsemanales, carrera);
-            control.agregarCurso(c);
-        } catch (Exception ex) {
-            throw new NotAcceptableException();
-        }
-    }*/
 
     @PermitAll
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
-    public void EliminarCurso(@DefaultValue("") @QueryParam("id") String id ) {
+    public void EliminarCurso(@DefaultValue("")
+            @QueryParam("id") String id
+    ) {
         try {
             control.eliminarCurso(id);
         } catch (Exception ex) {

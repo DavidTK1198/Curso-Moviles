@@ -1,4 +1,4 @@
-package com.sistema.logicaDeNegocio
+package com.matricula.mobile.models
 
 class Ciclo {
     var annio: Int

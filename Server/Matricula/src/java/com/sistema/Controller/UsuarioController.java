@@ -36,4 +36,9 @@ public class UsuarioController {
     public List<Usuario> obtenerUsuarios() throws GlobalException, NoDataException {
        return model.listarUsuarios();
     }
+
+    public void actualizarUsuario(Usuario p) throws GlobalException, NoDataException {
+       model.setUsuario(p);
+       model.actualizarUsuario();
+    }
 }

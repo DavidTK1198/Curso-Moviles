@@ -18,8 +18,9 @@ import com.google.gson.Gson
 import com.matricula.mobile.R
 import com.matricula.mobile.adapter.CursoAdapter
 import com.matricula.mobile.apiService.CursoService
+import com.matricula.mobile.models.Carrera
 import com.matricula.mobile.viewModels.CursoViewModel
-import com.sistema.logicaDeNegocio.Curso
+import com.matricula.mobile.models.Curso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -103,8 +104,9 @@ class CursosFragment: FragmentUtils() {
 
     private fun  getListOfCursos() {
         initLoading()
+        var carrera=cursoViewModel.getCarrera()
         CoroutineScope(Dispatchers.IO).launch {
-            val call = CursoService.getInstance().obtenerCursos()
+            val call = CursoService.getInstance().obtenerCursosPorCarrera(carrera.codigo!!)
             val nCarreras = call.body()
             if (call.isSuccessful) {
                 withContext(Dispatchers.Main) {

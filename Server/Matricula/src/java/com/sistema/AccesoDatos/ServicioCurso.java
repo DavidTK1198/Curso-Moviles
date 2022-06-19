@@ -154,7 +154,6 @@ public class ServicioCurso extends Servicio {
             pstmt.setString(2, curso.getNombre());
             pstmt.setInt(3, curso.getCreditos());
             pstmt.setInt(4, curso.getHsemanales());
-            pstmt.setString(5, curso.getCarrera().getCodigo());
 
             int resultado = pstmt.executeUpdate();
 

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.matricula.mobile.apiService.CicloService
-import com.sistema.logicaDeNegocio.Ciclo
+import com.matricula.mobile.models.Ciclo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

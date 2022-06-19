@@ -1,6 +1,4 @@
-package com.sistema.logicaDeNegocio
-
-import com.matricula.mobile.models.Carrera
+package com.matricula.mobile.models
 
 /**
  *
@@ -10,11 +8,11 @@ class Curso(var codigo: String, var nombre: String, var creditos: Int, var hsema
     private var grupos: ArrayList<Grupo>
 
     constructor() : this("", "", 0, 0, Carrera()) {
-        grupos = ArrayList<Grupo>()
+        grupos = ArrayList()
     }
 
     init {
-        grupos = ArrayList<Grupo>()
+        grupos = ArrayList()
     }
 
     fun agregarGrupo(grupo: Grupo) {

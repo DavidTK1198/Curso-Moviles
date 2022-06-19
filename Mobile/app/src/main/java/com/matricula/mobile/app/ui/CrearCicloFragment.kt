@@ -9,12 +9,8 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import com.google.android.material.snackbar.Snackbar
 import com.matricula.mobile.R
-import com.matricula.mobile.apiService.CarreraService
 import com.matricula.mobile.apiService.CicloService
-import com.matricula.mobile.apiService.CursoService
-import com.matricula.mobile.models.Carrera
-import com.sistema.logicaDeNegocio.Ciclo
-import com.sistema.logicaDeNegocio.Curso
+import com.matricula.mobile.models.Ciclo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,7 +50,7 @@ class CrearCicloFragment: FragmentUtils() {
         var fechaFin = editTextFechaFinal?.text.toString()
         var ciclo = Ciclo(num.toInt(), codigo.toInt(), annio.toInt(), 1, fechaIni, fechaFin)
         if (validarDatos()) {
-            insertarCiclo(ciclo)
+           // insertarCiclo(ciclo)
         }else{
             val  message = "Debe Completar todos los datos!!"
             Snackbar
@@ -102,19 +98,19 @@ class CrearCicloFragment: FragmentUtils() {
                 editTextCodigo?.text.toString()!=""&& editTextCodigo?.text.toString()!="")
     }
 
-    private fun insertarCiclo(ciclo: Ciclo){
-        initLoading()
-        CoroutineScope(Dispatchers.IO).launch {
-            val call = CicloService.getInstance().ingresarCiclo(ciclo)
-            if (call.isSuccessful) {
-                withContext(Dispatchers.Main) {
-                    stopLoadingSuccess()
-                }
-            } else {
-                withContext(Dispatchers.Main) {
-                    stopLoadingError()
-                }
-            }
-        }
-    }
+//    private fun insertarCiclo(ciclo: Ciclo){
+//        initLoading()
+//        CoroutineScope(Dispatchers.IO).launch {
+//           // val call = CicloService.getInstance().ingresarCiclo(ciclo)
+//            if (call.isSuccessful) {
+//                withContext(Dispatchers.Main) {
+//                    stopLoadingSuccess()
+//                }
+//            } else {
+//                withContext(Dispatchers.Main) {
+//                    stopLoadingError()
+//                }
+//            }
+//        }
+//    }
 }
