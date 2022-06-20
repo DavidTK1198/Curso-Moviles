@@ -57,4 +57,9 @@ public class CicloController {
         return model.getCurrent();
     }
 
+    public void agregar(Ciclo p) throws GlobalException, NoDataException {
+       model.setCurrent(p);
+       model.agregar();
+    }
+
 }

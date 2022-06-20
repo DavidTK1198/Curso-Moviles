@@ -7,6 +7,9 @@ import retrofit2.http.*
 interface CicloService {
     @GET("ciclos/listar")
     suspend fun obtenerCiclos(): Response<List<Ciclo>>
+    @POST("ciclos")
+    suspend fun ingresarCiclo(@Body ciclo: Ciclo): Response<Void>
+
     companion object {
         private var cicloService : CicloService? = null
         fun getInstance() : CicloService {

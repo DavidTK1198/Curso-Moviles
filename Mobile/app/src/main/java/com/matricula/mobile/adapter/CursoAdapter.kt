@@ -144,7 +144,7 @@ class CursoAdapter(val c: Context, val CursoList:ArrayList<Curso>): RecyclerView
         }
     }
 
-    fun getCarreraActual(): LiveData<Curso>?{
+    fun getCursoActual(): LiveData<Curso>?{
         if (cursoLiveData== null) {
             cursoLiveData = MutableLiveData<Curso>()
         }

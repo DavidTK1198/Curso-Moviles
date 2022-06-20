@@ -2,6 +2,7 @@ package com.matricula.mobile.app
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -13,8 +14,11 @@ import com.matricula.mobile.models.Usuario
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.SocketTimeoutException
+
 class Login : AppCompatActivity() {
 
     lateinit var et_user_name: EditText
@@ -58,20 +62,23 @@ class Login : AppCompatActivity() {
         btn_sum.isClickable = true
     }
     fun startService(view: View) {
-//        initLoading()
-//        CoroutineScope(Dispatchers.IO).launch {
-//            val login=login()
-//            val call = LoginService.Companion.getInstance().login(login)
-//            val logged = call.body()
-//            if(call.isSuccessful){
-//                toMainActivity(logged!!)
-//            }else{
-//                stopLoading()
-//            }
-//        }
-        val i = Intent(this, MainActivity::class.java)
-        startActivity(i)
-        finish()
+        initLoading()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val login = login()
+                val call = LoginService.Companion.getInstance().login(login)
+                val logged = call.body()
+                if (call.isSuccessful) {
+                    toMainActivity(logged!!)
+                } else {
+                    withContext(Dispatchers.Main) {
+                        stopLoading()
+                    }
+                }
+            } catch (e: SocketTimeoutException) {
+                Log.d("xd", "mamado")
+            }
         }
+    }
     }
 

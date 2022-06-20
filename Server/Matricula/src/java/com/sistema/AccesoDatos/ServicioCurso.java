@@ -21,7 +21,7 @@ public class ServicioCurso extends Servicio {
     private static final String BUSCARID = "{?=call buscarcurso(?)}";
     private static final String BUSCARCARRERA = "{?=call buscarcursoporcarrera(?)}";
     private static final String BUSCARNOMBRE = "{?=call buscarcursopornombre(?)}";
-    private static final String modificarCurso = "{call modificarCurso (?,?,?,?,?)}";
+    private static final String modificarCurso = "{call modificarCurso (?,?,?,?)}";
     private static final String eliminarCurso = "{call eliminarCurso(?)}";
     private static ServicioCurso instance = null;
     private static ServicioTransformar helper = null;

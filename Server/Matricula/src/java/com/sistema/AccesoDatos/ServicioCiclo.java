@@ -227,7 +227,7 @@ public class ServicioCiclo extends Servicio {
 
             int resultado = pstmt.executeUpdate();
 
-            if (resultado != 0) {
+            if (resultado == 0) {
                 throw new NoDataException("No se realizo el borrado");
             } else {
                 System.out.println("\nEliminación Satisfactoria!");

@@ -9,6 +9,7 @@ import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotAcceptableException;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -58,6 +59,17 @@ public class Ciclos {
     public void activar(Ciclo p) {
         try {
             control.activarCiclo(p);
+        } catch (Exception ex) {
+            throw new NotAcceptableException();
+        }
+    }
+    
+     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @PermitAll
+    public void agregar(Ciclo p) {
+        try {
+            control.agregar(p);
         } catch (Exception ex) {
             throw new NotAcceptableException();
         }

@@ -40,7 +40,7 @@ class CrearCursoFragment: FragmentUtils() {
         editTextName=view.findViewById(R.id.editText_Name_Curso)
         editTextCodigo= view.findViewById(R.id.editText_Codigo)
         editTextCreditos= view.findViewById(R.id.editText_Creditos)
-        editTextHorasSemanales= view.findViewById(R.id.editTextTextHorasSemanales_E)
+        editTextHorasSemanales= view.findViewById(R.id.editTextTextHorasSemanales)
         return view
     }
     private fun crearCurso() {

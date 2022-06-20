@@ -78,4 +78,8 @@ public class CicloModel {
     public void cicloActivo() throws GlobalException, NoDataException {
         current= ciclo_DBA.buscarCiclo(0,"activo");
     }
+
+    public void agregar() throws GlobalException, NoDataException {
+        this.ciclo_DBA.insertarCiclo(current);
+    }
 }

@@ -1,6 +1,7 @@
 package com.matricula.mobile.app.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.net.SocketTimeoutException
 
 class EditarCursoFragment: FragmentUtils() {
 
@@ -30,11 +32,11 @@ class EditarCursoFragment: FragmentUtils() {
     ): View? {
         var view = inflater.inflate(R.layout.fragment_editar_cursos, container, false)
 
-        view.findViewById<Button>(R.id.btn_guardarCurso).setOnClickListener{
+        view.findViewById<Button>(R.id.btn_guardarCurso_E).setOnClickListener{
             this.crearCurso()
         }
 
-        view.findViewById<Button>(R.id.btn_volver_curso).setOnClickListener {
+        view.findViewById<Button>(R.id.btn_volver_curso_E).setOnClickListener {
             volver()
         }
         editTextName=view.findViewById(R.id.editText_Name_Curso_E)
@@ -79,12 +81,12 @@ class EditarCursoFragment: FragmentUtils() {
     private  fun rellenar(curso: Curso){
         editTextName?.setText(curso.nombre)
         editTextCodigo?.setText(curso.codigo)
-        editTextCreditos?.setText(curso.creditos)
-        editTextHorasSemanales?.setText(curso.hsemanales)
+        editTextCreditos?.setText(curso.creditos.toString())
+        editTextHorasSemanales?.setText(curso.hsemanales.toString())
     }
     private fun volver(){
         setToolbarTitle("Cursos")
-        changeFragment(CarrerasFragment())
+        changeFragment(CursosFragment())
     }
 
     private fun initLoading(){
@@ -104,17 +106,20 @@ class EditarCursoFragment: FragmentUtils() {
                 editTextCodigo?.text.toString()!=""&& editTextCodigo?.text.toString()!="")
     }
 
-    private fun modificarCurso(curso: Curso){
+    private fun modificarCurso(curso: Curso) {
         initLoading()
         CoroutineScope(Dispatchers.IO).launch {
-            val call = CursoService.getInstance().modificarCurso(curso)
-            if (call.isSuccessful) {
-                withContext(Dispatchers.Main) {
+            try {
+                val call = CursoService.getInstance().modificarCurso(curso)
+                if (call.isSuccessful) {
+                    withContext(Dispatchers.Main) {
+                        stopLoading()
+                    }
+                } else {
                     stopLoading()
-                    limpiar()
                 }
-            } else {
-                stopLoading()
+            } catch (e: SocketTimeoutException) {
+                Log.d("xd", "mamado")
             }
         }
     }

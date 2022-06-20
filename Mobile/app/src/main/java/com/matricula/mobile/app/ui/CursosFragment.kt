@@ -33,12 +33,13 @@ class CursosFragment: FragmentUtils() {
     lateinit var adaptador: CursoAdapter
     private lateinit var addsBtn: FloatingActionButton
     private lateinit var listaCurso: ArrayList<Curso>
+    private lateinit var backBtn: FloatingActionButton
     private val cursoViewModel: CursoViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view = inflater.inflate(R.layout.fragment_carreras, container, false)
+        var view = inflater.inflate(R.layout.fragment_cursos, container, false)
         listaCurso = ArrayList()
         recyclerViewElement = view.findViewById(R.id.mRecycler)
         recyclerViewElement.layoutManager = LinearLayoutManager(recyclerViewElement.context)
@@ -59,6 +60,12 @@ class CursosFragment: FragmentUtils() {
         addsBtn.setOnClickListener { view ->
             setToolbarTitle("Crear Curso")
             changeFragment(CrearCursoFragment())
+        }
+
+        addsBtn = view.findViewById(R.id.volvercar)
+        addsBtn.setOnClickListener { view ->
+            setToolbarTitle("Carreras")
+            changeFragment(CarrerasFragment())
         }
         cursoViewModel.getCursosList()!!.observe(viewLifecycleOwner) { cursos ->
             listaCurso = cursos as ArrayList<Curso>
@@ -87,19 +94,19 @@ class CursosFragment: FragmentUtils() {
                 if (adaptador.check_state() == true) {
                     eliminarCurso()
                 } else {
-                    val editar = EditarCarreraFragment()
-                    setToolbarTitle("Editar Carrera")
+                    val editar = EditarCursoFragment()
+                    setToolbarTitle("Editar Curso")
                     var bundle =  Bundle();
-                    var carrera=adaptador.getCarreraActual()!!.value
+                    var carrera=adaptador.getCursoActual()!!.value
                     val gson = Gson()
                     var json=gson.toJson(carrera)
-                    bundle.putString("carrera", json)
+                    bundle.putString("curso", json)
                     editar.arguments=bundle
                     changeFragment(editar)
                 }
             }
         }
-        adaptador.getCarreraActual()!!.observe(this, carrera)
+        adaptador.getCursoActual()!!.observe(this, carrera)
     }
 
     private fun  getListOfCursos() {
@@ -128,7 +135,7 @@ class CursosFragment: FragmentUtils() {
         initLoading()
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                var codigo = adaptador.getCarreraActual()!!.value!!.codigo
+                var codigo = adaptador.getCursoActual()!!.value!!.codigo
                 val call = CursoService.getInstance().eliminarCurso(codigo!!)
                 if (call.isSuccessful) {
                     withContext(Dispatchers.Main) {

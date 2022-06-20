@@ -15,7 +15,7 @@ interface CursoService {
     @PUT("cursos")
     suspend fun modificarCurso(@Body curso: Curso): Response<Void>
     @DELETE("cursos")
-    suspend fun eliminarCurso(@Query("cod") codigo:String): Response<Void>
+    suspend fun eliminarCurso(@Query("id") codigo:String): Response<Void>
     companion object {
         private var cursoService : CursoService? = null
         fun getInstance() : CursoService {

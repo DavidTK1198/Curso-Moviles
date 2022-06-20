@@ -107,10 +107,9 @@ class CicloAdapter(val c: Context, val CicloList:ArrayList<Ciclo>): RecyclerView
 
     override fun onBindViewHolder(holder: CursoViewHolder, position: Int) {
         val newList = itemsList?.get(position)
-        holder.name.text = newList!!.numero.toString()
-        holder.mbNum.text = newList!!.id.toString()
+        holder.name.text = "Ciclo ${convertToRoman(newList!!.numero)}"
+        holder.mbNum.text = newList!!.annio.toString()
     }
-
     override fun getItemCount(): Int {
         return  itemsList?.size!!
     }
@@ -155,5 +154,12 @@ class CicloAdapter(val c: Context, val CicloList:ArrayList<Ciclo>): RecyclerView
         return state!!.value
     }
 
-
+private  fun convertToRoman(int: Int): String {
+    when (int) {
+        1 -> return "I"
+        2 -> return "II"
+        3 -> return "III"
+        else->return ""
+    }
+    }
 }

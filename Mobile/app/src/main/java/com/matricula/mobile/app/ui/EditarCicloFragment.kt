@@ -8,7 +8,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ProgressBar
 import android.widget.Spinner
 import com.google.android.material.snackbar.Snackbar
 import com.matricula.mobile.R
@@ -19,12 +18,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CrearCicloFragment: FragmentUtils() {
-        private lateinit var editTextAnnio : EditText
-        private lateinit var editTextFechaInicio : EditText
-        private lateinit var editTextFechaFinal : EditText
-        private lateinit var  numero:String
-        lateinit var option:Spinner
+class EditarCicloFragment: FragmentUtils() {
+    private lateinit var editTextAnnio : EditText
+    private lateinit var editTextFechaInicio : EditText
+    private lateinit var editTextFechaFinal : EditText
+    private lateinit var  numero:String
+    lateinit var option:Spinner
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -63,7 +62,7 @@ class CrearCicloFragment: FragmentUtils() {
         try {
             var ciclo = Ciclo(0,annio.toInt(),num.toInt(), 0, fechaIni, fechaFin)
             if (validarDatos()) {
-                 insertarCiclo(ciclo)
+                insertarCiclo(ciclo)
             }else{
                 val  message = "Debe Completar todos los datos!!"
                 Snackbar
@@ -116,5 +115,4 @@ class CrearCicloFragment: FragmentUtils() {
             else-> 0
         }
     }
-
 }
