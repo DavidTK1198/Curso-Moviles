@@ -222,8 +222,9 @@ public class ServicioCiclo extends Servicio {
         }
         PreparedStatement pstmt = null;
         try {
+       
             pstmt = conexion.prepareStatement(ELIMINARCICLO);
-            pstmt.setString(1, id);
+            pstmt.setInt(1,Integer.parseInt(id));
 
             int resultado = pstmt.executeUpdate();
 

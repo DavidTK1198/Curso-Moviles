@@ -5,6 +5,8 @@ import com.sistema.AccesoDatos.NoDataException;
 import com.sistema.LogicaNegocio.Ciclo;
 import com.sistema.LogicaNegocio.CicloModel;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -60,6 +62,12 @@ public class CicloController {
     public void agregar(Ciclo p) throws GlobalException, NoDataException {
        model.setCurrent(p);
        model.agregar();
+    }
+
+    public void eliminarCiclo(String id) throws GlobalException, NoDataException {
+        model.getCurrent().setId(Integer.parseInt(id));
+            model.eliminarCiclo();
+
     }
 
 }

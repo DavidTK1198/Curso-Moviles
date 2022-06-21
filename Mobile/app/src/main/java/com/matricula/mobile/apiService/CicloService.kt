@@ -10,6 +10,17 @@ interface CicloService {
     @POST("ciclos")
     suspend fun ingresarCiclo(@Body ciclo: Ciclo): Response<Void>
 
+    @DELETE("ciclos")
+    suspend fun eliminarCiclo(@Query("id") codigo:String): Response<Void>
+    @PUT("ciclos")
+    suspend fun modificarCiclo(@Body ciclo: Ciclo): Response<Void>
+
+    @PUT("ciclos/cicloDesActivar")
+    suspend fun desactivarCiclo(@Body ciclo: Ciclo): Response<Void>
+
+    @PUT("ciclos/cicloActivar")
+    suspend fun activar(@Body ciclo: Ciclo): Response<Void>
+
     companion object {
         private var cicloService : CicloService? = null
         fun getInstance() : CicloService {

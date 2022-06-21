@@ -60,6 +60,12 @@ class CiclosFragment: FragmentUtils() {
             setToolbarTitle("Crear Ciclo")
             changeFragment(CrearCicloFragment())
         }
+
+        addsBtn = view.findViewById(R.id.volverMain)
+        addsBtn.setOnClickListener { view ->
+            setToolbarTitle("Inicio")
+            changeFragment(InicioFragment())
+        }
         cicloViewModel.getCiclosList()!!.observe(viewLifecycleOwner) { ciclos ->
             listaCiclo = ciclos as ArrayList<Ciclo>
             refresh()
@@ -104,6 +110,7 @@ class CiclosFragment: FragmentUtils() {
 
     private fun  getListOfCiclos() {
         CoroutineScope(Dispatchers.IO).launch {
+            try {
             val call = CicloService.getInstance().obtenerCiclos()
             val nCiclos = call.body()
             if (call.isSuccessful) {
@@ -117,14 +124,18 @@ class CiclosFragment: FragmentUtils() {
                     cicloViewModel.setMensaje(call.message())
                 }//mensaje de error del servidor...
             }
+            } catch (e: Exception) {
+
+            }
         }
+
     }
 
     private fun eliminarCiclo() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 var codigo = adaptador.getCicloActual()!!.value!!.id
-                val call = CursoService.getInstance().eliminarCurso(id.toString()!!)
+                val call = CicloService.getInstance().eliminarCiclo(codigo.toString()!!)
                 if (call.isSuccessful) {
                     withContext(Dispatchers.Main) {
                         dialogDeleteSuccess()

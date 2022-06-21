@@ -124,7 +124,7 @@ class CicloAdapter(val c: Context, val CicloList:ArrayList<Ciclo>): RecyclerView
                     val resultList = ArrayList<Ciclo>()
                     for (row in CicloList) {
                         if (row.numero.toString()!!.toLowerCase().contains(charSearch.toLowerCase()) ||
-                            row.id.toString()!!.toLowerCase().contains(charSearch)) {
+                            row.annio.toString()!!.toLowerCase().contains(charSearch)) {
                             resultList.add(row)
                         }
                     }

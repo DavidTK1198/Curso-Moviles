@@ -82,4 +82,8 @@ public class CicloModel {
     public void agregar() throws GlobalException, NoDataException {
         this.ciclo_DBA.insertarCiclo(current);
     }
+
+    public void eliminarCiclo() throws GlobalException, NoDataException {
+        this.ciclo_DBA.eliminarCiclos(Integer.toString(current.getId()));
+    }
 }

@@ -12,6 +12,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.matricula.mobile.R
 import com.matricula.mobile.apiService.AlumnoService
 import com.matricula.mobile.models.Alumno
+import com.matricula.mobile.models.Carrera
+import com.matricula.mobile.models.Curso
 import com.matricula.mobile.viewModels.AlumnoViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,22 +42,39 @@ class CrearAlumnoFragment: FragmentUtils() {
         view.findViewById<Button>(R.id.btn_volver_alumno).setOnClickListener {
             volver()
         }
+        val carrera= view.findViewById<EditText>(R.id.CarreraAl)
+        carrera.isEnabled=false
+        if(alumnoViewModel.getCarrera()!=null)
+            carrera.setText(alumnoViewModel.getCarrera()!!.nombre)
         editTexttelefono=view.findViewById(R.id.editText_Tel_al)
         editTextName=view.findViewById(R.id.editText_Name_al)
         editTextCodigo= view.findViewById(R.id.editText_Cedula_al)
         editTextmail=view.findViewById(R.id.editTextEmail_al)
         fec_nac=view.findViewById(R.id.editTextTextfec_al2)
+        alumnoViewModel.getAlumno()!!.observe(viewLifecycleOwner) { alumno ->
+            rellenar(alumno)
+        }
         return view
     }
+
+    private fun rellenar(alumno: Alumno?) {
+        var name = editTextName?.setText(alumno!!.nombre)
+        var ced = editTextCodigo?.setText(alumno!!.cedula)
+        var tel = editTexttelefono?.setText(alumno!!.teléfono)
+        var mail=editTextmail?.setText(alumno!!.email)
+        var fecha=fec_nac.setText(alumno!!.fech_nac)
+    }
+
     private fun crearAlumno() {
         var name = editTextName?.text.toString()
         var ced = editTextCodigo?.text.toString()
         var tel = editTexttelefono?.text.toString()
         var mail=editTextmail?.text.toString()
+        var fecha=fec_nac.text.toString()
         var carrera=alumnoViewModel.getCarrera()
-        //var Alumno = Alumno(ced,name,tel, mail)
+        var Alumno = Alumno(ced,name,tel,mail,fecha,carrera!!)
         if (validarDatos()) {
-          //  insertarAlumno(Alumno)
+            insertarAlumno(Alumno)
         }else{
             val  message = "Debe Completar todos los datos!!"
             Snackbar
@@ -75,6 +94,13 @@ class CrearAlumnoFragment: FragmentUtils() {
     }
 
     private fun selecionar(){
+        var name = editTextName?.text.toString()
+        var ced = editTextCodigo?.text.toString()
+        var tel = editTexttelefono?.text.toString()
+        var mail=editTextmail?.text.toString()
+        var fecha=fec_nac.text.toString()
+        var al = Alumno(ced,name,tel,mail,fecha, Carrera())
+        alumnoViewModel.updateAlumno(al)
         setToolbarTitle("Selecionar Carrera")
         changeFragment(Alumno_CarreraFragment())
     }
@@ -104,7 +130,7 @@ class CrearAlumnoFragment: FragmentUtils() {
     private fun validarDatos():Boolean{//Manejo de errores
         return(editTextName?.text.toString()!="" &&
                 editTextCodigo?.text.toString()!=""&& editTexttelefono?.text.toString()!=""
-                &&editTextmail?.text.toString()!="")
+                &&editTextmail?.text.toString()!="" && fec_nac.text.toString()!="")
     }
 
     private fun insertarAlumno(Alumno: Alumno){

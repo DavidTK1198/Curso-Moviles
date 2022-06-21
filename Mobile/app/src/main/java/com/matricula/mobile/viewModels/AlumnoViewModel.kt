@@ -12,6 +12,7 @@ class AlumnoViewModel: ViewModel() {
     private var state:MutableLiveData<Boolean>?=null
     private var message:MutableLiveData<String>?=null
     private var carrera:MutableLiveData<Carrera>?=MutableLiveData<Carrera>()
+    private var alumno:MutableLiveData<Alumno>?=MutableLiveData<Alumno>()
 
     fun getAlumnosList(): LiveData<List<Alumno>>? {
         if (AlumnoListLiveData == null) {
@@ -39,5 +40,13 @@ class AlumnoViewModel: ViewModel() {
     }
     fun setMensaje(mensaje:String){
         message!!.value=mensaje
+    }
+
+    fun getAlumno(): MutableLiveData<Alumno>? {
+        return this.alumno
+    }
+
+    fun updateAlumno(al: Alumno) {
+        this.alumno!!.value=al
     }
 }

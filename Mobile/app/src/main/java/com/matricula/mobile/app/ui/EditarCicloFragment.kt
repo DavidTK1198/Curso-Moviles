@@ -10,8 +10,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.matricula.mobile.R
 import com.matricula.mobile.apiService.CicloService
+import com.matricula.mobile.models.Carrera
 import com.matricula.mobile.models.Ciclo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,97 +24,97 @@ class EditarCicloFragment: FragmentUtils() {
     private lateinit var editTextAnnio : EditText
     private lateinit var editTextFechaInicio : EditText
     private lateinit var editTextFechaFinal : EditText
-    private lateinit var  numero:String
-    lateinit var option:Spinner
+    private lateinit var editTextnum : EditText
+    private  lateinit var estado:EditText
+    private lateinit var ciclo: Ciclo
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view = inflater.inflate(R.layout.fragment_crear_ciclos, container, false)
+        var view = inflater.inflate(R.layout.fragment_editar_ciclos, container, false)
 
-        view.findViewById<Button>(R.id.btn_guardarCycle).setOnClickListener{
-            crearCiclo()
+        view.findViewById<Button>(R.id.btn_Estado).setOnClickListener{
+            GestionarEstado()
         }
 
         view.findViewById<Button>(R.id.btn_volver_cycle).setOnClickListener {
             volver()
         }
-        var options= arrayOf("I","II","III")
-        editTextAnnio= view.findViewById(R.id.editText_annio)
-        editTextFechaInicio= view.findViewById(R.id.editTextTextFechaInicio)
-        editTextFechaFinal= view.findViewById(R.id.editTextTextPersonName2)
-        option=view.findViewById(R.id.ciclos_num)
-        option.adapter=ArrayAdapter(this.activity!!,android.R.layout.simple_list_item_1,options)
-        option.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                numero=options.get(p2)
-            }
-            override fun onNothingSelected(p0: AdapterView<*>?) {
+        editTextAnnio= view.findViewById(R.id.editText_annio_E)
+        editTextFechaInicio= view.findViewById(R.id.editTextTextFechaInicio_E)
+        editTextFechaFinal= view.findViewById(R.id.editfecfinal)
+        editTextnum= view.findViewById(R.id.editText_Numero_E)
+        estado= view.findViewById(R.id.Estado)
 
-            }
-
+        editTextFechaFinal.isEnabled=false
+        editTextAnnio.isEnabled=false
+        editTextFechaInicio.isEnabled=false
+        editTextnum.isEnabled=false
+        estado.isEnabled=false
+        val bundle = this.arguments
+        if (bundle != null) {
+            val json = bundle.get("ciclo").toString() // Key
+            val gson = Gson()
+            ciclo = gson.fromJson(json, Ciclo::class.java)
+            rellenar()
+        }else{
+            setToolbarTitle("Ciclos")
+            changeFragment(CiclosFragment())
         }
         return view
     }
-    private fun crearCiclo() {
-        var num = toInt(numero)
-        var annio = editTextAnnio?.text.toString()
-        var fechaIni = editTextFechaInicio?.text.toString()
-        var fechaFin = editTextFechaFinal?.text.toString()
-        try {
-            var ciclo = Ciclo(0,annio.toInt(),num.toInt(), 0, fechaIni, fechaFin)
-            if (validarDatos()) {
-                insertarCiclo(ciclo)
-            }else{
-                val  message = "Debe Completar todos los datos!!"
-                Snackbar
-                    .make(view!!, message!!, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null)
-                    .show()}
-        }catch (e:Exception){
+    private fun GestionarEstado() {
 
-        }
-
-    }
-
-    private fun limpiar(){
-        editTextAnnio?.setText("")
-        editTextFechaInicio?.setText("")
-        editTextFechaFinal?.setText("")
-    }
-    private fun volver(){
-        setToolbarTitle("Inicio")
-        changeFragment(CiclosFragment())
-    }
-    private fun validarDatos():Boolean{//Manejo de errores
-        return(editTextAnnio?.text.toString()!=""&& editTextFechaInicio?.text.toString()!=""
-                &&editTextFechaFinal.text.toString()!="")
-    }
-
-    private fun insertarCiclo(ciclo: Ciclo) {
-        try {
             CoroutineScope(Dispatchers.IO).launch {
-                val call = CicloService.getInstance().ingresarCiclo(ciclo)
-                if (call.isSuccessful) {
-                    withContext(Dispatchers.Main) {
-                        limpiar()
+                try {
+                if(ciclo.estado==1) {
+                    ciclo.estado=2
+                    var call = CicloService.getInstance().desactivarCiclo(ciclo)
+                    if (call.isSuccessful) {
+                        withContext(Dispatchers.Main) {
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                        }
                     }
-                } else {
-                    withContext(Dispatchers.Main) {
-                    }
+                }else{
+                    ciclo.estado=1
+                    var call = CicloService.getInstance().activar(ciclo)
+                        if (call.isSuccessful) {
+                            withContext(Dispatchers.Main) {
+                            }
+                        } else {
+                            withContext(Dispatchers.Main) {}
+                }
+                }
+                } catch (e: Exception) {
+
                 }
             }
-        } catch (e: Exception) {
 
-        }
+
+    }
+    private fun rellenar(){
+        editTextFechaFinal.setText(ciclo.fec_final)
+        editTextAnnio.setText(ciclo.annio.toString())
+        editTextFechaInicio.setText(ciclo.fec_inicio)
+        editTextnum.setText(toRoman(ciclo.numero))
+        if(ciclo!!.estado==1)
+            estado.setText("Activo")
+        else
+            estado.setText("Inactivo")
     }
 
-    private fun toInt(valor:String): Int {
+    private fun volver(){
+        setToolbarTitle("Ciclos")
+        changeFragment(CiclosFragment())
+    }
+    private fun toRoman(valor:Int): String {
         return when(valor){
-            "I"-> 1
-            "II"-> 2
-            "III"-> 3
-            else-> 0
+            1-> "I"
+            2->"II"
+            3->"III"
+            else-> ""
         }
     }
 }

@@ -82,7 +82,7 @@ class CrearCicloFragment: FragmentUtils() {
         editTextFechaFinal?.setText("")
     }
     private fun volver(){
-        setToolbarTitle("Inicio")
+        setToolbarTitle("Ciclos")
         changeFragment(CiclosFragment())
     }
     private fun validarDatos():Boolean{//Manejo de errores

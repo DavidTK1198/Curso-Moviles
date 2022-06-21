@@ -67,6 +67,13 @@ class CursosFragment: FragmentUtils() {
             setToolbarTitle("Carreras")
             changeFragment(CarrerasFragment())
         }
+
+
+        backBtn = view.findViewById(R.id.volvercar)
+        addsBtn.setOnClickListener { view ->
+            setToolbarTitle("Carreras")
+            changeFragment(CarrerasFragment())
+        }
         cursoViewModel.getCursosList()!!.observe(viewLifecycleOwner) { cursos ->
             listaCurso = cursos as ArrayList<Curso>
             refresh()

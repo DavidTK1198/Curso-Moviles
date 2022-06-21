@@ -4,144 +4,151 @@
                                                    xmlns:tools="http://schemas.android.com/tools"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
-                                                   tools:context=".controller.ui.CreateEstudianteFragment">
+                                                   tools:context=".controller.ui.CreateEstudianteFragment"
+                                                   android:id="@+id/btnEstado">
 
     <TextView
             android:id="@+id/textView_accionCycle"
             style="@style/Widget.AppCompat.TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="70dp"
             android:text="Editar Ciclo"
             android:textSize="34sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.419"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/textView5"/>
 
     <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="8dp"
             android:text="Numero"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/editText_Numero"
-            app:layout_constraintTop_toBottomOf="@+id/textView_accionCycle"/>
-    <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:text="Codigo"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/editText_Codigo"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Numero"/>
-
+            app:layout_constraintStart_toStartOf="@+id/editText_Numero_E"
+            app:layout_constraintTop_toBottomOf="@+id/textView_accionCycle" android:layout_marginEnd="298dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"/>
     <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
             android:text="Año"
-            app:layout_constraintStart_toStartOf="@+id/editText_annio"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Codigo"/>
+            app:layout_constraintTop_toBottomOf="@+id/editText_Numero_E" android:layout_marginEnd="331dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="56dp"
+            app:layout_constraintHorizontal_bias="1.0"/>
 
     <EditText
-            android:id="@+id/editText_Numero"
+            android:id="@+id/editText_Numero_E"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:ems="10"
             android:hint="Numero"
             android:inputType="textPersonName"
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.495" android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/textView5"/>
-
     <EditText
-            android:id="@+id/editText_Codigo"
+            android:id="@+id/editText_annio_E"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:hint="Codigo"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6"/>
-
-    <EditText
-            android:id="@+id/editText_annio"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:ems="10"
             android:hint="Año"
             android:inputType="textPassword"
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" android:layout_marginBottom="37dp"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextFechaInicio"/>
-
-    <Button
-            android:id="@+id/btn_guardarCycle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="192dp"
-            android:text="Guardar Ciclo"
-            app:layout_constraintEnd_toEndOf="@+id/editText_annio"
-            app:layout_constraintTop_toBottomOf="@+id/editText_annio" android:layout_marginEnd="8dp"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView7"
+            app:layout_constraintBottom_toTopOf="@+id/editTextTextFechaInicio_E"
+            app:layout_constraintVertical_bias="0.061"/>
     <Button
             android:id="@+id/btn_volver_cycle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="192dp"
             android:text="Volver"
-            app:layout_constraintStart_toStartOf="@+id/editText_annio"
-            app:layout_constraintTop_toBottomOf="@+id/editText_annio" android:layout_marginStart="24dp"/>
+            app:layout_constraintEnd_toStartOf="@+id/btn_Estado"
+            android:layout_marginEnd="14dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="43dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="172dp" android:layout_marginTop="37dp"
+            app:layout_constraintTop_toBottomOf="@+id/Estado" app:layout_constraintVertical_bias="0.145"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editTextTextFechaInicio"
+            android:id="@+id/editTextTextFechaInicio_E"
             android:hint="Fecha de inicio" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.273"
             app:layout_constraintTop_toBottomOf="@+id/textView2" android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView3" app:layout_constraintVertical_bias="0.0"/>
+    />
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editTextTextPersonName2"
-            android:hint="Fecha final" app:layout_constraintEnd_toStartOf="@+id/switch1"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.777" android:layout_marginBottom="108dp"/>
+            android:id="@+id/editfecfinal"
+            android:hint="Fecha final"
+            android:layout_marginEnd="145dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="57dp" android:layout_marginTop="9dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+    />
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/Estado"
+            android:hint="Estado"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="56dp" android:layout_marginEnd="145dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gfdgdgd"
+            app:layout_constraintHorizontal_bias="1.0"
+            android:layout_marginTop="16dp"/>
     <TextView
             android:text="Fecha de inicio"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textView2" tools:layout_editor_absoluteY="461dp"
-            tools:layout_editor_absoluteX="56dp"/>
+            android:layout_height="wrap_content" android:id="@+id/textView2"
+            android:layout_marginEnd="263dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/editText_annio_E" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="55dp"
+    />
     <TextView
             android:text="Fecha final"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/textView3"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.16"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName2" android:layout_marginBottom="8dp"/>
-    <Switch
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextFechaInicio_E"
+            android:layout_marginBottom="10dp" app:layout_constraintBottom_toTopOf="@+id/editfecfinal"
+            android:layout_marginEnd="287dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="57dp"
+            android:layout_marginTop="8dp"/>
+    <TextView
             android:text="Estado"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/switch1"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="40dp"
-            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName2"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.142"/>
+            android:layout_height="wrap_content" android:id="@+id/gfdgdgd"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="24dp" android:layout_marginTop="14dp"
+            app:layout_constraintTop_toBottomOf="@+id/editfecfinal" android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.103" app:layout_constraintBottom_toTopOf="@+id/Estado"
+            android:layout_marginBottom="16dp"/>
+    <Button
+            android:text="Cambiar Estado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/btn_Estado"
+            android:layout_marginEnd="95dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="14dp"
+            app:layout_constraintStart_toEndOf="@+id/btn_volver_cycle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="172dp" android:layout_marginTop="37dp"
+            app:layout_constraintTop_toBottomOf="@+id/Estado" app:layout_constraintVertical_bias="0.145"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

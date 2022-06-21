@@ -6,15 +6,15 @@ class Ciclo {
     var id: Int
     var fec_inicio: String
     var fec_final: String
-    var isEstado: Int
+    var estado: Int = 0
 
-    constructor(id: Int, annio: Int, numero: Int, estado: Int, fec_inicio: String, fec_final: String) {
+    constructor(id: Int, annio: Int, numero: Int, est: Int, fec_inicio: String, fec_final: String) {
         this.annio = annio
         this.numero = numero
         this.id = id
         this.fec_inicio = fec_inicio
         this.fec_final = fec_final
-        isEstado = estado
+        this.estado = est
     }
 
     constructor() {
@@ -23,6 +23,6 @@ class Ciclo {
         id = 0
         fec_inicio = ""
         fec_final = ""
-        isEstado = 0
+        estado = 0
     }
 }
