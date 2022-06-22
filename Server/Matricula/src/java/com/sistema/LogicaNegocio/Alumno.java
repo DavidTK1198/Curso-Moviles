@@ -32,6 +32,8 @@ public class Alumno {
         this.carrera = carrera;
     }
 
+
+
     public String getCedula() {
         return cedula;
     }

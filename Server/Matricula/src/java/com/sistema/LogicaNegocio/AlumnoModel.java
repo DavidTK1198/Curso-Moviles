@@ -62,4 +62,16 @@ public class AlumnoModel {
     public void buscarporCarrera() throws GlobalException, NoDataException {
         alumnos = (List<Alumno>) alumno_DBA.listarAlumno("carrera", current.getCarrera().getCodigo());
     }
+
+    public void agregar() throws GlobalException, NoDataException {
+       this.alumno_DBA.insertarAlumno(current);
+    }
+
+    public void eliminar() throws GlobalException, NoDataException {
+       this.alumno_DBA.eliminarAlumnos(current.getCedula());
+    }
+
+    public void actualizar() throws GlobalException, NoDataException {
+       this.alumno_DBA.modificarAlumno(current);
+    }
 }

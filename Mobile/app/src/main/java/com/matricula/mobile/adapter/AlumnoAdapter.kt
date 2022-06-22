@@ -16,7 +16,7 @@ class AlumnoAdapter(val c: Context, val AlumnoList:ArrayList<Alumno>): RecyclerV
 {
     private var itemsList: ArrayList<Alumno>? = null
     var AlumnoLiveData:MutableLiveData<Alumno>? = null
-    private var state:MutableLiveData<Boolean>?=null
+    private var state:MutableLiveData<Int>?=null
 
     init {
         this.itemsList=AlumnoList
@@ -31,7 +31,7 @@ class AlumnoAdapter(val c: Context, val AlumnoList:ArrayList<Alumno>): RecyclerV
             name = v.findViewById(R.id.mTitle)
             mbNum = v.findViewById(R.id.mSubTitle)
             mMenus = v.findViewById(R.id.mMenus)
-            state=MutableLiveData<Boolean>()
+            state=MutableLiveData<Int>()
             mMenus.setOnClickListener { popupMenus(it) }
         }
 
@@ -49,7 +49,7 @@ class AlumnoAdapter(val c: Context, val AlumnoList:ArrayList<Alumno>): RecyclerV
                                     dialog,_->
                                 Toast.makeText(c,"Se editara la Alumno",Toast.LENGTH_SHORT).show()
                                 dialog.dismiss()
-                                state!!.value=false
+                                state!!.value=1
                                 AlumnoLiveData!!.value = itemsList!!.get(adapterPosition)
 
                             }
@@ -66,13 +66,34 @@ class AlumnoAdapter(val c: Context, val AlumnoList:ArrayList<Alumno>): RecyclerV
                         AlertDialog.Builder(c)
                             .setTitle("Eliminar")
                             .setIcon(R.drawable.ic_warning)
-                            .setMessage("¿Está seguro que desea Eliminarla?")
+                            .setMessage("¿Está seguro que desea Eliminar?")
                             .setPositiveButton("Sí"){
                                     dialog,_->
                                 dialog.dismiss()
-                                state!!.value=true
+                                state!!.value=2
                                 AlumnoLiveData!!.value = itemsList!!.get(adapterPosition)
-                                state!!.value=false
+                                state!!.value=0
+                            }
+                            .setNegativeButton("No"){
+                                    dialog,_->
+                                dialog.dismiss()
+                            }
+                            .create()
+                            .show()
+
+                        true
+                    }
+                    R.id.eshistorial->{
+                        AlertDialog.Builder(c)
+                            .setTitle("Historial Académico")
+                            .setIcon(R.drawable.ic_warning)
+                            .setMessage("¿Está seguro que desea ver el historial?")
+                            .setPositiveButton("Sí"){
+                                    dialog,_->
+                                dialog.dismiss()
+                                state!!.value=3
+                                AlumnoLiveData!!.value = itemsList!!.get(adapterPosition)
+                                state!!.value=0
                             }
                             .setNegativeButton("No"){
                                     dialog,_->
@@ -148,7 +169,7 @@ class AlumnoAdapter(val c: Context, val AlumnoList:ArrayList<Alumno>): RecyclerV
         }
         return AlumnoLiveData
     }
-    fun check_state(): Boolean? {
+    fun check_state(): Int? {
         return state!!.value
     }
 

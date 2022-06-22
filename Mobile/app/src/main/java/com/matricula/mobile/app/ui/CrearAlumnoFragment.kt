@@ -136,6 +136,7 @@ class CrearAlumnoFragment: FragmentUtils() {
     private fun insertarAlumno(Alumno: Alumno){
         initLoading()
         CoroutineScope(Dispatchers.IO).launch {
+            try {
             val call = AlumnoService.getInstance().ingresarAlumno(Alumno)
             if (call.isSuccessful) {
                 withContext(Dispatchers.Main) {
@@ -145,6 +146,9 @@ class CrearAlumnoFragment: FragmentUtils() {
                 withContext(Dispatchers.Main) {
                     stopLoadingError()
                 }
+            }
+            } catch (e: Exception) {
+
             }
         }
     }

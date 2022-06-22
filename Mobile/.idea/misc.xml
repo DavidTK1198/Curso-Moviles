@@ -3,14 +3,30 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2015625" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/backes.xml" value="0.2953125" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/bg_iv.xml" value="0.1" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/bg_linear_layout.xml" value="0.1" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_account.xml" value="0.1" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_add.xml" value="0.1" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_check.xml" value="0.1" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_day_svgrepo_com.xml" value="0.2123076923076923" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_delete.xml" value="0.1" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_edit.xml" value="0.2123076923076923" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_educative_books_svgrepo_com.xml" value="0.2015625" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_grades_svgrepo_com.xml" value="0.2015625" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_home_svgrepo_com.xml" value="0.2015625" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2015625" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_logout_svgrepo_com.xml" value="0.2015625" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_more.xml" value="0.1" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_profle_svgrepo_com.xml" value="0.2015625" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_school_svgrepo_com__1_.xml" value="0.2015625" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_security_svgrepo_com.xml" value="0.2123076923076923" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_square_academic_cap_svgrepo_com.xml" value="0.2015625" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_student_svgrepo_com.xml" value="0.2015625" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_success.xml" value="0.2015625" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_teachers_svgrepo_com.xml" value="0.2015625" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/ic_warning.xml" value="0.2123076923076923" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/nav_item_background.xml" value="0.1" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/nav_item_text.xml" value="0.1" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/drawable/shape_background.xml" value="0.1" />
@@ -33,6 +49,7 @@
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_cursos.xml" value="0.19746376811594202" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_edit_inscriptions.xml" value="0.14739583333333334" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_edit_profesor.xml" value="0.2" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_edit_students.xml" value="0.25" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_edit_users.xml" value="0.25" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_editar_carreras.xml" value="0.19746376811594202" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_editar_ciclos.xml" value="0.33" />

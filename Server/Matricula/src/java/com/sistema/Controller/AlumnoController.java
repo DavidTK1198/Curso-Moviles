@@ -4,6 +4,7 @@ import com.sistema.AccesoDatos.GlobalException;
 import com.sistema.AccesoDatos.NoDataException;
 import com.sistema.LogicaNegocio.Alumno;
 import com.sistema.LogicaNegocio.AlumnoModel;
+import com.sistema.LogicaNegocio.Carrera;
 import java.util.List;
 
 /**
@@ -45,5 +46,20 @@ public class AlumnoController {
         model.getCurrent().getCarrera().setCodigo(codigo);
         model.buscarporCarrera();
         return model.getAlumnos();
+    }
+
+    public void agregar(Alumno p) throws GlobalException, NoDataException {
+       model.setCurrent(p);
+       model.agregar();
+    }
+
+    public void eliminar(String id) throws GlobalException, NoDataException {
+        model.setCurrent(new Alumno(id,"","","","",new Carrera()));
+        model.eliminar();
+    }
+
+    public void actualizar(Alumno p) throws GlobalException, NoDataException {
+       model.setCurrent(p);
+       model.actualizar();
     }
 }

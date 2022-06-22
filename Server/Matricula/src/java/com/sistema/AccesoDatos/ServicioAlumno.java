@@ -17,10 +17,10 @@ import oracle.jdbc.internal.OracleTypes;
  */
 public class ServicioAlumno extends Servicio {
 
-    private static final String insertarAlumno = "{call insertarAlumno (?,?,?,?)}";
+    private static final String insertarAlumno = "{call insertarAlumno (?,?,?,?,?,?)}";
     private static final String LISTAR = "{?=call listarAlumno()}";
     private static final String BUSCARID = "{?=call buscaralumno(?)}";
-    private static final String modificarAlumno = "{call modificarAlumno (?,?,?,?)}";
+    private static final String modificarAlumno = "{call modificarAlumno (?,?,?,?,?)}";
     private static final String eliminarAlumno = "{call eliminarAlumno(?)}";
     private static final String BUSCARNOMBRE = "{?=call buscarAlumnopornombre(?)}";
     private static final String BUSCARCARRERA = "{?=call buscarAlumnoporcarrera(?)}";
@@ -119,6 +119,8 @@ public class ServicioAlumno extends Servicio {
             pstmt.setString(2, alumno.getNombre());
             pstmt.setString(3, alumno.getTeléfono());
             pstmt.setString(4, alumno.getEmail());
+            pstmt.setString(5, alumno.getFech_nac());
+            pstmt.setString(6,alumno.getCarrera().getCodigo());
 
             boolean resultado = pstmt.execute();
             if (resultado == true) {
@@ -155,10 +157,11 @@ public class ServicioAlumno extends Servicio {
             pstmt.setString(2, alumno.getNombre());
             pstmt.setString(3, alumno.getTeléfono());
             pstmt.setString(4, alumno.getEmail());
+            pstmt.setString(5, alumno.getFech_nac());
             int resultado = pstmt.executeUpdate();
 
             //si es diferente de 0 es porq si afecto un registro o mas
-            if (resultado != 0) {
+            if (resultado == 0) {
                 throw new NoDataException("No se realizo la actualización");
             } else {
                 System.out.println("\nModificación Satisfactoria!");
@@ -192,7 +195,7 @@ public class ServicioAlumno extends Servicio {
 
             int resultado = pstmt.executeUpdate();
 
-            if (resultado != 0) {
+            if (resultado == 0) {
                 throw new NoDataException("No se realizo el borrado");
             } else {
                 System.out.println("\nEliminación Satisfactoria!");

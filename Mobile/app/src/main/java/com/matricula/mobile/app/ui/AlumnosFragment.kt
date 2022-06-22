@@ -81,24 +81,29 @@ class AlumnosFragment : FragmentUtils() {
         val Alumno: Observer<Alumno> = object : Observer<Alumno> {
             @Override
             override fun onChanged(@Nullable Alumnos: Alumno?) {
-                if (adaptador.check_state() == true) {
-                    eliminarAlumno()
-                } else {
-                    val editar = EditarAlumnoFragment()
-                    setToolbarTitle("Editar Alumno")
-                    var bundle =  Bundle();
-                    var Alumno=adaptador.getAlumnoActual()!!.value
-                    val gson = Gson()
-                    var json=gson.toJson(Alumno)
-                    bundle.putString("Alumno", json)
-                    editar.arguments=bundle
-                    changeFragment(editar)
+                when(adaptador.check_state()){
+                    1->editar()
+                    2->eliminarAlumno()
+                    3->historial()
                 }
             }
+
+
         }
         adaptador.getAlumnoActual()!!.observe(this, Alumno)
     }
 
+    private fun historial() {
+        val historial = HistorialFragment()
+        setToolbarTitle("Historial Académico")
+        var bundle =  Bundle();
+        var Alumno=adaptador.getAlumnoActual()!!.value
+        val gson = Gson()
+        var json=gson.toJson(Alumno)
+        bundle.putString("Alumno", json)
+        historial.arguments=bundle
+        changeFragment(historial)
+    }
     private fun  getListOfAlumnos() {
         initLoading()
         CoroutineScope(Dispatchers.IO).launch {
@@ -118,6 +123,18 @@ class AlumnosFragment : FragmentUtils() {
                 }//mensaje de error del servidor...
             }
         }
+    }
+
+    private fun editar(){
+        val editar = EditarAlumnoFragment()
+        setToolbarTitle("Editar Alumno")
+        var bundle =  Bundle();
+        var Alumno=adaptador.getAlumnoActual()!!.value
+        val gson = Gson()
+        var json=gson.toJson(Alumno)
+        bundle.putString("Alumno", json)
+        editar.arguments=bundle
+        changeFragment(editar)
     }
 
     private fun eliminarAlumno() {
