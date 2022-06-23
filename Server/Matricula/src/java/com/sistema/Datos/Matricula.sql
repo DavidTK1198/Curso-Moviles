@@ -557,7 +557,12 @@ BEGIN
 RETURN grupo_cursor; 
 END;
 /
-
+create or replace procedure eliminarGrupo(codigoin IN Grupo.idgrupo%TYPE)
+as
+begin
+    delete from Grupo where idgrupo =codigoin;
+end;
+/
 --INSCRIPCION
 ------------------------------------------------------
 PROMPT SE CREA Inscripcion

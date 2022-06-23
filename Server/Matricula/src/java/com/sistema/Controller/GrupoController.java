@@ -65,4 +65,9 @@ public class GrupoController {
         return model.getGrupos();
     }
 
+    public void eliminar(String id) throws GlobalException, NoDataException {
+        model.getCurrent().setIdEntidad(Integer.parseInt(id));
+        model.eliminar();
+    }
+
 }

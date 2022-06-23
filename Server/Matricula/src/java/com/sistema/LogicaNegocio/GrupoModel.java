@@ -71,5 +71,9 @@ public class GrupoModel {
         this.grupos=(List<Grupo>) grupo_DBA.listarGrupo(current.getCiclo().getId(), "", "ciclo");
     }
 
+    public void eliminar() throws GlobalException, NoDataException {
+       this.grupo_DBA.eliminarGrupos(Integer.toString(current.getIdEntidad()));
+    }
+
 
 }

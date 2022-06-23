@@ -85,6 +85,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 setToolbarTitle("Ciclos")
                 changeFragment(CiclosFragment())
             }
+
+            R.id.nav_item_oferta -> {
+                setToolbarTitle("Oferta Académica")
+                changeFragment(OfertaFragment())
+            }
             R.id.nav_item_logout -> {
             logout()
             }

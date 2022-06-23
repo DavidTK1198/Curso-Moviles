@@ -5,6 +5,7 @@ import com.sistema.LogicaNegocio.Grupo;
 import java.util.List;
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotAcceptableException;
@@ -76,6 +77,7 @@ public class Grupos {
     }
     
     @PUT
+      @PermitAll
     @Consumes(MediaType.APPLICATION_JSON)
     public void Actualizar(Grupo p) {
         try {
@@ -95,5 +97,19 @@ public class Grupos {
             throw new NotFoundException();
         }
     }
+    
+        @PermitAll
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void Eliminar(@DefaultValue("")
+            @QueryParam("id") String id
+    ) {
+        try {
+            control.eliminar(id);
+        } catch (Exception ex) {
+            throw new NotAcceptableException();
+        }
+    }
+    
 
 }

@@ -2,12 +2,13 @@ package com.matricula.mobile.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.matricula.mobile.models.Carrera
 import com.matricula.mobile.models.Ciclo
 import com.matricula.mobile.models.Curso
 import com.matricula.mobile.models.Grupo
 
-class GrupoViewModel {
+class GrupoViewModel:ViewModel() {
 
     private var GrupoListLiveData: MutableLiveData<List<Grupo>>? = null
     private var state: MutableLiveData<Boolean>?=null
@@ -17,7 +18,7 @@ class GrupoViewModel {
     private var curso:MutableLiveData<Curso>?= MutableLiveData<Curso>()
 
 
-    fun getCarrerasList(): MutableLiveData<List<Grupo>>? {
+    fun getGruposList(): MutableLiveData<List<Grupo>>? {
         if (GrupoListLiveData== null) {
             GrupoListLiveData= MutableLiveData<List<Grupo>>()
             state= MutableLiveData<Boolean>()
@@ -38,5 +39,19 @@ class GrupoViewModel {
 
     fun setMensaje(mensaje:String){
         message!!.value=mensaje
+    }
+
+    fun getCiclo(): Ciclo? {
+        return this.ciclo!!.value
+    }
+
+    fun getCurso(): Curso? {
+        return this.curso!!.value
+    }
+    fun updateCurso(curso: Curso) {
+        this.curso!!.value=curso
+    }
+    fun updateCiclo(ciclo: Ciclo) {
+        this.ciclo!!.value=ciclo
     }
 }

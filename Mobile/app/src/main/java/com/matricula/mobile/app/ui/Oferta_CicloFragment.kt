@@ -2,7 +2,6 @@ package com.matricula.mobile.app.ui
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,29 +13,29 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.gson.Gson
-import com.matricula.mobile.viewModels.GrupoViewModel
 import com.matricula.mobile.R
-import com.matricula.mobile.adapter.GrupoAdapter
-import com.matricula.mobile.apiService.GrupoService
-import com.matricula.mobile.models.Grupo
+import com.matricula.mobile.adapter.Oferta_CicloAdapter
+import com.matricula.mobile.apiService.CicloService
+import com.matricula.mobile.models.Ciclo
+import com.matricula.mobile.viewModels.CicloViewModel
+import com.matricula.mobile.viewModels.GrupoViewModel
 import kotlinx.coroutines.*
-import java.net.SocketTimeoutException
 
 
-class GruposFragment : FragmentUtils() {
-
+class Oferta_CicloFragment : FragmentUtils() {
     lateinit var recyclerViewElement: RecyclerView
-    lateinit var adaptador: GrupoAdapter
+    lateinit var adaptador: Oferta_CicloAdapter
     private lateinit var addsBtn: FloatingActionButton
-    private lateinit var listaGrupo: ArrayList<Grupo>
-    private val GrupoViewModel: GrupoViewModel by activityViewModels()
+    private lateinit var listaCiclo: ArrayList<Ciclo>
+    private val grupoViewModel: GrupoViewModel by activityViewModels()
+    private val cicloViewModel: CicloViewModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view = inflater.inflate(R.layout.fragment_grupos, container, false)
-        listaGrupo = ArrayList()
+        var view = inflater.inflate(R.layout.fragment_carreras, container, false)
+        listaCiclo = ArrayList()
         recyclerViewElement = view.findViewById(R.id.mRecycler)
         recyclerViewElement.layoutManager = LinearLayoutManager(recyclerViewElement.context)
         recyclerViewElement.setHasFixedSize(true)
@@ -54,22 +53,22 @@ class GruposFragment : FragmentUtils() {
             })
         addsBtn = view.findViewById(R.id.addingBtn)
         addsBtn.setOnClickListener { view ->
-            setToolbarTitle("Crear Grupo")
-            changeFragment(CrearGrupoFragment())
+            setToolbarTitle("")
+            changeFragment(OfertaFragment())
         }
-        GrupoViewModel.getGruposList()!!.observe(viewLifecycleOwner) { Grupos ->
-            listaGrupo = Grupos as ArrayList<Grupo>
+        cicloViewModel.getCiclosList()!!.observe(viewLifecycleOwner) { ciclos ->
+            listaCiclo = ciclos as ArrayList<Ciclo>
             refresh()
         }
-        getListOfGrupos()
-        adaptador = GrupoAdapter(this.activity!!, listaGrupo)
+        getListOfCiclos()
+        adaptador = Oferta_CicloAdapter(this.activity!!, listaCiclo)
         recyclerViewElement.adapter = adaptador
         return view;
     }
 
     private fun refresh() {
-        if (GrupoViewModel.check_state() == true) {
-            adaptador = GrupoAdapter(this.activity!!, listaGrupo)
+        if (cicloViewModel.check_state() == true) {
+            adaptador = Oferta_CicloAdapter(this.activity!!, listaCiclo)
             recyclerViewElement.adapter = adaptador
             contract()
         } else {
@@ -78,77 +77,45 @@ class GruposFragment : FragmentUtils() {
     }
 
     private fun contract() {
-        val Grupo: Observer<Grupo> = object : Observer<Grupo> {
+        val Ciclo: Observer<Ciclo> = object : Observer<Ciclo> {
             @Override
-            override fun onChanged(@Nullable Grupos: Grupo?) {
-                when(adaptador.check_state()){
-                    0->{editar()}
-                    //1->{eliminarGrupo()}
-                }
+            override fun onChanged(@Nullable Ciclos: Ciclo?) {
+                volverCiclo()
             }
         }
-        adaptador.getGrupoActual()!!.observe(this, Grupo)
+        adaptador.getCicloActual()!!.observe(this, Ciclo)
     }
 
-    private fun editar(){
-        val editar = EditarGrupoFragment()
-        setToolbarTitle("Editar Grupo")
-        var bundle =  Bundle();
-        var Grupo=adaptador.getGrupoActual()!!.value
-        val gson = Gson()
-        var json=gson.toJson(Grupo)
-        bundle.putString("Grupo", json)
-        editar.arguments=bundle
-        changeFragment(editar)
+    private fun volverCiclo(){
+        var Ciclo= adaptador.getCicloActual()!!.value
+        grupoViewModel.updateCiclo(Ciclo!!)
+        val a = OfertaFragment()
+        setToolbarTitle("Oferta Académica")
+        changeFragment(a)
     }
-    private fun  getListOfGrupos() {
-        val ciclo=GrupoViewModel.getCiclo()!!.id.toString()
-        val curso=GrupoViewModel.getCurso()!!.codigo
+
+    private fun  getListOfCiclos() {
+        initLoading()
         CoroutineScope(Dispatchers.IO).launch {
-            val call = GrupoService.getInstance().obtenerGrupos(ciclo,curso)
-            val nGrupos = call.body()
+            val call = CicloService.getInstance().obtenerCiclos()
+            val nCiclos = call.body()
             if (call.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    GrupoViewModel.setState(true)
-                    GrupoViewModel.updateModel(nGrupos!!)
+                    cicloViewModel.setState(true)
+                    cicloViewModel.updateModel(nCiclos!!)
                     stopLoading()
                 }
             } else {
                 withContext(Dispatchers.Main) {
-                    GrupoViewModel.setState(false)
-                    GrupoViewModel.setMensaje(call.message())
+                    cicloViewModel.setState(false)
+                    cicloViewModel.setMensaje(call.message())
                     stopLoading()
                 }//mensaje de error del servidor...
             }
         }
     }
 
-   private fun eliminarGrupo() {
-       initLoading()
-       CoroutineScope(Dispatchers.IO).launch {
-           try {
-               var codigo = adaptador.getGrupoActual()!!.value!!.idEntidad.toString()
-               val call = GrupoService.getInstance().eliminarGrupo(codigo!!)
-               if (call.isSuccessful) {
-                    withContext(Dispatchers.Main) {
-                       stopLoading()
-                       dialogDeleteSuccess()
-                       getListOfGrupos()
-                   }
-               } else {
-                    withContext(Dispatchers.Main) {
-                       GrupoViewModel.setState(false)
-                        GrupoViewModel.setMensaje(call.message())
-                       stopLoading()
-                        dialogDeleteError()
-                   }//mensaje de error del servidor...
-               }
-           } catch (e: SocketTimeoutException) {
-                Log.d("xd","mamado")
-            }
-      }
 
-   }
     private fun initLoading(){
         val loader = view?.findViewById<ProgressBar>(R.id.loading)
         loader?.visibility=View.VISIBLE

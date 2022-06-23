@@ -10,6 +10,7 @@ class CarreraViewModel: ViewModel() {
 
     private var carreraListLiveData: MutableLiveData<List<Carrera>>? = null
     private var state:MutableLiveData<Boolean>?=null
+    private var carrera:MutableLiveData<Carrera>?=MutableLiveData<Carrera>()
     private var message:MutableLiveData<String>?=null
 
     fun getCarrerasList(): LiveData<List<Carrera>>? {
@@ -34,4 +35,13 @@ class CarreraViewModel: ViewModel() {
     fun setMensaje(mensaje:String){
         message!!.value=mensaje
     }
+
+    fun setCarrera(carrera: Carrera){
+        this.carrera!!.value=carrera
+    }
+
+    fun  getCarrera(): Carrera? {
+        return this.carrera!!.value
+    }
+
 }
