@@ -13,7 +13,7 @@ interface GrupoService {
     @DELETE("grupos")
     suspend fun eliminarGrupo(@Query("id") id:String): Response<Void>
     @POST("grupos/agregar")
-    suspend fun ingresarGrupo(@Body carrera: Carrera): Response<Void>
+    suspend fun ingresarGrupo(@Body grupo: Grupo): Response<Void>
     @PUT("grupos")
     suspend fun modificarGrupo(@Body carrera: Carrera): Response<Void>
     companion object {

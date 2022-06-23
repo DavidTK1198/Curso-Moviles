@@ -11,6 +11,7 @@ class ProfesorViewModel: ViewModel() {
 
     private var ProfesorListLiveData: MutableLiveData<List<Profesor>>? = null
     private var state:MutableLiveData<Boolean>?=null
+    private var profesor:MutableLiveData<Profesor>?=MutableLiveData<Profesor>()
     private var message:MutableLiveData<String>?=null
 
     fun getProfesorsList(): LiveData<List<Profesor>>? {
@@ -32,7 +33,14 @@ class ProfesorViewModel: ViewModel() {
         ProfesorListLiveData!!.value = NProfesors
     }
 
+    fun setprofesor(profesor: Profesor){
+        this.profesor!!.value=profesor
+    }
     fun setMensaje(mensaje:String){
         message!!.value=mensaje
+    }
+
+    fun getProfesor(): Profesor? {
+        return this.profesor!!.value
     }
 }

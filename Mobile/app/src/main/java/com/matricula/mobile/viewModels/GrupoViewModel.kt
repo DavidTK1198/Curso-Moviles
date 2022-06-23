@@ -54,4 +54,11 @@ class GrupoViewModel:ViewModel() {
     fun updateCiclo(ciclo: Ciclo) {
         this.ciclo!!.value=ciclo
     }
+
+    fun updateGrupo(grupo: Grupo){
+        this.Grupo!!.value=grupo
+    }
+    fun getGrupo(): Grupo? {
+        return this.Grupo!!.value
+    }
 }

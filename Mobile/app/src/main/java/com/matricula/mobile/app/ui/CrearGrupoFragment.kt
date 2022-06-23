@@ -1,5 +1,6 @@
 package com.matricula.mobile.app.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,60 +8,84 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import com.matricula.mobile.R
-import com.matricula.mobile.apiService.CarreraService
-import com.matricula.mobile.models.Carrera
+import com.matricula.mobile.apiService.GrupoService
+import com.matricula.mobile.models.Grupo
+import com.matricula.mobile.viewModels.GrupoViewModel
+import com.matricula.mobile.viewModels.ProfesorViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class CrearGrupoFragment: FragmentUtils() {
-    private lateinit  var editTextName:EditText
-    private lateinit var editTextCodigo :EditText
-    private lateinit var editTexttitulo :EditText
+    private lateinit  var editnumero:EditText
+    private lateinit var editCupo :EditText
+    private lateinit var editHorario :EditText
+    private lateinit var  profesorbtn:Button
+    private val GrupoViewModel: GrupoViewModel by activityViewModels()
+    private val ProfesorViewModel: ProfesorViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         var view = inflater.inflate(R.layout.fragment_create_groups, container, false)
 
-//        view.findViewById<Button>(R.id.btn_guardarCareer).setOnClickListener{
-//            this.crearCarrera()
-//        }
-//
-//        view.findViewById<Button>(R.id.btn_volver_career).setOnClickListener {
-//            volver()
-//        }
-//        editTexttitulo=view.findViewById(R.id.editText_Title_Career)
-//        editTextName=view.findViewById(R.id.editText_Name_Career)
-//        editTextCodigo= view.findViewById(R.id.editText_Code_Career)
+       view.findViewById<Button>(R.id.btn_guardarGroup).setOnClickListener{
+            this.crearGrupo()
+        }
+
+        view.findViewById<Button>(R.id.btn_volver_group).setOnClickListener {
+            volver()
+        }
+        editnumero=view.findViewById(R.id.editText_Number)
+        editCupo=view.findViewById(R.id.editText_Cupo)
+        editHorario = view.findViewById(R.id.editTextHorario)
+
+       profesorbtn= view.findViewById<Button>(R.id.profesor_grupo)
+        profesorbtn.setOnClickListener{
+            setToolbarTitle("Profesores")
+            changeFragment(Grupo_ProfesorFragment())
+        }
+
+        if(ProfesorViewModel.getProfesor()!=null){
+            profesorbtn.setText(ProfesorViewModel!!.getProfesor()!!.nombre)
+        }
         return view
     }
-    private fun crearCarrera() {
-        var name = editTextName?.text.toString()
-        var codigo = editTextCodigo?.text.toString()
-        var titulo = editTexttitulo?.text.toString()
-        var carrera = Carrera(codigo, name, titulo)
-        if (validarDatos()) {
-            insertarCarrera(carrera)
-        }else{
-            val  message = "Debe Completar todos los datos!!"
-            Snackbar
-                .make(view!!, message!!, Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .show()}
+    private fun crearGrupo() {
+        var name = editnumero?.text.toString()
+        var codigo = editCupo.text.toString()
+        var titulo = editHorario ?.text.toString()
+        val profesor= ProfesorViewModel.getProfesor()
+        val curso=GrupoViewModel.getCurso()
+        val ciclo=GrupoViewModel.getCiclo()
+        try {
+            var c = Grupo(codigo.toInt(),codigo.toInt(), name.toInt(), titulo,ciclo!!,profesor!!,curso!!)
+            if (validarDatos()) {
+                insertarGrupo(c)
+            }else{
+                val  message = "Debe Completar todos los datos!!"
+                Snackbar
+                    .make(view!!, message!!, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null)
+                    .show()}
+        }catch (e:Exception){
+
+        }
+
     }
 
     private fun limpiar(){
-        editTextName?.setText("")
-        editTextCodigo?.setText("")
-        editTexttitulo?.setText("")
+        editnumero?.setText("")
+        editCupo?.setText("")
+        editHorario?.setText("")
     }
     private fun volver(){
-        setToolbarTitle("Carreras")
-        changeFragment(CarrerasFragment())
+        setToolbarTitle("Grupos")
+        changeFragment(GruposFragment())
     }
 
     private fun initLoading(){
@@ -73,30 +98,32 @@ class CrearGrupoFragment: FragmentUtils() {
         loader?.visibility=View.GONE
     }
 
-    private fun stopLoadingSuccess(){
-        val loader=view?.findViewById<ProgressBar>(R.id.loading)
-        loader?.visibility=View.GONE
-        val dialog=SuccessDiaglogFragment()
-        val bundle = Bundle()
-        bundle.putString("La carrera ${editTextName.text.toString()} con el código ${editTextCodigo.text.toString()} fue creada " +
-                "correctamente", "mensaje")
-        dialog.arguments=bundle
-        dialog.show(childFragmentManager,"agregar")
-        limpiar()
+    fun validarAgregar() {
+        if (profesorbtn.text.toString() == "Debe Seleccionar un Profesor") {
+            AlertDialog.Builder(this.activity!!)
+                .setTitle("Alerta")
+                .setIcon(R.drawable.ic_warning)
+                .setMessage("Debe Seleccionar un Profesor")
+                .setPositiveButton("Ok") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+        }
     }
+
 
     private fun validarDatos():Boolean{//Manejo de errores
-        return(editTextName?.text.toString()!="" &&
-                editTextCodigo?.text.toString()!=""&& editTexttitulo?.text.toString()!="")
+        return(editnumero?.text.toString()!="" &&
+                editHorario?.text.toString()!=""&& editCupo?.text.toString()!="")
     }
 
-    private fun insertarCarrera(carrera: Carrera){
+    private fun insertarGrupo(Grupo: Grupo){
         initLoading()
         CoroutineScope(Dispatchers.IO).launch {
-            val call = CarreraService.getInstance().ingresarCarrera(carrera)
+            val call = GrupoService.getInstance().ingresarGrupo(Grupo)
             if (call.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    stopLoadingSuccess()
                 }
             } else {
                 withContext(Dispatchers.Main) {

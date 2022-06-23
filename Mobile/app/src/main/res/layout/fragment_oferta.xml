@@ -13,8 +13,8 @@
             android:layout_height="wrap_content">
 
         <Button
-                android:layout_width="236dp"
-                android:layout_height="wrap_content"
+                android:layout_width="295dp"
+                android:layout_height="38dp"
                 android:inputType="textPersonName"
                 android:ems="10"
                 android:id="@+id/Ciclocarga"
@@ -28,8 +28,8 @@
                 android:layout_marginBottom="23dp" app:layout_constraintBottom_toTopOf="@+id/btn_guardar_alumno"
                 android:textColorHint="@color/colorWhite"/>
         <Button
-                android:layout_width="242dp"
-                android:layout_height="wrap_content"
+                android:layout_width="283dp"
+                android:layout_height="38dp"
                 android:inputType="textPersonName"
                 android:ems="10"
                 android:id="@+id/Carreracarga"
@@ -43,8 +43,8 @@
                 android:layout_marginBottom="23dp" app:layout_constraintBottom_toTopOf="@+id/btn_guardar_alumno"
                 android:textColorHint="@color/colorWhite"/>
         <Button
-                android:layout_width="242dp"
-                android:layout_height="wrap_content"
+                android:layout_width="297dp"
+                android:layout_height="35dp"
                 android:inputType="textPersonName"
                 android:ems="10"
                 android:id="@+id/CargarCursos"
