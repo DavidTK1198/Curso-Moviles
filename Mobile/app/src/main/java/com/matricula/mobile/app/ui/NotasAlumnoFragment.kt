@@ -14,32 +14,32 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.gson.Gson
+import com.matricula.mobile.viewModels.InscripcionViewModel
 import com.matricula.mobile.R
-import com.matricula.mobile.adapter.AlumnoAdapter
-import com.matricula.mobile.apiService.AlumnoService
+import com.matricula.mobile.adapter.AlumnoNotaAdapter
+import com.matricula.mobile.apiService.InscripcionService
 import com.matricula.mobile.app.MainActivity
-import com.matricula.mobile.models.Alumno
+import com.matricula.mobile.models.Inscripcion
 import com.matricula.mobile.models.Usuario
-import com.matricula.mobile.viewModels.AlumnoViewModel
+import com.matricula.mobile.viewModels.GrupoViewModel
 import kotlinx.coroutines.*
 import java.net.SocketTimeoutException
 
 
-class AlumnosFragment : FragmentUtils() {
+class NotasAlumnoFragment : FragmentUtils() {
 
     lateinit var recyclerViewElement: RecyclerView
-    lateinit var adaptador: AlumnoAdapter
+    lateinit var adaptador: AlumnoNotaAdapter
     private lateinit var addsBtn: FloatingActionButton
-    private lateinit var listaAlumno: ArrayList<Alumno>
-    private lateinit var usuario: Usuario
-    private val alumnoViewModel: AlumnoViewModel by activityViewModels()
+    private lateinit var listaInscripcion: ArrayList<Inscripcion>
+    private val InscripcionViewModel: InscripcionViewModel by activityViewModels()
+    private val GrupoViewModel: GrupoViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view = inflater.inflate(R.layout.fragment_alumnos, container, false)
-        listaAlumno = ArrayList()
+        var view = inflater.inflate(R.layout.fragment_inscripciones, container, false)
+        listaInscripcion = ArrayList()
         recyclerViewElement = view.findViewById(R.id.mRecycler)
         recyclerViewElement.layoutManager = LinearLayoutManager(recyclerViewElement.context)
         recyclerViewElement.setHasFixedSize(true)
@@ -55,26 +55,24 @@ class AlumnosFragment : FragmentUtils() {
                     return false
                 }
             })
-        addsBtn = view.findViewById(R.id.addingBtn)
+        addsBtn = view.findViewById(R.id.volverMain)
         addsBtn.setOnClickListener { view ->
-            setToolbarTitle("Crear Alumno")
-            changeFragment(CrearAlumnoFragment())
+            setToolbarTitle("Inicio")
+            changeFragment(RegistroNotasFragment())
         }
-        alumnoViewModel.getAlumnosList()!!.observe(viewLifecycleOwner) { Alumnos ->
-            listaAlumno = Alumnos as ArrayList<Alumno>
+        InscripcionViewModel.getInscripcionesList()!!.observe(viewLifecycleOwner) { Inscripcions ->
+            listaInscripcion = Inscripcions as ArrayList<Inscripcion>
             refresh()
         }
-        getListOfAlumnos()
-
-       usuario = (activity as MainActivity?)!!.usuario()
-        adaptador = AlumnoAdapter(this.activity!!, listaAlumno,usuario)
+        getListOfInscripcion()
+        adaptador = AlumnoNotaAdapter(this.activity!!, listaInscripcion)
         recyclerViewElement.adapter = adaptador
         return view;
     }
 
     private fun refresh() {
-        if (alumnoViewModel.check_state() == true) {
-            adaptador = AlumnoAdapter(this.activity!!, listaAlumno,usuario)
+        if (InscripcionViewModel.check_state() == true) {
+            adaptador = AlumnoNotaAdapter(this.activity!!, listaInscripcion)
             recyclerViewElement.adapter = adaptador
             contract()
         } else {
@@ -83,83 +81,41 @@ class AlumnosFragment : FragmentUtils() {
     }
 
     private fun contract() {
-        val Alumno: Observer<Alumno> = object : Observer<Alumno> {
+        val Inscripcion: Observer<Inscripcion> = object : Observer<Inscripcion> {
             @Override
-            override fun onChanged(@Nullable Alumnos: Alumno?) {
-                when(adaptador.check_state()){
-                    1->editar()
-                    2->eliminarAlumno()
-                    3->historial()
-                }
-            }
-
-
-        }
-        adaptador.getAlumnoActual()!!.observe(this, Alumno)
-    }
-
-    private fun historial() {
-        val historial = HistorialFragment()
-        setToolbarTitle("Historial Académico")
-        var bundle =  Bundle();
-        var Alumno=adaptador.getAlumnoActual()!!.value
-        val gson = Gson()
-        var json=gson.toJson(Alumno)
-        bundle.putString("Alumno", json)
-        historial.arguments=bundle
-        changeFragment(historial)
-    }
-    private fun  getListOfAlumnos() {
-        initLoading()
-        CoroutineScope(Dispatchers.IO).launch {
-            val call = AlumnoService.getInstance().obtenerAlumnos()
-            val nAlumnos = call.body()
-            if (call.isSuccessful) {
-                withContext(Dispatchers.Main) {
-                    alumnoViewModel.setState(true)
-                    alumnoViewModel.updateModel(nAlumnos!!)
-                    stopLoading()
-                }
-            } else {
-                withContext(Dispatchers.Main) {
-                    alumnoViewModel.setState(false)
-                    alumnoViewModel.setMensaje(call.message())
-                    stopLoading()
-                }//mensaje de error del servidor...
+            override fun onChanged(@Nullable ins: Inscripcion?) {
+                InscripcionViewModel.setInscripcion(ins!!)
+                editar()
             }
         }
+        adaptador.getInscripcionActual()!!.observe(this, Inscripcion)
     }
 
     private fun editar(){
-        val editar = EditarAlumnoFragment()
-        setToolbarTitle("Editar Alumno")
-        var bundle =  Bundle();
-        var Alumno=adaptador.getAlumnoActual()!!.value
-        val gson = Gson()
-        var json=gson.toJson(Alumno)
-        bundle.putString("Alumno", json)
-        editar.arguments=bundle
-        changeFragment(editar)
+        val editar = NotaAlumnoFragment()
+       setToolbarTitle("Asignar Nota")
+          changeFragment(editar)
     }
 
-    private fun eliminarAlumno() {
+
+    private fun  getListOfInscripcion() {
         initLoading()
+        val grupo= GrupoViewModel.getGrupo()
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                var codigo = adaptador.getAlumnoActual()!!.value!!.cedula
-                val call = AlumnoService.getInstance().eliminarAlumno(codigo!!)
+                val call = InscripcionService.getInstance().obtenerInscripcionesPorGrupo(grupo!!.idEntidad.toString())
+                val nInscripcions = call.body()
                 if (call.isSuccessful) {
                     withContext(Dispatchers.Main) {
+                        InscripcionViewModel.setState(true)
+                        InscripcionViewModel.updateModel(nInscripcions!!)
                         stopLoading()
-                        dialogDeleteSuccess()
-                        getListOfAlumnos()
                     }
                 } else {
                     withContext(Dispatchers.Main) {
-                        alumnoViewModel.setState(false)
-                        alumnoViewModel.setMensaje(call.message())
+                        InscripcionViewModel.setState(false)
+                        InscripcionViewModel.setMensaje(call.message())
                         stopLoading()
-                        dialogDeleteError()
                     }//mensaje de error del servidor...
                 }
             } catch (e: SocketTimeoutException) {
@@ -167,6 +123,8 @@ class AlumnosFragment : FragmentUtils() {
             }
         }
     }
+
+
     private fun initLoading(){
         val loader = view?.findViewById<ProgressBar>(R.id.loading)
         loader?.visibility=View.VISIBLE

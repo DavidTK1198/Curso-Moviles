@@ -4,128 +4,72 @@
                                                    xmlns:tools="http://schemas.android.com/tools"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
-                                                   tools:context=".controller.ui.CreateEstudianteFragment">
+                                                   tools:context=".app.ui.CrearGrupoFragment">
 
     <TextView
             android:id="@+id/textView_accionGroup"
             style="@style/Widget.AppCompat.TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="Editar Grupo"
             android:textSize="34sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Numero"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/editText_Number"
-            app:layout_constraintTop_toBottomOf="@+id/textView_accionGroup"/>
-
-    <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Codigo"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/editText_Codigo"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Number"/>
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="64dp"
+            app:layout_constraintHorizontal_bias="0.359"/>
     <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
             android:text="Cupo"
-            app:layout_constraintStart_toStartOf="@+id/editText_Cupo"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Codigo"/>
-
-    <EditText
-            android:id="@+id/editText_Number"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:hint="Numero"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5"/>
-
-    <EditText
-            android:id="@+id/editText_Codigo"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:hint="Codigo"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6"/>
-
+            android:layout_marginEnd="323dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="56dp" app:layout_constraintHorizontal_bias="0.0"
+            android:layout_marginTop="48dp" app:layout_constraintTop_toBottomOf="@+id/textView_accionGroup"/>
     <EditText
             android:id="@+id/editText_Cupo"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:ems="10"
             android:hint="Cupo"
-            android:inputType="textPassword"
+            android:inputType="textPersonName"
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7"/>
-
+            android:layout_marginEnd="64dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="47dp"
+            android:layout_marginTop="24dp" app:layout_constraintTop_toBottomOf="@+id/textView7"
+            app:layout_constraintHorizontal_bias="1.0"/>
     <Button
             android:id="@+id/btn_guardarGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="276dp"
             android:text="Guardar Grupo"
-            app:layout_constraintEnd_toEndOf="@+id/editText_Cupo"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Cupo" android:layout_marginEnd="24dp"/>
+            android:layout_marginEnd="75dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="24dp"
+            app:layout_constraintStart_toEndOf="@+id/btn_volver_group"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="268dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/editTextHorario"/>
     <Button
             android:id="@+id/btn_volver_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="276dp"
             android:text="Volver"
-            app:layout_constraintStart_toStartOf="@+id/editText_Cupo"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Cupo" android:layout_marginStart="8dp"/>
-    <TextView
-            android:text="Cupo disponible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Cupo"
-            app:layout_constraintBottom_toTopOf="@+id/editTextCupoDisponible"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.18" app:layout_constraintVertical_bias="0.705"/>
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editTextCupoDisponible"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.273" app:layout_constraintBottom_toTopOf="@+id/textView8"
-            android:layout_marginBottom="8dp" android:hint="Cupo Disponible"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="43dp" app:layout_constraintEnd_toStartOf="@+id/btn_guardarGroup"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="268dp"
+            android:layout_marginTop="60dp" app:layout_constraintTop_toBottomOf="@+id/editTextHorario"
+            app:layout_constraintVertical_bias="0.0"/>
     <TextView
             android:text="Horario"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textView8" tools:layout_editor_absoluteY="469dp"
-            tools:layout_editor_absoluteX="55dp"/>
+            android:layout_height="wrap_content" android:id="@+id/textView8"
+            android:layout_marginEnd="308dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="56dp"
+            android:layout_marginTop="34dp" app:layout_constraintTop_toBottomOf="@+id/editText_Cupo"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -133,14 +77,8 @@
             android:ems="10"
             android:id="@+id/editTextHorario"
             android:hint="Horario"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" app:layout_constraintBottom_toTopOf="@+id/switch2"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.273" app:layout_constraintVertical_bias="0.23"/>
-    <Switch
-            android:text="Estado"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/switch2"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.174" app:layout_constraintBottom_toTopOf="@+id/btn_volver_group"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" app:layout_constraintVertical_bias="0.686"/>
+            app:layout_constraintHorizontal_bias="0.233" android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView8"
+            android:layout_marginBottom="24dp" app:layout_constraintBottom_toTopOf="@+id/btn_guardarGroup"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

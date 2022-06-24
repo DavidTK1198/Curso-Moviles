@@ -3,13 +3,20 @@ package com.matricula.mobile.apiService
 import com.matricula.mobile.apiUtils.ApiBuilder
 import com.matricula.mobile.models.Inscripcion
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface InscripcionService {
 
     @GET("inscripciones/alumno")
     suspend  fun obtenerInscripcionesPorAlumno(@Query("ced") codigo:String): Response<List<Inscripcion>>
+    @GET("inscripciones/grupo")
+    suspend  fun obtenerInscripcionesPorGrupo(@Query("id") codigo:String):Response<List<Inscripcion>>
+    @PUT("inscripciones")
+    suspend  fun colocarNota(@Body inscripcion: Inscripcion):Response<Void>
+
 
     companion object {
         private var inscripcionService : InscripcionService? = null

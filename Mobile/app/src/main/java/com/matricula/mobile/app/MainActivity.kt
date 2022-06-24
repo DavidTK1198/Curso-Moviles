@@ -10,18 +10,21 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import com.matricula.mobile.*
 import com.matricula.mobile.apiService.LoginService
 import com.matricula.mobile.app.ui.*
 import com.matricula.mobile.models.Usuario
+import com.matricula.mobile.viewModels.UsuarioViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.net.SocketTimeoutException
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private  lateinit var usuario: Usuario
@@ -32,6 +35,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
         if(us!=null){
             usuario=us
+
         }else{
             usuario=Usuario()
             salir()
@@ -86,6 +90,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 changeFragment(CiclosFragment())
             }
 
+            R.id.nav_item_notas -> {
+                setToolbarTitle("Registro de Notas")
+                changeFragment(RegistroNotasFragment())
+            }
             R.id.nav_item_oferta -> {
                 setToolbarTitle("Oferta Académica")
                 changeFragment(OfertaFragment())

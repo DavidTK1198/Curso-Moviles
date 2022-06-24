@@ -8,6 +8,7 @@ import com.matricula.mobile.models.Inscripcion
 class InscripcionViewModel: ViewModel()  {
     private var InscripcionListLiveData: MutableLiveData<List<Inscripcion>>? = null
     private var state: MutableLiveData<Boolean>?=null
+    private var inscripcion: MutableLiveData<Inscripcion>?=MutableLiveData<Inscripcion>()
     private var message: MutableLiveData<String>?=null
 
     fun getInscripcionesList(): LiveData<List<Inscripcion>>? {
@@ -29,6 +30,12 @@ class InscripcionViewModel: ViewModel()  {
         InscripcionListLiveData!!.value = NInscripcions
     }
 
+    fun setInscripcion(inscripcion: Inscripcion){
+        this.inscripcion!!.value=inscripcion
+    }
+    fun getInscripcion(): Inscripcion? {
+        return this.inscripcion!!.value
+    }
     fun setMensaje(mensaje:String){
         message!!.value=mensaje
     }

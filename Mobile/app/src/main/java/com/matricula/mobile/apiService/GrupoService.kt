@@ -15,7 +15,10 @@ interface GrupoService {
     @POST("grupos/agregar")
     suspend fun ingresarGrupo(@Body grupo: Grupo): Response<Void>
     @PUT("grupos")
-    suspend fun modificarGrupo(@Body carrera: Carrera): Response<Void>
+    suspend fun modificarGrupo(@Body grupo: Grupo): Response<Void>
+    @GET("grupos/profesor")
+    suspend fun obtenerGrupoPorProfesor(@Query("ced") cedula:String): Response<List<Grupo>>
+
     companion object {
         private var grupoService : GrupoService? = null
         fun getInstance() : GrupoService {

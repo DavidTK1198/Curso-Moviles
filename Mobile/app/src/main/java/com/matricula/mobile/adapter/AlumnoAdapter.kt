@@ -1,5 +1,6 @@
 package com.matricula.mobile.adapter
 import android.app.AlertDialog
+import android.content.ClipData.Item
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.Toast
@@ -11,12 +12,14 @@ import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.matricula.mobile.models.Alumno
+import com.matricula.mobile.models.Usuario
 
-class AlumnoAdapter(val c: Context, val AlumnoList:ArrayList<Alumno>): RecyclerView.Adapter<AlumnoAdapter.AlumnoViewHolder>(), Filterable
+class AlumnoAdapter(val c: Context, val AlumnoList:ArrayList<Alumno>,usuario: Usuario): RecyclerView.Adapter<AlumnoAdapter.AlumnoViewHolder>(), Filterable
 {
     private var itemsList: ArrayList<Alumno>? = null
     var AlumnoLiveData:MutableLiveData<Alumno>? = null
     private var state:MutableLiveData<Int>?=null
+    private val usuario=usuario
 
     init {
         this.itemsList=AlumnoList
@@ -37,7 +40,10 @@ class AlumnoAdapter(val c: Context, val AlumnoList:ArrayList<Alumno>): RecyclerV
 
         private fun popupMenus(v:View) {
             val popupMenus = PopupMenu(c,v)
+            if(usuario.rol=="ADM")
             popupMenus.inflate(R.menu.alumno_menu)
+            else
+                popupMenus.inflate(R.menu.matriculador_menu)
             popupMenus.setOnMenuItemClickListener {
                 when(it.itemId){
                     R.id.editText->{

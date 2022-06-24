@@ -11,6 +11,7 @@ class UsuarioViewModel: ViewModel() {
     private var UsuarioListLiveData: MutableLiveData<List<Usuario>>? = null
     private var state:MutableLiveData<Boolean>?=null
     private var message:MutableLiveData<String>?=null
+    private var usuario:MutableLiveData<Usuario>?=MutableLiveData<Usuario>()
 
     fun getUsuariosList(): LiveData<List<Usuario>>? {
         if (UsuarioListLiveData == null) {
@@ -33,5 +34,13 @@ class UsuarioViewModel: ViewModel() {
 
     fun setMensaje(mensaje:String){
         message!!.value=mensaje
+    }
+
+    fun updateUsuario(usuario: Usuario){
+        this.usuario!!.value=usuario
+    }
+
+    fun getUsuario(): Usuario? {
+        return this.usuario!!.value
     }
 }

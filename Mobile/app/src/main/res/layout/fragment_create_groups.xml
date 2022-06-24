@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:text="Numero"
             android:textSize="16sp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/textView_accionGroup"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="32dp"
             android:layout_marginEnd="24dp" app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +80,7 @@
             app:layout_constraintStart_toEndOf="@+id/btn_volver_group"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="78dp" android:layout_marginTop="32dp"
-            app:layout_constraintTop_toBottomOf="@+id/profesor_grupo" app:layout_constraintVertical_bias="1.0"/>
+            app:layout_constraintTop_toBottomOf="@+id/profesor_grupo" app:layout_constraintVertical_bias="0.0"/>
     <Button
             android:id="@+id/btn_volver_group"
             android:layout_width="wrap_content"
@@ -90,8 +90,8 @@
             android:layout_marginStart="43dp" app:layout_constraintEnd_toStartOf="@+id/btn_guardarGroup"
             android:layout_marginEnd="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="76dp" android:layout_marginTop="52dp"
-            app:layout_constraintTop_toBottomOf="@+id/profesor_grupo"/>
+            android:layout_marginBottom="76dp" android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@+id/profesor_grupo" app:layout_constraintVertical_bias="0.0"/>
     <TextView
             android:text="Horario"
             android:layout_width="wrap_content"

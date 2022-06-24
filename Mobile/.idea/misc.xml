@@ -48,6 +48,7 @@
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_create_groups.xml" value="0.25" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_create_students.xml" value="0.19746376811594202" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_cursos.xml" value="0.19746376811594202" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_edit_groups.xml" value="0.25" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_edit_inscriptions.xml" value="0.14739583333333334" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_edit_profesor.xml" value="0.2" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/fragment_edit_students.xml" value="0.25" />
@@ -66,8 +67,10 @@
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/list_item.xml" value="0.2" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/list_item_button.xml" value="0.25" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/navigation_header.xml" value="0.25" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/layout/nota_alumno.xml" value="0.33" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/menu/alumno_menu.xml" value="0.134375" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/menu/cursos_menu.xml" value="0.184375" />
+        <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/menu/matriculador_menu.xml" value="0.15625" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/menu/navigation_menu.xml" value="0.25" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/menu/show_menu.xml" value="0.21" />
         <entry key="..\:/Users/DavidTK1198/Videos/moviles/Mobile/app/src/main/res/menu/usuario_menu.xml" value="0.29375" />

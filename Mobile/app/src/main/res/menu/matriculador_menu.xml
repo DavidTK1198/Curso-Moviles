@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--we add icons-->
+    <item
+            android:id="@+id/esmatricula"
+            android:title="Matricula"
+            android:icon="@drawable/ic_enrollment_svgrepo_com"
+    />
+
+</menu>

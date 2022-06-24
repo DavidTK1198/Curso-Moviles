@@ -14,32 +14,31 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.gson.Gson
+import com.matricula.mobile.viewModels.GrupoViewModel
 import com.matricula.mobile.R
-import com.matricula.mobile.adapter.AlumnoAdapter
-import com.matricula.mobile.apiService.AlumnoService
+import com.matricula.mobile.adapter.RegistroNotaAdapter
+import com.matricula.mobile.apiService.GrupoService
 import com.matricula.mobile.app.MainActivity
-import com.matricula.mobile.models.Alumno
+import com.matricula.mobile.models.Grupo
 import com.matricula.mobile.models.Usuario
-import com.matricula.mobile.viewModels.AlumnoViewModel
 import kotlinx.coroutines.*
 import java.net.SocketTimeoutException
 
 
-class AlumnosFragment : FragmentUtils() {
+class RegistroNotasFragment : FragmentUtils() {
 
     lateinit var recyclerViewElement: RecyclerView
-    lateinit var adaptador: AlumnoAdapter
+    lateinit var adaptador: RegistroNotaAdapter
     private lateinit var addsBtn: FloatingActionButton
-    private lateinit var listaAlumno: ArrayList<Alumno>
+    private lateinit var listaGrupo: ArrayList<Grupo>
     private lateinit var usuario: Usuario
-    private val alumnoViewModel: AlumnoViewModel by activityViewModels()
+    private val GrupoViewModel: GrupoViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view = inflater.inflate(R.layout.fragment_alumnos, container, false)
-        listaAlumno = ArrayList()
+        var view = inflater.inflate(R.layout.fragment_inscripciones, container, false)
+        listaGrupo = ArrayList()
         recyclerViewElement = view.findViewById(R.id.mRecycler)
         recyclerViewElement.layoutManager = LinearLayoutManager(recyclerViewElement.context)
         recyclerViewElement.setHasFixedSize(true)
@@ -55,26 +54,25 @@ class AlumnosFragment : FragmentUtils() {
                     return false
                 }
             })
-        addsBtn = view.findViewById(R.id.addingBtn)
+        addsBtn = view.findViewById(R.id.volverMain)
         addsBtn.setOnClickListener { view ->
-            setToolbarTitle("Crear Alumno")
-            changeFragment(CrearAlumnoFragment())
+            setToolbarTitle("Inicio")
+            changeFragment(InicioFragment())
         }
-        alumnoViewModel.getAlumnosList()!!.observe(viewLifecycleOwner) { Alumnos ->
-            listaAlumno = Alumnos as ArrayList<Alumno>
+        GrupoViewModel.getGruposList()!!.observe(viewLifecycleOwner) { Grupos ->
+            listaGrupo = Grupos as ArrayList<Grupo>
             refresh()
         }
-        getListOfAlumnos()
-
-       usuario = (activity as MainActivity?)!!.usuario()
-        adaptador = AlumnoAdapter(this.activity!!, listaAlumno,usuario)
+        usuario = (activity as MainActivity?)!!.usuario()
+        getListOfGrupo()
+        adaptador = RegistroNotaAdapter(this.activity!!, listaGrupo)
         recyclerViewElement.adapter = adaptador
         return view;
     }
 
     private fun refresh() {
-        if (alumnoViewModel.check_state() == true) {
-            adaptador = AlumnoAdapter(this.activity!!, listaAlumno,usuario)
+        if (GrupoViewModel.check_state() == true) {
+            adaptador = RegistroNotaAdapter(this.activity!!, listaGrupo)
             recyclerViewElement.adapter = adaptador
             contract()
         } else {
@@ -83,90 +81,59 @@ class AlumnosFragment : FragmentUtils() {
     }
 
     private fun contract() {
-        val Alumno: Observer<Alumno> = object : Observer<Alumno> {
+        val Grupo: Observer<Grupo> = object : Observer<Grupo> {
             @Override
-            override fun onChanged(@Nullable Alumnos: Alumno?) {
-                when(adaptador.check_state()){
-                    1->editar()
-                    2->eliminarAlumno()
-                    3->historial()
-                }
+            override fun onChanged(@Nullable ins: Grupo?) {
+               GrupoViewModel.updateGrupo(ins!!)
+                verEstudiantes()
             }
-
-
         }
-        adaptador.getAlumnoActual()!!.observe(this, Alumno)
+        adaptador.getGrupoActual()!!.observe(this, Grupo)
     }
 
-    private fun historial() {
-        val historial = HistorialFragment()
-        setToolbarTitle("Historial Académico")
-        var bundle =  Bundle();
-        var Alumno=adaptador.getAlumnoActual()!!.value
-        val gson = Gson()
-        var json=gson.toJson(Alumno)
-        bundle.putString("Alumno", json)
-        historial.arguments=bundle
-        changeFragment(historial)
+    private fun verEstudiantes(){
+        setToolbarTitle("Alumnos")
+        changeFragment(NotasAlumnoFragment())
     }
-    private fun  getListOfAlumnos() {
+    private fun editar(){
+//        val editar = EditarGrupoFragment()
+//        setToolbarTitle("Editar Grupo")
+//        var bundle =  Bundle();
+//        var Grupo=adaptador.getGrupoActual()!!.value
+//        val gson = Gson()
+//        var json=gson.toJson(Grupo)
+//        bundle.putString("Grupo", json)
+//        editar.arguments=bundle
+//        changeFragment(editar)
+    }
+
+
+    private fun  getListOfGrupo() {
         initLoading()
         CoroutineScope(Dispatchers.IO).launch {
-            val call = AlumnoService.getInstance().obtenerAlumnos()
-            val nAlumnos = call.body()
+            try {
+            val call = GrupoService.getInstance().obtenerGrupoPorProfesor(usuario.id)
+            val nGrupos = call.body()
             if (call.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    alumnoViewModel.setState(true)
-                    alumnoViewModel.updateModel(nAlumnos!!)
+                    GrupoViewModel.setState(true)
+                    GrupoViewModel.updateModel(nGrupos!!)
                     stopLoading()
                 }
             } else {
                 withContext(Dispatchers.Main) {
-                    alumnoViewModel.setState(false)
-                    alumnoViewModel.setMensaje(call.message())
+                    GrupoViewModel.setState(false)
+                    GrupoViewModel.setMensaje(call.message())
                     stopLoading()
                 }//mensaje de error del servidor...
             }
-        }
-    }
-
-    private fun editar(){
-        val editar = EditarAlumnoFragment()
-        setToolbarTitle("Editar Alumno")
-        var bundle =  Bundle();
-        var Alumno=adaptador.getAlumnoActual()!!.value
-        val gson = Gson()
-        var json=gson.toJson(Alumno)
-        bundle.putString("Alumno", json)
-        editar.arguments=bundle
-        changeFragment(editar)
-    }
-
-    private fun eliminarAlumno() {
-        initLoading()
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                var codigo = adaptador.getAlumnoActual()!!.value!!.cedula
-                val call = AlumnoService.getInstance().eliminarAlumno(codigo!!)
-                if (call.isSuccessful) {
-                    withContext(Dispatchers.Main) {
-                        stopLoading()
-                        dialogDeleteSuccess()
-                        getListOfAlumnos()
-                    }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        alumnoViewModel.setState(false)
-                        alumnoViewModel.setMensaje(call.message())
-                        stopLoading()
-                        dialogDeleteError()
-                    }//mensaje de error del servidor...
-                }
             } catch (e: SocketTimeoutException) {
                 Log.d("xd","mamado")
             }
         }
     }
+
+
     private fun initLoading(){
         val loader = view?.findViewById<ProgressBar>(R.id.loading)
         loader?.visibility=View.VISIBLE
