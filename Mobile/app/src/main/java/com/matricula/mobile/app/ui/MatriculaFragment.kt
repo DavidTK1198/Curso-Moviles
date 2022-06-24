@@ -42,7 +42,7 @@ class MatriculaFragment: FragmentUtils() {
         var tablayout = view.findViewById(R.id.tablayout) as TabLayout
         val fragmentAdapter = FragmentAdapter(activity!!.supportFragmentManager)
         fragmentAdapter.addFragment(MatricularFragment(),"Matricular")
-        fragmentAdapter.addFragment(CarrerasFragment(),"Desmatricular")
+        fragmentAdapter.addFragment(DesmatricularFragment(),"Desmatricular")
         viewPager.adapter = fragmentAdapter
         tablayout.setupWithViewPager(viewPager)
         return view

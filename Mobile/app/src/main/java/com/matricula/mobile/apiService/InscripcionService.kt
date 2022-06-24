@@ -4,6 +4,7 @@ import com.matricula.mobile.apiUtils.ApiBuilder
 import com.matricula.mobile.models.Inscripcion
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -19,7 +20,7 @@ interface InscripcionService {
     suspend  fun colocarNota(@Body inscripcion: Inscripcion):Response<Void>
     @POST("inscripciones")
     suspend  fun matricular(@Body ins: Inscripcion): Response<Void>
-    @POST("inscripciones")
+    @DELETE("inscripciones")
     suspend  fun desMatricular(@Query("id") codigo:String): Response<Void>
 
 
