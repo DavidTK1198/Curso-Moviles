@@ -110,6 +110,28 @@ class AlumnoAdapter(val c: Context, val AlumnoList:ArrayList<Alumno>,usuario: Us
 
                         true
                     }
+
+                    R.id.esmatricula->{
+                        AlertDialog.Builder(c)
+                            .setTitle("Matricula")
+                            .setIcon(R.drawable.ic_warning)
+                            .setMessage("¿Está seguro que desea ver Gestionar la matricula?")
+                            .setPositiveButton("Sí"){
+                                    dialog,_->
+                                dialog.dismiss()
+                                state!!.value=4
+                                AlumnoLiveData!!.value = itemsList!!.get(adapterPosition)
+                                state!!.value=0
+                            }
+                            .setNegativeButton("No"){
+                                    dialog,_->
+                                dialog.dismiss()
+                            }
+                            .create()
+                            .show()
+
+                        true
+                    }
                     else-> true
                 }
 

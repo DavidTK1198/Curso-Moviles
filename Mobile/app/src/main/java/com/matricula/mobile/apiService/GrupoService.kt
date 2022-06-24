@@ -18,6 +18,8 @@ interface GrupoService {
     suspend fun modificarGrupo(@Body grupo: Grupo): Response<Void>
     @GET("grupos/profesor")
     suspend fun obtenerGrupoPorProfesor(@Query("ced") cedula:String): Response<List<Grupo>>
+    @GET("grupos/ciclo")
+    suspend fun obtenerGruposPorCiclo(@Query("id") id:String): Response<List<Grupo>>
 
     companion object {
         private var grupoService : GrupoService? = null

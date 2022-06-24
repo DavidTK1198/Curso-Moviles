@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".app.ui.OfertaFragment">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <Button
+                android:layout_width="295dp"
+                android:layout_height="38dp"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/Ciclocarga"
+                android:hint=" Debe Cargar un Ciclo"
+                android:background="@drawable/edit_text_background"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/primaryTextColor"
+                app:layout_constraintTop_toBottomOf="@+id/textView11" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="55dp" android:layout_marginEnd="146dp"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginBottom="23dp" app:layout_constraintBottom_toTopOf="@+id/btn_guardar_alumno"
+                android:textColorHint="@color/colorWhite"/>
+        <Button
+                android:layout_width="297dp"
+                android:layout_height="35dp"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/CargarCursos"
+                android:hint="Buscar Cursos"
+                android:background="@drawable/edit_text_background"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/primaryTextColor"
+                app:layout_constraintTop_toBottomOf="@+id/textView11" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="55dp" android:layout_marginEnd="146dp"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginBottom="23dp" app:layout_constraintBottom_toTopOf="@+id/btn_guardar_alumno"
+                android:textColorHint="@color/colorWhite"/>
+        <androidx.appcompat.widget.SearchView
+                android:id="@+id/input_search"
+                android:elevation="@dimen/cardview_default_elevation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textCursorDrawable="@null"
+                app:iconifiedByDefault="false"
+                android:backgroundTint="@color/primaryColor"
+                app:queryBackground="@null" android:layout_marginTop="8dp" android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" android:layout_marginBottom="8dp">
+        </androidx.appcompat.widget.SearchView>
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+    </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/volverMain"
+            android:src="@drawable/ic_back_svgrepo_com"
+            app:tint="@color/white"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:backgroundTint="@color/primaryColor"
+            android:layout_height="wrap_content" android:layout_marginTop="15dp" android:layout_marginStart="15dp"
+            android:layout_marginEnd="20dp" android:layout_marginBottom="16dp"/>
+    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+                                                       android:layout_height="match_parent"/>
+
+
+</RelativeLayout>

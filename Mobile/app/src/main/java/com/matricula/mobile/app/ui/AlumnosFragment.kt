@@ -90,12 +90,19 @@ class AlumnosFragment : FragmentUtils() {
                     1->editar()
                     2->eliminarAlumno()
                     3->historial()
+                    4->matricula()
                 }
             }
 
 
         }
         adaptador.getAlumnoActual()!!.observe(this, Alumno)
+    }
+
+    private fun matricula() {
+        val m=MatriculaFragment()
+        setToolbarTitle("Gestionar Matricula")
+        changeFragment(m)
     }
 
     private fun historial() {
