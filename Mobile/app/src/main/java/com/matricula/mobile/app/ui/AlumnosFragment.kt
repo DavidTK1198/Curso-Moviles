@@ -86,6 +86,7 @@ class AlumnosFragment : FragmentUtils() {
         val Alumno: Observer<Alumno> = object : Observer<Alumno> {
             @Override
             override fun onChanged(@Nullable Alumnos: Alumno?) {
+                alumnoViewModel.updateAlumno(Alumnos!!)
                 when(adaptador.check_state()){
                     1->editar()
                     2->eliminarAlumno()

@@ -5,6 +5,7 @@ import com.matricula.mobile.models.Inscripcion
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Query
 
@@ -16,6 +17,10 @@ interface InscripcionService {
     suspend  fun obtenerInscripcionesPorGrupo(@Query("id") codigo:String):Response<List<Inscripcion>>
     @PUT("inscripciones")
     suspend  fun colocarNota(@Body inscripcion: Inscripcion):Response<Void>
+    @POST("inscripciones")
+    suspend  fun matricular(@Body ins: Inscripcion): Response<Void>
+    @POST("inscripciones")
+    suspend  fun desMatricular(@Query("id") codigo:String): Response<Void>
 
 
     companion object {

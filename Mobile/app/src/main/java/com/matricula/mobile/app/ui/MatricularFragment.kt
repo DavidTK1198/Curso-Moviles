@@ -18,7 +18,10 @@ import com.matricula.mobile.R
 import com.matricula.mobile.adapter.MatriculaAdapter
 import com.matricula.mobile.adapter.Oferta_CursoAdapter
 import com.matricula.mobile.apiService.GrupoService
+import com.matricula.mobile.apiService.InscripcionService
 import com.matricula.mobile.models.Grupo
+import com.matricula.mobile.models.Inscripcion
+import com.matricula.mobile.viewModels.AlumnoViewModel
 import com.matricula.mobile.viewModels.GrupoViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,6 +38,7 @@ class MatricularFragment: FragmentUtils() {
     private  lateinit var  ciclo:Button
     private lateinit var backBtn: FloatingActionButton
     private val grupoViewModel: GrupoViewModel by activityViewModels()
+    private val alumnoViewModel: AlumnoViewModel by activityViewModels()
     private lateinit var carrera:Button
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -99,9 +103,36 @@ class MatricularFragment: FragmentUtils() {
             @Override
             override fun onChanged(@Nullable Grupos: Grupo?) {
                 grupoViewModel.updateGrupo(Grupos!!)
+                matricular()
             }
         }
         adaptador.getGrupoActual()!!.observe(this, carrera)
+    }
+
+    private fun matricular() {
+        val grupo=grupoViewModel.getGrupo()
+        val alumno=alumnoViewModel.getAlumno()
+        var ins= Inscripcion(alumno!!.value!!,0,grupo!!)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val call = InscripcionService.getInstance().matricular(ins)
+                val nGrupos = call.body()
+                if (call.isSuccessful) {
+                    withContext(Dispatchers.Main) {
+                        grupoViewModel.setState(true)
+                        stopLoading()
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        grupoViewModel.setState(false)
+                        grupoViewModel.setMensaje(call.message())
+                        stopLoading()
+                    }//mensaje de error del servidor...
+                }
+            }catch (e:SocketTimeoutException){
+
+            }
+        }
     }
 
 
@@ -158,10 +189,6 @@ class MatricularFragment: FragmentUtils() {
         val loader=view?.findViewById<ProgressBar>(R.id.loading)
         loader?.visibility= View.GONE
     }
-
-
-
-
 
     private fun diaglogTimeOut(){
         AlertDialog.Builder(this.activity!!)
