@@ -121,6 +121,7 @@ class MatricularFragment: FragmentUtils() {
                     withContext(Dispatchers.Main) {
                         grupoViewModel.setState(true)
                         stopLoading()
+                        mensaje()
                     }
                 } else {
                     withContext(Dispatchers.Main) {
@@ -135,6 +136,17 @@ class MatricularFragment: FragmentUtils() {
         }
     }
 
+    private fun mensaje(){
+        AlertDialog.Builder(this.activity!!)
+            .setTitle("Resultado")
+            .setIcon(R.drawable.ic_success)
+            .setMessage("Matriculado correctamente!!!")
+            .setPositiveButton("Ok"){ dialog,_->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
 
     private  fun  validar(): Boolean {
         if (ciclo.text.toString()==" Debe Cargar un Ciclo") {

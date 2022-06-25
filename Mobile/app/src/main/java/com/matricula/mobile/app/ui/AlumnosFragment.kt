@@ -60,6 +60,10 @@ class AlumnosFragment : FragmentUtils() {
             setToolbarTitle("Crear Alumno")
             changeFragment(CrearAlumnoFragment())
         }
+        view.findViewById<FloatingActionButton>(R.id.volverMain).setOnClickListener{
+            setToolbarTitle("Inicio")
+            changeFragment(InicioFragment())
+        }
         alumnoViewModel.getAlumnosList()!!.observe(viewLifecycleOwner) { Alumnos ->
             listaAlumno = Alumnos as ArrayList<Alumno>
             refresh()
@@ -67,6 +71,9 @@ class AlumnosFragment : FragmentUtils() {
         getListOfAlumnos()
 
        usuario = (activity as MainActivity?)!!.usuario()
+        if(usuario!=null && usuario.rol!="ADM"){
+            addsBtn.setVisibility(View.GONE)
+        }
         adaptador = AlumnoAdapter(this.activity!!, listaAlumno,usuario)
         recyclerViewElement.adapter = adaptador
         return view;

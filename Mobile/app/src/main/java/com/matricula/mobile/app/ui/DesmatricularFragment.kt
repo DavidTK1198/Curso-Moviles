@@ -82,7 +82,17 @@ class DesmatricularFragment : FragmentUtils() {
         adaptador.getInscripcionActual()!!.observe(this, inscripcion)
     }
 
-
+    private fun mensaje(){
+        AlertDialog.Builder(this.activity!!)
+            .setTitle("Resultado")
+            .setIcon(R.drawable.ic_success)
+            .setMessage("Retirado correctamente!!!")
+            .setPositiveButton("Ok"){ dialog,_->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
 
     private fun refresh() {
         if (InscripcionViewModel.check_state() == true) {
@@ -172,6 +182,7 @@ class DesmatricularFragment : FragmentUtils() {
                     withContext(Dispatchers.Main) {
                         InscripcionViewModel.setState(true)
                         getListOfInscripciones()
+                        mensaje()
                     }
                 } else {
                     withContext(Dispatchers.Main) {

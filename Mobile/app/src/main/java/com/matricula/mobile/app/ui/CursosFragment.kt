@@ -127,6 +127,7 @@ class CursosFragment: FragmentUtils() {
                     cursoViewModel.setState(true)
                     cursoViewModel.updateModel(nCarreras!!)
                     stopLoading()
+                    refresh()
                 }
             } else {
                 withContext(Dispatchers.Main) {

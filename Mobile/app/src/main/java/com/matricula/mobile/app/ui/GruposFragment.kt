@@ -61,6 +61,11 @@ class GruposFragment : FragmentUtils() {
             listaGrupo = Grupos as ArrayList<Grupo>
             refresh()
         }
+
+        view.findViewById<FloatingActionButton>(R.id.volverMain).setOnClickListener{
+            setToolbarTitle("Inicio")
+            changeFragment(OfertaFragment())
+        }
         getListOfGrupos()
         adaptador = GrupoAdapter(this.activity!!, listaGrupo)
         recyclerViewElement.adapter = adaptador

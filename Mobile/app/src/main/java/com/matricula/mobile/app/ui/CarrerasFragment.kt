@@ -63,6 +63,10 @@ class CarrerasFragment : FragmentUtils() {
             listaCarrera = carreras as ArrayList<Carrera>
             refresh()
         }
+        view.findViewById<FloatingActionButton>(R.id.volverMain).setOnClickListener{
+            setToolbarTitle("Inicio")
+            changeFragment(InicioFragment())
+        }
         getListOfCarreras()
         adaptador = CarreraAdapter(this.activity!!, listaCarrera)
         recyclerViewElement.adapter = adaptador

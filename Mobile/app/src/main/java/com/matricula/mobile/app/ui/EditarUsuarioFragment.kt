@@ -1,4 +1,5 @@
 package com.matricula.mobile.app.ui
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -79,11 +80,23 @@ class EditarUsuarioFragment: FragmentUtils() {
                 editTextCodigo?.text.toString()!="")
     }
 
+    private  fun mensaje(){
+        AlertDialog.Builder(this.activity!!)
+            .setTitle("Resultado")
+            .setIcon(R.drawable.ic_success)
+            .setMessage("Modificado correctamente!!!")
+            .setPositiveButton("Ok"){ dialog,_->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
     private fun modificarUsuario(){
         CoroutineScope(Dispatchers.IO).launch {
             val call = UsuarioService.getInstance().modificarUsuario(usuario)
             if (call.isSuccessful) {
                 withContext(Dispatchers.Main) {
+                    mensaje()
                 }
             } else {
 

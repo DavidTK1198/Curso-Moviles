@@ -1,5 +1,6 @@
 package com.matricula.mobile.app.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -80,6 +81,17 @@ class CrearCicloFragment: FragmentUtils() {
         editTextAnnio?.setText("")
         editTextFechaInicio?.setText("")
         editTextFechaFinal?.setText("")
+        val loader=view?.findViewById<ProgressBar>(R.id.loading)
+        loader?.visibility=View.GONE
+        AlertDialog.Builder(this.activity!!)
+            .setTitle("Resultado")
+            .setIcon(R.drawable.ic_success)
+            .setMessage("Creado correctamente!!!")
+            .setPositiveButton("Ok"){ dialog,_->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
     private fun volver(){
         setToolbarTitle("Ciclos")

@@ -11,6 +11,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.matricula.mobile.viewModels.InscripcionViewModel
 import com.matricula.mobile.R
@@ -54,6 +55,11 @@ class InscripcionesFragment : FragmentUtils() {
         InscripcionViewModel.getInscripcionesList()!!.observe(viewLifecycleOwner) { Inscripciones ->
             listaInscripcion = Inscripciones as ArrayList<Inscripcion>
             refresh()
+        }
+
+        view.findViewById<FloatingActionButton>(R.id.volverMain).setOnClickListener{
+            setToolbarTitle("Inicio")
+            changeFragment(InicioFragment())
         }
         val bundle = this.arguments
         if (bundle != null) {

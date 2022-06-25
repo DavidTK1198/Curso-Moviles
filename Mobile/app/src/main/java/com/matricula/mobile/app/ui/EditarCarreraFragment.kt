@@ -1,5 +1,6 @@
 package com.matricula.mobile.app.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -89,6 +90,15 @@ class EditarCarreraFragment: FragmentUtils() {
     private fun stopLoading(){
         val loader=view?.findViewById<ProgressBar>(R.id.loading)
         loader?.visibility= View.GONE
+        AlertDialog.Builder(this.activity!!)
+            .setTitle("Resultado")
+            .setIcon(R.drawable.ic_success)
+            .setMessage("Modificado correctamente!!!")
+            .setPositiveButton("Ok"){ dialog,_->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 
 
@@ -101,14 +111,17 @@ class EditarCarreraFragment: FragmentUtils() {
     private fun modificarCarrera(carrera: Carrera){
         initLoading()
         CoroutineScope(Dispatchers.IO).launch {
+            try {
             val call = CarreraService.getInstance().modificarCarrera(carrera)
             if (call.isSuccessful) {
                 withContext(Dispatchers.Main) {
                     stopLoading()
-                    limpiar()
                 }
             } else {
                 stopLoading()
+            }
+            } catch (e: Exception) {
+
             }
         }
     }

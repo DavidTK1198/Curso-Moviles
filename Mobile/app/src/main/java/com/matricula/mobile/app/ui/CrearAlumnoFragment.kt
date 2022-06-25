@@ -1,5 +1,6 @@
 package com.matricula.mobile.app.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -118,19 +119,22 @@ class CrearAlumnoFragment: FragmentUtils() {
     private fun stopLoadingSuccess(){
         val loader=view?.findViewById<ProgressBar>(R.id.loading)
         loader?.visibility= View.GONE
-        val dialog=SuccessDiaglogFragment()
-        val bundle = Bundle()
-        bundle.putString("La Alumno ${editTextName.text.toString()} con el código ${editTextCodigo.text.toString()} fue creada " +
-                "correctamente", "mensaje")
-        dialog.arguments=bundle
-        dialog.show(childFragmentManager,"agregar")
+        AlertDialog.Builder(this.activity!!)
+            .setTitle("Resultado")
+            .setIcon(R.drawable.ic_success)
+            .setMessage("Creado correctamente!!!")
+            .setPositiveButton("Ok"){ dialog,_->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
         limpiar()
     }
 
     private fun validarDatos():Boolean{//Manejo de errores
         return(editTextName?.text.toString()!="" &&
                 editTextCodigo?.text.toString()!=""&& editTexttelefono?.text.toString()!=""
-                &&editTextmail?.text.toString()!="" && fec_nac.text.toString()!="")
+                &&editTextmail?.text.toString()!="" && fec_nac.text.toString()!="" && alumnoViewModel.getCarrera()!=null)
     }
 
     private fun insertarAlumno(Alumno: Alumno){

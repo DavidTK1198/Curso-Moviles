@@ -82,6 +82,17 @@ class CrearGrupoFragment: FragmentUtils() {
         editnumero?.setText("")
         editCupo?.setText("")
         editHorario?.setText("")
+        val loader=view?.findViewById<ProgressBar>(R.id.loading)
+        loader?.visibility=View.GONE
+        AlertDialog.Builder(this.activity!!)
+            .setTitle("Resultado")
+            .setIcon(R.drawable.ic_success)
+            .setMessage("Creado correctamente!!!")
+            .setPositiveButton("Ok"){ dialog,_->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
     private fun volver(){
         setToolbarTitle("Grupos")
@@ -98,7 +109,7 @@ class CrearGrupoFragment: FragmentUtils() {
         loader?.visibility=View.GONE
     }
 
-    fun validarAgregar() {
+    fun validarAgregar(): Boolean {
         if (profesorbtn.text.toString() == "Debe Seleccionar un Profesor") {
             AlertDialog.Builder(this.activity!!)
                 .setTitle("Alerta")
@@ -109,7 +120,9 @@ class CrearGrupoFragment: FragmentUtils() {
                 }
                 .create()
                 .show()
+            return false
         }
+        return true
     }
 
 
@@ -124,6 +137,7 @@ class CrearGrupoFragment: FragmentUtils() {
             val call = GrupoService.getInstance().ingresarGrupo(Grupo)
             if (call.isSuccessful) {
                 withContext(Dispatchers.Main) {
+                    limpiar()
                 }
             } else {
                 withContext(Dispatchers.Main) {

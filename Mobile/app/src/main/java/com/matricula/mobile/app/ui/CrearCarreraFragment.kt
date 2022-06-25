@@ -1,5 +1,6 @@
 package com.matricula.mobile.app.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.net.SocketTimeoutException
 
 class CrearCarreraFragment: FragmentUtils() {
     private lateinit  var editTextName:EditText
@@ -76,13 +78,15 @@ class CrearCarreraFragment: FragmentUtils() {
     private fun stopLoadingSuccess(){
         val loader=view?.findViewById<ProgressBar>(R.id.loading)
         loader?.visibility=View.GONE
-        val dialog=SuccessDiaglogFragment()
-        val bundle = Bundle()
-        bundle.putString("La carrera ${editTextName.text.toString()} con el código ${editTextCodigo.text.toString()} fue creada " +
-                "correctamente", "mensaje")
-        dialog.arguments=bundle
-        dialog.show(childFragmentManager,"agregar")
-        limpiar()
+        AlertDialog.Builder(this.activity!!)
+            .setTitle("Resultado")
+            .setIcon(R.drawable.ic_success)
+            .setMessage("Creada correctamente!!!")
+            .setPositiveButton("Ok"){ dialog,_->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 
     private fun validarDatos():Boolean{//Manejo de errores
@@ -93,15 +97,22 @@ class CrearCarreraFragment: FragmentUtils() {
     private fun insertarCarrera(carrera: Carrera){
         initLoading()
         CoroutineScope(Dispatchers.IO).launch {
+            try {
+
+
             val call = CarreraService.getInstance().ingresarCarrera(carrera)
             if (call.isSuccessful) {
                 withContext(Dispatchers.Main) {
                     stopLoadingSuccess()
+                    limpiar()
                 }
             } else {
                 withContext(Dispatchers.Main) {
                     stopLoadingError()
                 }
+            }
+            }catch (e:SocketTimeoutException){
+
             }
         }
     }
